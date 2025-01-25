@@ -36,6 +36,11 @@ export default function Navigacio() {
                             </li>
                         </>
                     )}
+                    <li className="navbar-item">
+                        <Link className="nav-link" to="/admin">
+                            Admin
+                        </Link>
+                    </li>
                 </ul>
             </div>
         </nav>
