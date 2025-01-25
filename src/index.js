@@ -7,13 +7,19 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthProvider } from "./contexts/AuthContext";
 import { BrowserRouter } from "react-router-dom";
+import { ApiProvider } from "./contexts/ApiContext";
+import { KosarProvider } from "./contexts/KosarContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <App />
+        <ApiProvider> 
+          <KosarProvider> 
+            <App />
+          </KosarProvider>
+        </ApiProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>

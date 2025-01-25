@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-//import { KosarContext } from "../../contexts/KosarContext";
+import { KosarContext } from "../../contexts/KosarContext";
 
 export function TermekPublic(props) {
-  //const {kosarba} =useContext(KosarContext)
+  const {kosarba} =useContext(KosarContext)
   return (
     <div className="col">
       <div className="card h-100">
@@ -18,10 +18,10 @@ export function TermekPublic(props) {
             <li className="list-group-item">{props.termek.leiras}</li>
           </ul>
         </div>
-        {/* <div className="card-footer">
+         <div className="card-footer">
           <button className="btn btn-primary card-link" onClick={()=>{kosarba(props.termek)}}>Kosárba</button>
           <b className="card-link ">{props.termek.ar} €</b>
-        </div> */}
+        </div> 
       </div>
     </div>
   );

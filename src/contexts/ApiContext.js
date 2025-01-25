@@ -43,9 +43,11 @@ export const ApiProvider = ({ children }) => {
     getData("/products", setApiData); // Adatok automatikus lekérése
   }, []);
 
+
   return (
-    <ApiContext.Provider value={{ apiData, getData, postData }}>
+    <ApiContext.Provider value={{ getData, apiData, postData, loading, error }}>
       {children}
     </ApiContext.Provider>
   );
+  
 };
