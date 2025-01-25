@@ -26,6 +26,8 @@ export const ApiProvider = ({ children }) => {
       });
   }
 
+  
+
   const postData = async (vegpont, data) => {
     setLoading(true);
     setError(null);
@@ -40,7 +42,7 @@ export const ApiProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getData("/products", setApiData); // Adatok automatikus lekérése
+    getData("/termekek", setApiData); // Adatok automatikus lekérése
   }, []);
 
 
