@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { KosarContext } from "../contexts/KosarContext";
+import axios from "axios";
 import { FaTimes } from "react-icons/fa";
 
 export default function Fizetes() {
@@ -7,6 +8,22 @@ export default function Fizetes() {
 
   const handleRemove = (termek_id) => {
     torolTermek(termek_id);
+  };
+
+  const handlePayment = async (event) => {
+    event.preventDefault(); // Az alapértelmezett űrlap beküldést megakadályozza
+
+    try {
+      const response = await axios.post("/api/send-payment-confirmation", {
+        kosar,
+        total,
+      });
+
+      alert(response.data.message); // Visszajelzés a felhasználónak
+    } catch (error) {
+      console.error("Hiba történt a fizetés során:", error);
+      alert("Nem sikerült elküldeni a visszaigazoló e-mailt.");
+    }
   };
 
   return (
@@ -64,7 +81,7 @@ export default function Fizetes() {
       )}
 
       {/* Fizetési űrlap */}
-      <form>
+      <form onSubmit={handlePayment}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
             Teljes név

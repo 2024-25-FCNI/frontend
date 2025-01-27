@@ -9,16 +9,19 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { BrowserRouter } from "react-router-dom";
 import { ApiProvider } from "./contexts/ApiContext";
 import { KosarProvider } from "./contexts/KosarContext";
+import { AnalitikaProvider } from "./contexts/AnalitikaContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <ApiProvider> 
-          <KosarProvider> 
-            <App />
-          </KosarProvider>
+        <ApiProvider>
+          <AnalitikaProvider>
+            <KosarProvider>
+              <App />
+            </KosarProvider>
+          </AnalitikaProvider>
         </ApiProvider>
       </AuthProvider>
     </BrowserRouter>

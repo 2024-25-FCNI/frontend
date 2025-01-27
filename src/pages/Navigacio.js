@@ -33,20 +33,35 @@ export default function Navigacio() {
                 Kezdőlap
               </Link>
             </li>
+            <li className="navbar-item">
+              <Link className="nav-link" to="/bemutatkozas">
+                Bemutatkozás
+              </Link>
+            </li>
             {user ? (
-              user.role === 0 ? (
-                <li className="navbar-item">
-                  <Link className="nav-link" to="/admin">
-                    Admin
-                  </Link>
-                </li>
-              ) : (
-                <li className="navbar-item">
-                  <Link className="nav-link" to="/profil">
-                    Profil
-                  </Link>
-                </li>
-              )
+              <>
+                {user.role === 0 && (
+                  <>
+                    <li className="navbar-item">
+                      <Link className="nav-link" to="/admin">
+                        Admin
+                      </Link>
+                    </li>
+                    <li className="navbar-item">
+                      <Link className="nav-link" to="/analitika">
+                        Analitika
+                      </Link>
+                    </li>
+                  </>
+                )}
+                {user.role !== 0 && (
+                  <li className="navbar-item">
+                    <Link className="nav-link" to="/profil">
+                      Profil
+                    </Link>
+                  </li>
+                )}
+              </>
             ) : (
               <>
                 <li className="navbar-item">

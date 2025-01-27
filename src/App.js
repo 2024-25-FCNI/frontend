@@ -6,6 +6,10 @@ import VendegLayout from "./layouts/VendegLayout";
 import Admin from "./pages/Admin";
 import Profil from "./pages/Profil";
 import Fizetes from "./pages/Fizetes";
+import TermekReszletek from "./components/public/TermekReszletek";
+import Bemutatkozas from "./pages/Bemutatkozas";
+import Konyv from "./pages/Konyv";
+import Analitika from "./pages/Analitika";
 
 function App() {
     return (
@@ -19,6 +23,11 @@ function App() {
                 <Route path="regisztracio" element={<Regisztracio />} />
                 <Route path="admin" element={<Admin />} />
                 <Route path="/fizetes" element={<Fizetes />} />
+                <Route path="/termek/:termekId" element={<TermekReszletek />} />
+                <Route path="/bemutatkozas" element={<Bemutatkozas />} />
+                <Route path="/konyv" element={<Konyv />} />
+                <Route path="/analitika" element={<Analitika />} />
+                
             </Route>
         </Routes>
       
