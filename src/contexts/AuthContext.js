@@ -21,13 +21,30 @@ export const AuthProvider = ({ children }) => {
     console.log(data)
     setUser(data);
   };
-  const logout = async () => {
+  /* const logout = async () => {
     await csrf();
 
     myAxios.post("/logout").then((resp) => {
       setUser(null);
       console.log(resp);
     });
+  }; */
+
+  const logout = async () => {
+    await csrf();
+  
+    try {
+      await myAxios.post("/logout");
+      setUser(null);
+      navigate("/"); // Kijelentkezés után a bejelentkezési oldalra irányít
+    } catch (error) {
+      console.error("Hiba történt a kijelentkezés során:", error);
+      if (error.response && error.response.status === 401) {
+        // Ha a szerver 401-es hibát ad vissza, töröljük a felhasználói állapotot
+        setUser(null);
+        navigate("/");
+      }
+    }
   };
 
   const loginReg = async ({ ...adat }, vegpont) => {

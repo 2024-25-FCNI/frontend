@@ -4,6 +4,7 @@ import Bejelentkezes from "./pages/Bejelentkezes";
 import Regisztracio from "./pages/Regisztracio";
 import VendegLayout from "./layouts/VendegLayout";
 import Admin from "./pages/Admin";
+import Profil from "./pages/Profil";
 
 function App() {
     return (
@@ -12,6 +13,7 @@ function App() {
             <Route path="/" element={<VendegLayout />}>
                 {/* <Route index element={<Kezdolap />} /> */}
                 <Route index element={<Kezdolap />} />
+                <Route path="/profil" element={<Profil />} />
                 <Route path="bejelentkezes" element={<Bejelentkezes />} />
                 <Route path="regisztracio" element={<Regisztracio />} />
                 <Route path="admin" element={<Admin />} />

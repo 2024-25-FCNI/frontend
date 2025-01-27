@@ -12,49 +12,52 @@ export default function Navigacio() {
 
   const toggleKosar = () => {
     setKosarOpen(!isKosarOpen);
-    };
+  };
 
+  return (
+    <>
+      <nav className="navbar navbar-expand-sm bg-light">
+        <div className="container-fluid">
+          <ul className="navbar-nav">
+            <li className="navbar-item">
+              <Link className="nav-link" to="/">
+                Kezdőlap
+              </Link>
+            </li>
+            {user ? (
+              user.role === 0 ? (
+                <>
+                  <li className="navbar-item">
+                    <Link className="nav-link" to="/admin">
+                      Admin
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="navbar-item">
+                    <Link className="nav-link" to="/profil">
+                      Profil
+                    </Link>
+                  </li>
+                </>
+              )
+            ) : (
+              <>
+                <li className="navbar-item">
+                  <Link className="nav-link" to="/bejelentkezes">
+                    Bejelentkezés
+                  </Link>
+                </li>
+                <li className="navbar-item">
+                  <Link className="nav-link" to="/regisztracio">
+                    Regisztráció
+                  </Link>
+                </li>
+              </>
+            )}
 
-    return (
-        <>
-        <nav className="navbar navbar-expand-sm bg-light">
-            <div className="container-fluid">
-                <ul className="navbar-nav">
-                    <li className="navbar-item">
-                        <Link className="nav-link" to="/">
-                            Kezdőlap
-                        </Link>
-                    </li>
-                    {user ? (
-                        <>
-                            <li className="navbar-item">
-                                <button className="nav-link" onClick={()=>{logout()}}>
-                                    Kijelentkezés
-                                </button>
-                            </li>
-                        </>
-                    ) : (
-                        <>
-                            <li className="navbar-item">
-                                <Link className="nav-link" to="/bejelentkezes">
-                                    Bejelentkezés
-                                </Link>
-                            </li>
-                            <li className="navbar-item">
-                                <Link className="nav-link" to="/regisztracio">
-                                    Regisztráció
-                                </Link>
-                            </li>
-                        </>
-                    )}
-                    <li className="navbar-item">
-                        <Link className="nav-link" to="/admin">
-                            Admin
-                        </Link>
-                    </li>
-
-                
-                    <li className="navbar-item">
+            <li className="navbar-item">
               <button className="nav-link" onClick={toggleKosar}>
                 Kosár ({kosar.length})
               </button>
@@ -82,7 +85,5 @@ export default function Navigacio() {
         </div>
       </div>
     </>
-    
-    );
+  );
 }
-
