@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
 
 export default function Profil() {
-  const { logout } = useAuthContext();
+  const { user, logout } = useAuthContext(); // Lekérjük a user objektumot
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -13,11 +13,17 @@ export default function Profil() {
 
   return (
     <div className="container mt-5">
-      <h1>Profil</h1>
-      <p>Üdvözlünk a profilod oldalán!</p>
-      <button onClick={handleLogout} className="btn btn-danger mt-3">
-        Kijelentkezés
-      </button>
+      {user ? ( // Ellenőrizzük, hogy van-e bejelentkezett felhasználó
+        <>
+          <h1>{user.name}</h1>
+          <p>Üdvözlünk a profilod oldalán!</p>
+          <button onClick={handleLogout} className="btn btn-danger mt-3">
+            Kijelentkezés
+          </button>
+        </>
+      ) : (
+        <p>Nincs bejelentkezett felhasználó.</p>
+      )}
     </div>
   );
 }

@@ -123,7 +123,12 @@ export default function Regisztracio() {
         <button type="submit" className="btn btn-primary w-100">
           Regisztrálok
         </button>
+
+        
       </form>
+
+      
+
     </div>
   );
 }

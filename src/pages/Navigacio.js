@@ -4,6 +4,7 @@ import useAuthContext from "../contexts/AuthContext";
 import { KosarContext } from "../contexts/KosarContext";
 import Kosar from "../components/public/Kosar";
 import "../components/public/Kosar.css";
+import { FaHome } from "react-icons/fa";
 
 export default function Navigacio() {
   const { user, logout } = useAuthContext();
@@ -30,7 +31,7 @@ export default function Navigacio() {
           <ul className="navbar-nav">
             <li className="navbar-item">
               <Link className="nav-link" to="/">
-                Kezdőlap
+              <FaHome />
               </Link>
             </li>
             <li className="navbar-item">
@@ -39,29 +40,19 @@ export default function Navigacio() {
               </Link>
             </li>
             {user ? (
-              <>
-                {user.role === 0 && (
-                  <>
-                    <li className="navbar-item">
-                      <Link className="nav-link" to="/admin">
-                        Admin
-                      </Link>
-                    </li>
-                    <li className="navbar-item">
-                      <Link className="nav-link" to="/analitika">
-                        Analitika
-                      </Link>
-                    </li>
-                  </>
-                )}
-                {user.role !== 0 && (
-                  <li className="navbar-item">
-                    <Link className="nav-link" to="/profil">
-                      Profil
-                    </Link>
-                  </li>
-                )}
-              </>
+              user.role === 0 ? (
+                <li className="navbar-item">
+                  <Link className="nav-link" to="/admin">
+                    Admin
+                  </Link>
+                </li>
+              ) : (
+                <li className="navbar-item">
+                  <Link className="nav-link" to="/profil">
+                    {user.name}
+                  </Link>
+                </li>
+              )
             ) : (
               <>
                 <li className="navbar-item">
