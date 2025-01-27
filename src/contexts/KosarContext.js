@@ -6,9 +6,9 @@ export const KosarProvider = ({ children }) => {
   const [kosar, setKosar] = useState([]);
   const [total, setTotal] = useState(0);
 
-   function kosarba(termek) {
+  function kosarba(termek) {
     const segedKosar = [...kosar];
-    const vanIlyenTermek = segedKosar.find((elem) => elem.id === termek.id);
+    const vanIlyenTermek = segedKosar.find((elem) => elem.termek_id === termek.termek_id);
 
     if (vanIlyenTermek) {
       alert("Ez a termék már szerepel a kosárban.");
@@ -16,24 +16,21 @@ export const KosarProvider = ({ children }) => {
     } else {
       segedKosar.push(termek);
     }
-    setKosar([...segedKosar]);
-    osszeg();
-  } 
 
-   
-
-  function torolTermek(id) {
-    const segedKosar = kosar.filter((termek) => termek.id !== id); 
     setKosar([...segedKosar]);
-    osszeg();
+    osszeg(segedKosar); // Az aktuális kosarat adjuk át az összegzéshez
   }
 
-     function osszeg() {
-    const szum = kosar.reduce((sv, termek) => sv + termek.price, 0);
-    setTotal(szum);
-  } 
+  function torolTermek(termek_id) {
+    const segedKosar = kosar.filter((termek) => termek.termek_id !== termek_id);
+    setKosar([...segedKosar]);
+    osszeg(segedKosar); // Az aktuális kosarat adjuk át az összegzéshez
+  }
 
-    
+  function osszeg(aktualisKosar) {
+    const szum = aktualisKosar.reduce((sv, termek) => sv + termek.ar, 0);
+    setTotal(szum);
+  }
 
   return (
     <KosarContext.Provider value={{ kosarba, torolTermek, kosar, total }}>

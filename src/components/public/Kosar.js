@@ -6,8 +6,8 @@ import { FaTimes } from "react-icons/fa";
 function Kosar() {
   const { total, kosar, torolTermek } = useContext(KosarContext); 
 
-  const handleRemove = (id) => {
-    torolTermek(id); 
+  const handleRemove = (termek_id) => {
+    torolTermek(termek_id); 
   };
 
   return (
@@ -15,25 +15,24 @@ function Kosar() {
       <ul className="list-group">
         {kosar.length > 0 ? (
           kosar.map((termek) => (
-            <li className="row border p-2 align-items-center" key={termek.id}>
-                
+            <li className="row border p-2 align-items-center" key={termek.termek_id}>
               <div className="col-sm-3">
                 <img
-                  src={termek.image}
-                  alt={termek.title}
+                  src={termek.kep}
+                  alt={termek.cim}
                   className="img-fluid"
                 />
               </div>
               <div className="col-sm-5">
-                <span>{termek.title}</span>
+                <span>{termek.cim}</span>
               </div>
               <div className="col-sm-2">
-                <span>{termek.price} Ft</span>
+                <span>{termek.ar} Ft</span>
               </div>
               <div className="col-sm-2 text-end">
                 <button
                   className="btn btn-danger btn-sm"
-                  onClick={() => handleRemove(termek.id)}
+                  onClick={() => handleRemove(termek.termek_id)}
                 >
                   <FaTimes />
                 </button>

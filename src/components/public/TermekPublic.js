@@ -20,7 +20,7 @@ export function TermekPublic(props) {
         </div>
          <div className="card-footer">
           <button className="btn btn-primary card-link" onClick={()=>{kosarba(props.termek)}}>Kosárba</button>
-          <b className="card-link ">{props.termek.ar} €</b>
+          <b className="card-link ">{props.termek.ar} Ft</b>
         </div> 
       </div>
     </div>

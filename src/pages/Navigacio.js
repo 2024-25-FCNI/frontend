@@ -1,17 +1,26 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
-import { KosarContext } from "../contexts/KosarContext"; // KosarContext helyes importálása
-import Kosar from "../components/public/Kosar"; // Kosar helyes importálása
-import "../components/public/Kosar.css"; // Kosar.css helyes importálása
+import { KosarContext } from "../contexts/KosarContext";
+import Kosar from "../components/public/Kosar";
+import "../components/public/Kosar.css";
 
 export default function Navigacio() {
   const { user, logout } = useAuthContext();
   const { kosar } = useContext(KosarContext);
   const [isKosarOpen, setKosarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleKosar = () => {
     setKosarOpen(!isKosarOpen);
+  };
+
+  const handleFizetes = () => {
+    if (!user) {
+      navigate("/bejelentkezes"); // Ha nincs bejelentkezett felhasználó, irány a bejelentkezés
+    } else {
+      navigate("/fizetes"); // Ha van, irány a vásárlás oldal
+    }
   };
 
   return (
@@ -26,21 +35,17 @@ export default function Navigacio() {
             </li>
             {user ? (
               user.role === 0 ? (
-                <>
-                  <li className="navbar-item">
-                    <Link className="nav-link" to="/admin">
-                      Admin
-                    </Link>
-                  </li>
-                </>
+                <li className="navbar-item">
+                  <Link className="nav-link" to="/admin">
+                    Admin
+                  </Link>
+                </li>
               ) : (
-                <>
-                  <li className="navbar-item">
-                    <Link className="nav-link" to="/profil">
-                      Profil
-                    </Link>
-                  </li>
-                </>
+                <li className="navbar-item">
+                  <Link className="nav-link" to="/profil">
+                    Profil
+                  </Link>
+                </li>
               )
             ) : (
               <>
@@ -73,14 +78,13 @@ export default function Navigacio() {
       >
         <div className="kosar-content" onClick={(e) => e.stopPropagation()}>
           <h3>Kosár Tartalma</h3>
-          {/* Változtatás: Kosár komponens */}
           {kosar ? (
             <Kosar kosar={kosar} />
           ) : (
             <p className="text-muted">A kosár üres.</p>
           )}
-          <button onClick={toggleKosar} className="btn btn-primary mt-3">
-            Bezárás
+          <button onClick={handleFizetes} className="btn btn-primary mt-3">
+            Tovább a fizetéshez
           </button>
         </div>
       </div>

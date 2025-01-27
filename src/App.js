@@ -5,6 +5,7 @@ import Regisztracio from "./pages/Regisztracio";
 import VendegLayout from "./layouts/VendegLayout";
 import Admin from "./pages/Admin";
 import Profil from "./pages/Profil";
+import Fizetes from "./pages/Fizetes";
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                 <Route path="bejelentkezes" element={<Bejelentkezes />} />
                 <Route path="regisztracio" element={<Regisztracio />} />
                 <Route path="admin" element={<Admin />} />
+                <Route path="/fizetes" element={<Fizetes />} />
             </Route>
         </Routes>
       
