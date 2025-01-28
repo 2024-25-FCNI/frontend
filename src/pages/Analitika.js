@@ -3,18 +3,22 @@ import { AnalitikaContext } from "../contexts/AnalitikaContext";
 import UserAnalitika from "../components/admin/UserAnalitika";
 
 function Analitika() {
-  const { felhasznalok, loading, error, torolFelhasznalo } = useContext(AnalitikaContext);
+  const { felhasznalok, loading, error, torolFelhasznalo } =
+    useContext(AnalitikaContext);
 
   if (loading) {
-    return <div>Betöltés...</div>;
+    return <div className="text-center mt-5">Betöltés...</div>;
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <div className="text-danger text-center mt-5">{error}</div>;
   }
 
   return (
-    <UserAnalitika felhasznalok={felhasznalok} torolFelhasznalo={torolFelhasznalo} />
+    <UserAnalitika
+      felhasznalok={felhasznalok}
+      torolFelhasznalo={torolFelhasznalo}
+    />
   );
 }
 
