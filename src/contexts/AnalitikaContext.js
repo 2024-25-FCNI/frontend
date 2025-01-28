@@ -16,23 +16,47 @@ export const AnalitikaProvider = ({ children }) => {
   const fetchFelhasznalok = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("/api/felhasznalok");
+      console.log("Felhasználók lekérése...");
+      const response = await axios.get("http://localhost:8000/api/felhasznalok");
+      console.log("API válasz:", response.data);
       setFelhasznalok(response.data);
       setLoading(false);
     } catch (error) {
+      console.error("Nem sikerült betölteni a felhasználókat:", error);
       setError("Nem sikerült betölteni a felhasználókat.");
       setLoading(false);
     }
   };
+  
 
   // Felhasználó törlése
   const torolFelhasznalo = async (id) => {
+    if (!id) {
+      console.error("HIBA: A törlendő felhasználó ID-je undefined!");
+      return;
+    }
+  
     try {
-      await axios.delete(`/api/felhasznalok/${id}`);
-      // Frissítsük a felhasználók listáját a törlés után
-      setFelhasznalok(felhasznalok.filter((felhasznalo) => felhasznalo.id !== id));
+      console.log(`Felhasználó törlése: ${id}`);
+  
+      const response = await axios.delete(`http://localhost:8000/api/felhasznalok/${id}`, {
+        headers: {
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+      });
+  
+      if (response.status === 200) {
+        console.log("Felhasználó sikeresen törölve.");
+  
+        // Frissítjük az állapotot, hogy eltűnjön a táblázatból is
+        setFelhasznalok((prevFelhasznalok) =>
+          prevFelhasznalok.filter((felhasznalo) => felhasznalo.user_id !== id)
+        );
+      } else {
+        console.error("Nem sikerült törölni a felhasználót.");
+      }
     } catch (error) {
-      console.error("Nem sikerült törölni a felhasználót:", error);
+      console.error("Hiba történt a törlés során:", error);
     }
   };
 

@@ -4,24 +4,25 @@ import axios from "axios";
 import { KosarContext } from "../contexts/KosarContext";
 
 export default function Termek() {
-  const { termekId } = useParams(); // Az URL-ből kinyert termék ID
-  const [termek, setTermek] = useState(null); // Az aktuális termék adatai
-  const { kosarba } = useContext(KosarContext); // Kosárba helyezés függvény
+  const { termekId } = useParams(); // URL-ből kinyert ID
+  const [termek, setTermek] = useState(null);
+  const { kosarba } = useContext(KosarContext);
 
   useEffect(() => {
-    // API hívás a termék adatainak lekérdezéséhez
+    console.log("Lekérdezett termék ID:", termekId); // Debug log
     axios
-      .get(`/api/termekek/${termekId}`) // Az API végpont a termék adatokhoz
+      .get(`http://localhost:8000/api/termekek/${termekId}`) // Ellenőrizd az API URL-t
       .then((response) => {
-        setTermek(response.data); // A termék adatai mentése
+        console.log("Termék adatok:", response.data); // Debug log
+        setTermek(response.data);
       })
       .catch((error) => {
-        console.error("Hiba a termék adatainak lekérdezésekor:", error);
+        console.error("Hiba a termék lekérdezésekor:", error);
       });
   }, [termekId]);
 
   if (!termek) {
-    return <div>Betöltés...</div>; // Betöltési állapot
+    return <div>Betöltés...</div>;
   }
 
   return (
@@ -29,7 +30,6 @@ export default function Termek() {
       <h1>Termék részletek</h1>
       <div className="row">
         <div className="col-md-6">
-          {/* Termék kép */}
           <img
             src={termek.kep}
             alt={termek.cim}
@@ -38,7 +38,6 @@ export default function Termek() {
           />
         </div>
         <div className="col-md-6">
-          {/* Termék adatok */}
           <h2>{termek.cim}</h2>
           <p>{termek.leiras}</p>
           <p>
@@ -47,11 +46,7 @@ export default function Termek() {
           <p>
             <strong>Hozzáférési idő:</strong> {termek.hozzaferesi_ido} nap
           </p>
-          {/* Kosárba helyezés gomb */}
-          <button
-            className="btn btn-primary"
-            onClick={() => kosarba(termek)}
-          >
+          <button className="btn btn-primary" onClick={() => kosarba(termek)}>
             Kosárba
           </button>
         </div>

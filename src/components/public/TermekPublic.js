@@ -5,12 +5,19 @@ import { KosarContext } from "../../contexts/KosarContext";
 export function TermekPublic(props) {
   const { kosarba } = useContext(KosarContext);
 
+  // Ellenőrzés: Kiírjuk a termék ID-t a konzolba
+  console.log("Termék adatok a TermekPublic komponensben:", props.termek);
+  console.log("Navigációs útvonal:", `/termek/${props.termek.termek_id}`);
+
   return (
     <div className="col">
       <div className="card h-100">
         <Link
           to={`/termek/${props.termek.termek_id}`}
           style={{ textDecoration: "none", color: "inherit" }}
+          onClick={() =>
+            console.log("Navigálás a termékhez, ID:", props.termek.termek_id)
+          }
         >
           <div className="card-header bg-transparent border-success">
             <h5 className="card-title">{props.termek.cim}</h5>
