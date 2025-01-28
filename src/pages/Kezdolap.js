@@ -2,19 +2,21 @@ import { useContext, useEffect, useState } from "react";
 import useAuthContext from "../contexts/AuthContext";
 import { ApiContext } from "../contexts/ApiContext";
 import TermekekPublic from "../components/public/TermekekPublic";
+import Kereso from "../components/public/Kereso";
 
 export default function Kezdolap() {
   const { user } = useAuthContext();
-  const { getData } = useContext(ApiContext); 
-  const [termekek, setTermekek] = useState([]); 
+  const { getData } = useContext(ApiContext);
+  const [termekek, setTermekek] = useState([]); // Az összes termék
+  const [filteredTermekek, setFilteredTermekek] = useState([]); // Szűrt termékek
 
   useEffect(() => {
     getData("/api/termekek", (adatok) => {
-      setTermekek(adatok); 
+      setTermekek(adatok); // Az összes termék betöltése
+      setFilteredTermekek(adatok); // Kezdetben a szűrt termékek az összeset tartalmazzák
     });
   }, [getData]);
 
-
   return (
     <div>
       <h1>Kezdőlap</h1>
@@ -22,39 +24,8 @@ export default function Kezdolap() {
         Bejelentkezett felhasználó:{" "}
         {user == null ? "Nincs bejelentkezett felhasználó!" : user.name}
       </p>
-      <TermekekPublic termekek={termekek} />
+      <Kereso termekek={termekek} setFilteredTermekek={setFilteredTermekek} />
+      <TermekekPublic termekek={filteredTermekek} />
     </div>
   );
-
-  
 }
-
-
-
-
-
-/* import { useContext } from "react";
-import useAuthContext from "../contexts/AuthContext";
-import { ApiContext } from "../contexts/ApiContext";
-import TermekekPublic from "../components/public/TermekekPublic";
-
-export default function Kezdolap() {
-  const { user } = useAuthContext();
-  const { apiData } = useContext(ApiContext);
-
-  return (
-    <div>
-      <h1>Kezdőlap</h1>
-      <p>
-        Bejelentkezett felhasználó:{" "}
-        {user == null ? "Nincs bejelentkezett felhasználó!" : user.name}
-      </p>
-
-      <article>
-                {apiData ? <TermekekPublic termekek={apiData} /> : "Nincs adat"}
-      </article> 
-     
-    </div>
-  );
-} */
-
