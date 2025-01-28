@@ -21,8 +21,8 @@ function UserAnalitika({ felhasznalok, torolFelhasznalo }) {
           </thead>
           <tbody>
             {felhasznalok.map((felhasznalo) => (
-              <tr key={felhasznalo.user_id}>
-                <td>{felhasznalo.user_id}</td>
+              <tr key={felhasznalo.id}>
+                <td>{felhasznalo.id}</td>
                 <td>{felhasznalo.name}</td>
                 <td>{felhasznalo.email}</td>
                 <td>
@@ -35,20 +35,12 @@ function UserAnalitika({ felhasznalok, torolFelhasznalo }) {
                   <button
                     className="btn btn-danger btn-sm"
                     onClick={() => {
-                      console.log("Kiválasztott felhasználó:", felhasznalo); // Debug log
-                      console.log("Felhasználó törlési ID:", felhasznalo.user_id); // Ellenőrizd az ID-t
-
-                      if (!felhasznalo.user_id) {
-                        console.error("HIBA: Nincs user_id!");
-                        return;
-                      }
-
-                      const confirmed = window.confirm(
-                        `Biztosan törölni szeretnéd ${felhasznalo.name} felhasználót?`
-                      );
-
-                      if (confirmed) {
-                        torolFelhasznalo(felhasznalo.user_id);
+                      if (
+                        window.confirm(
+                          `Biztosan törölni szeretnéd ${felhasznalo.name} felhasználót?`
+                        )
+                      ) {
+                        torolFelhasznalo(felhasznalo.id);
                       }
                     }}
                   >
