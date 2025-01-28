@@ -31,27 +31,15 @@ export const AnalitikaProvider = ({ children }) => {
 
   // Felhasználó törlése
   const torolFelhasznalo = async (id) => {
-    if (!id) {
-      console.error("HIBA: A törlendő felhasználó ID-je undefined!");
-      return;
-    }
-  
     try {
       console.log(`Felhasználó törlése: ${id}`);
-  
-      const response = await axios.delete(`http://localhost:8000/api/felhasznalok/${id}`, {
-        headers: {
-          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        }
-      });
+      const response = await axios.delete(`http://localhost:8000/api/felhasznalok/${id}`);
   
       if (response.status === 200) {
-        console.log("Felhasználó sikeresen törölve.");
-  
-        // Frissítjük az állapotot, hogy eltűnjön a táblázatból is
         setFelhasznalok((prevFelhasznalok) =>
-          prevFelhasznalok.filter((felhasznalo) => felhasznalo.user_id !== id)
+          prevFelhasznalok.filter((felhasznalo) => felhasznalo.id !== id)
         );
+        console.log("Felhasználó sikeresen törölve.");
       } else {
         console.error("Nem sikerült törölni a felhasználót.");
       }
@@ -59,6 +47,8 @@ export const AnalitikaProvider = ({ children }) => {
       console.error("Hiba történt a törlés során:", error);
     }
   };
+  
+  
 
   // Vásárlások lekérése felhasználó szerint
   const fetchVasarlasok = async (id) => {
