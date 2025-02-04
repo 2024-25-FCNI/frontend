@@ -10,6 +10,7 @@ import Termek from "./pages/Termek";
 import Bemutatkozas from "./pages/Bemutatkozas";
 import Konyv from "./pages/Konyv";
 import Analitika from "./pages/Analitika";
+import ElfelejtettJelszo from "./pages/ElfelejtettJelszo";
 
 function App() {
     return (
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/bemutatkozas" element={<Bemutatkozas />} />
                 <Route path="/konyv" element={<Konyv />} />
                 <Route path="/analitika" element={<Analitika />} />
+                <Route path="/elfelejtett-jelszo" element={<ElfelejtettJelszo />} />
                 
             </Route>
         </Routes>

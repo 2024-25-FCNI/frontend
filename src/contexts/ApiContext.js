@@ -42,7 +42,7 @@ export const ApiProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getData("/termekek", setApiData); // Adatok automatikus lekérése
+    getData("/api/termekek", setApiData); // Adatok automatikus lekérése
   }, []);
 
 

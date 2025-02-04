@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { myAxios } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 
@@ -7,68 +7,73 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [errors, setErrors] = useState({
-    name: "",
-    email: "",
-    password: "",
-    password_confirmation: "",
-  });
-  const csrf = () => myAxios.get("/sanctum/csrf-cookie");
+  const [errors, setErrors] = useState({});
 
-  //bejelentkezett felhasználó adatainak lekérdezése
-  const getUser = async () => {
-    const { data } = await myAxios.get("/api/user");
-    console.log(data)
-    setUser(data);
+  // CSRF token beszerzése
+  const csrf = async () => {
+    try {
+      await myAxios.get("/sanctum/csrf-cookie");
+    } catch (error) {
+      console.error("CSRF token lekérése sikertelen:", error);
+    }
   };
-  /* const logout = async () => {
-    await csrf();
 
-    myAxios.post("/logout").then((resp) => {
+  // Bejelentkezett felhasználó adatainak lekérdezése
+  const getUser = async () => {
+    try {
+      const { data } = await myAxios.get("/api/user");
+      console.log("Bejelentkezett felhasználó:", data);
+      setUser(data);
+    } catch (error) {
+      console.error("Nem sikerült lekérdezni a felhasználót:", error);
       setUser(null);
-      console.log(resp);
-    });
-  }; */
+    }
+  };
 
+  // Kijelentkezés
   const logout = async () => {
     await csrf();
-  
+
     try {
       await myAxios.post("/logout");
       setUser(null);
-      navigate("/"); // Kijelentkezés után a bejelentkezési oldalra irányít
+      navigate("/"); // Kijelentkezés után átirányítás
     } catch (error) {
       console.error("Hiba történt a kijelentkezés során:", error);
-      if (error.response && error.response.status === 401) {
-        // Ha a szerver 401-es hibát ad vissza, töröljük a felhasználói állapotot
+      if (error.response?.status === 401) {
         setUser(null);
         navigate("/");
       }
     }
   };
 
-  const loginReg = async ({ ...adat }, vegpont) => {
-    //lekérjük a csrf tokent
+  // Bejelentkezés / Regisztráció
+  const loginReg = async (adat, vegpont) => {
     await csrf();
-    console.log(adat,vegpont);
+    setErrors({}); // Hibaüzenetek törlése az új próbálkozás előtt
 
     try {
-      await myAxios.post(vegpont, adat);
-      console.log("siker");
-      //sikeres bejelentkezés/regisztráció esetén
-      //Lekérdezzük a usert
-      //await getUser();
-      //elmegyünk  a kezdőlapra
-      getUser()
-      navigate("/");
-      
+      const response = await myAxios.post(vegpont, adat);
+      console.log("Sikeres művelet:", response.data);
+      await getUser(); // User adatainak frissítése
+      navigate("/"); // Sikeres bejelentkezés vagy regisztráció után átirányítás
     } catch (error) {
-      console.log(error);
-      if (error.response.status === 422) {
-        setErrors(error.response.data.errors);
+      console.error("Hiba történt:", error);
+
+      if (error.response?.status === 422) {
+        setErrors(error.response.data.errors || {});
+      } else {
+        setErrors({ general: "Ismeretlen hiba történt, próbáld újra." });
       }
     }
   };
+
+  // Bejelentkezett felhasználó lekérdezése, ha nincs beállítva
+  useEffect(() => {
+    if (!user) {
+      getUser();
+    }
+  }, [user]);
 
   return (
     <AuthContext.Provider value={{ logout, loginReg, errors, getUser, user }}>
@@ -76,6 +81,7 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
 export default function useAuthContext() {
   return useContext(AuthContext);
 }
