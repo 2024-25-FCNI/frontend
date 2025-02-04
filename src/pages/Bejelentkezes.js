@@ -75,9 +75,14 @@ export default function Bejelentkezes() {
             Login
           </button>
           <p>
-            Még nincs felhaszálóneve?
+            Még nincs felhasználóneve?{" "}
             <Link className="nav-link text-info" to="/regisztracio">
               Regisztráció
+            </Link>
+          </p>
+          <p>
+            <Link className="nav-link text-danger" to="/elfelejtett-jelszo">
+              Elfelejtettem a jelszavam
             </Link>
           </p>
         </div>

@@ -3,6 +3,7 @@ import TermekAdmin from "./TermekAdmin";
 import TablaFejlec from "./TablaFejlec";
 
 function TermekekAdmin(props) {
+  console.log(props)
   return (
     <table className="table table-stripped">
       <thead>
