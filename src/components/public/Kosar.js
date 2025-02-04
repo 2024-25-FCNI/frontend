@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { KosarContext } from "../../contexts/KosarContext";
+import { Link } from "react-router-dom";
 import "./Kosar.css";
 import { FaTimes } from "react-icons/fa";
 
@@ -25,10 +26,14 @@ function Kosar({ toggleKosar }) {
           kosar.map((termek) => (
             <li className="row border p-2 align-items-center kosar-item" key={termek.termek_id}>
               <div className="col-3">
-                <img src={termek.kep} alt={termek.cim} className="img-fluid rounded" />
+                <Link to={`/termek/${termek.termek_id}`} onClick={toggleKosar}>
+                  <img src={termek.kep} alt={termek.cim} className="img-fluid rounded" />
+                </Link>
               </div>
               <div className="col-5">
-                <span className="termek-cim">{termek.cim}</span>
+                <Link to={`/termek/${termek.termek_id}`} className="termek-link" onClick={toggleKosar}>
+                  <span className="termek-cim">{termek.cim}</span>
+                </Link>
               </div>
               <div className="col-2">
                 <span className="termek-ar">{termek.ar} Ft</span>
