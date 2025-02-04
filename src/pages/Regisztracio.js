@@ -1,24 +1,21 @@
-
 import React, { useState } from "react";
-
+import { Link, useNavigate } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
-
-import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Regisztracio() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password_confirmation, setPasswordConfirmation] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
 
   const navigate = useNavigate();
-
   const { loginReg, errors } = useAuthContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    //Összegyűjtjük egyetlen objektumban az űrlap adatokat
     const adat = {
       name: name,
       email: email,
@@ -30,105 +27,84 @@ export default function Regisztracio() {
   };
 
   return (
-    <div className=" m-auto" style={{ maxWidth: "400px" }}>
+    <div className="m-auto" style={{ maxWidth: "400px" }}>
       <h1 className="text-center">Regisztráció</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3 mt-3">
-          <label htmlFor="name" className="form-label">
-            Név:
-          </label>
+          <label htmlFor="name" className="form-label">Név:</label>
           <input
             type="text"
             value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
+            onChange={(e) => setName(e.target.value)}
             className="form-control"
             id="name"
             placeholder="Név"
             name="name"
           />
-          <div>
-            {errors.name && (
-              <span className="text-danger">{errors.name[0]}</span>
-            )}
-          </div>
+          <div>{errors.name && <span className="text-danger">{errors.name[0]}</span>}</div>
         </div>
         <div className="mb-3 mt-3">
-          <label htmlFor="email" className="form-label">
-            Email:
-          </label>
+          <label htmlFor="email" className="form-label">Email:</label>
           <input
             type="email"
             value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
+            onChange={(e) => setEmail(e.target.value)}
             className="form-control"
             id="email"
             placeholder="email"
             name="email"
           />
-          <div>
-            {errors.email && (
-              <span className="text-danger">{errors.email[0]}</span>
-            )}
-          </div>
+          <div>{errors.email && <span className="text-danger">{errors.email[0]}</span>}</div>
         </div>
-        <div className="mb-3">
-          <label htmlFor="pwd" className="form-label">
-            Jelszó:
-          </label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            className="form-control"
-            id="pwd"
-            placeholder="jelszó"
-            name="pwd"
-          />
-          <div>
-            {errors.password && (
-              <span className="text-danger">{errors.password[0]}</span>
-            )}
+        <div className="mb-3 position-relative">
+          <label htmlFor="pwd" className="form-label">Jelszó:</label>
+          <div className="input-group">
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="form-control"
+              id="pwd"
+              placeholder="jelszó"
+              name="pwd"
+            />
+            <button
+              type="button"
+              className="btn btn-outline-secondary"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
           </div>
+          <div>{errors.password && <span className="text-danger">{errors.password[0]}</span>}</div>
         </div>
-        <div className="mb-3">
-          <label htmlFor="pwd2" className="form-label">
-            Jelszó újra:
-          </label>
-          <input
-            type="password"
-            value={password_confirmation}
-            onChange={(e) => {
-              setPasswordConfirmation(e.target.value);
-            }}
-            className="form-control"
-            id="pwd2"
-            placeholder="jelszó újra"
-            name="pwd2"
-          />
-          <div>
-            {errors.password_confirmation && (
-              <span className="text-danger">
-                {errors.password_confirmation[0]}
-              </span>
-            )}
+        <div className="mb-3 position-relative">
+          <label htmlFor="pwd2" className="form-label">Jelszó újra:</label>
+          <div className="input-group">
+            <input
+              type={showPasswordConfirmation ? "text" : "password"}
+              value={password_confirmation}
+              onChange={(e) => setPasswordConfirmation(e.target.value)}
+              className="form-control"
+              id="pwd2"
+              placeholder="jelszó újra"
+              name="pwd2"
+            />
+            <button
+              type="button"
+              className="btn btn-outline-secondary"
+              onClick={() => setShowPasswordConfirmation(!showPasswordConfirmation)}
+            >
+              {showPasswordConfirmation ? <FaEyeSlash /> : <FaEye />}
+            </button>
           </div>
+          <div>{errors.password_confirmation && <span className="text-danger">{errors.password_confirmation[0]}</span>}</div>
         </div>
-
-        <button type="submit" className="btn btn-primary w-100">
-          Regisztrálok
-        </button>
-
-        
+        <button type="submit" className="btn btn-primary w-100">Regisztrálok</button>
+        <p className="text-center mt-3">
+          Már van profilja? <Link to="/bejelentkezes" className="text-info">Bejelentkezés</Link>
+        </p>
       </form>
-
-      
-
     </div>
   );
 }
