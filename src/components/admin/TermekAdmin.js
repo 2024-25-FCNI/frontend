@@ -11,11 +11,11 @@ export function TermekAdmin(props) {
     console.log("Módosítás ID:", id);
   }
 
-  // Dátum formázó függvény (csak YYYY-MM-DD HH:mm)
+  
   const formatDate = (dateString) => {
     if (!dateString) return "";
     const date = new Date(dateString);
-    return date.toISOString().slice(0, 16).replace("T", " "); // Formázás: YYYY-MM-DD HH:mm
+    return date.toISOString().slice(0, 16).replace("T", " "); 
   };
 
   return (
@@ -28,9 +28,9 @@ export function TermekAdmin(props) {
             </td>
           );
         } else if (kulcs === "price") {
-          return <td key={kulcs}>{value} Ft</td>; // Ft hozzáadása csak az árhoz
+          return <td key={kulcs}>{value} Ft</td>; 
         } else if (kulcs === "created_at" || kulcs === "updated_at") {
-          return <td key={kulcs}>{formatDate(value)}</td>; // Formázott dátum megjelenítése
+          return <td key={kulcs}>{formatDate(value)}</td>; 
         } else if (kulcs !== "rating") {
           return <td key={kulcs}>{value}</td>;
         } else {
