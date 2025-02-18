@@ -1,28 +1,37 @@
 import React, { useContext } from "react";
 import { KosarContext } from "../contexts/KosarContext";
-import axios from "axios";
+import { myAxios } from "../api/axios";
 import { FaTimes } from "react-icons/fa";
 
 export default function Fizetes() {
   const { kosar, total, torolTermek } = useContext(KosarContext);
 
-  const handleRemove = (termek_id) => {
-    torolTermek(termek_id);
-  };
-
-  const handlePayment = async (event) => {
-    event.preventDefault(); // Az alapértelmezett űrlap beküldést megakadályozza
-
+  const handlePayment = async () => {
     try {
-      const response = await axios.post("/api/send-payment-confirmation", {
+      await myAxios.get("/sanctum/csrf-cookie"); // Először kérjük a CSRF tokent
+
+      const response = await myAxios.post("/api/send-payment-confirmation", {
         kosar,
         total,
+      }, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("auth_token")}` // Ha van autentikáció
+        }
       });
 
-      alert(response.data.message); // Visszajelzés a felhasználónak
+      alert(response.data.message);  // Sikeres fizetés esetén visszajelzés
     } catch (error) {
       console.error("Hiba történt a fizetés során:", error);
       alert("Nem sikerült elküldeni a visszaigazoló e-mailt.");
+    }
+  };
+
+  // ÚJONNAN HOZZÁADOTT FUNKCIÓ: Termék törlése a kosárból
+  const handleRemove = (termek_id) => {
+    if (typeof torolTermek === "function") {
+      torolTermek(termek_id);
+    } else {
+      console.warn("A torolTermek függvény nincs definiálva a KosarContext-ben.");
     }
   };
 

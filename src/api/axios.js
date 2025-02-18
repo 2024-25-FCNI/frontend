@@ -6,6 +6,8 @@ export const  myAxios=axios.create({
 });
 
 
+
+
 myAxios.interceptors.request.use(
   (config) => {
     const token = document.cookie
@@ -22,3 +24,5 @@ myAxios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+
