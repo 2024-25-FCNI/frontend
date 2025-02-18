@@ -26,7 +26,7 @@ export default function Fizetes() {
     }
   };
 
-  // ÚJONNAN HOZZÁADOTT FUNKCIÓ: Termék törlése a kosárból
+ 
   const handleRemove = (termek_id) => {
     if (typeof torolTermek === "function") {
       torolTermek(termek_id);
@@ -39,7 +39,7 @@ export default function Fizetes() {
     <div className="container mt-5">
       <h1>Fizetés</h1>
 
-      {/* Kosár tartalom táblázat */}
+      
       <table className="table table-bordered mt-4">
         <thead>
           <tr>
