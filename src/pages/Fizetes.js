@@ -6,32 +6,40 @@ import { FaTimes } from "react-icons/fa";
 export default function Fizetes() {
   const { kosar, total, torolTermek } = useContext(KosarContext);
 
-  const handlePayment = async () => {
+  const handlePayment = async (event) => {
+    event.preventDefault();  // Ne töltse újra az oldalt!
+    console.log("handlePayment() meghívva!");  // Kellene látnod a konzolon!
+
     try {
       await myAxios.get("/sanctum/csrf-cookie"); // Először kérjük a CSRF tokent
 
-      const response = await myAxios.post("/api/send-payment-confirmation", {
-        kosar,
-        total,
-      }, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("auth_token")}` // Ha van autentikáció
+      const response = await myAxios.post(
+        "/api/send-payment-confirmation",
+        {
+          kosar,
+          total,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("auth_token")}`, // Ha van autentikáció
+          },
         }
-      });
+      );
 
-      alert(response.data.message);  // Sikeres fizetés esetén visszajelzés
+      alert(response.data.message); // Sikeres fizetés esetén visszajelzés
     } catch (error) {
       console.error("Hiba történt a fizetés során:", error);
       alert("Nem sikerült elküldeni a visszaigazoló e-mailt.");
     }
   };
 
- 
   const handleRemove = (termek_id) => {
     if (typeof torolTermek === "function") {
       torolTermek(termek_id);
     } else {
-      console.warn("A torolTermek függvény nincs definiálva a KosarContext-ben.");
+      console.warn(
+        "A torolTermek függvény nincs definiálva a KosarContext-ben."
+      );
     }
   };
 
@@ -39,7 +47,6 @@ export default function Fizetes() {
     <div className="container mt-5">
       <h1>Fizetés</h1>
 
-      
       <table className="table table-bordered mt-4">
         <thead>
           <tr>
@@ -57,7 +64,11 @@ export default function Fizetes() {
                   <img
                     src={termek.kep}
                     alt={termek.cim}
-                    style={{ width: "50px", height: "50px", objectFit: "cover" }}
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      objectFit: "cover",
+                    }}
                   />
                 </td>
                 <td>{termek.cim}</td>
@@ -139,7 +150,7 @@ export default function Fizetes() {
             required
           />
         </div>
-        <button type="submit" className="btn btn-success">
+        <button onClick={handlePayment} className="btn btn-success">
           Fizetés
         </button>
       </form>
