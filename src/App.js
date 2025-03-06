@@ -12,6 +12,7 @@ import Konyv from "./pages/Konyv";
 import Analitika from "./pages/Analitika";
 import ElfelejtettJelszo from "./pages/ElfelejtettJelszo";
 import Videok from "./pages/Videok";
+import UjJelszo from "./pages/UjJelszo";
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
         <Routes>
             <Route path="/" element={<VendegLayout />}>
                 {/* <Route index element={<Kezdolap />} /> */}
+                <Route path="/reset-password" element={<UjJelszo />} />        
                 <Route index element={<Kezdolap />} />
                 <Route path="/videok" element={<Videok />} />
                 <Route path="/profil" element={<Profil />} />
