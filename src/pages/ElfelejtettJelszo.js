@@ -1,16 +1,22 @@
 import React, { useState } from "react";
+import { myAxios } from "../api/axios"; // 🔥 Axios importálása az API híváshoz
 
 export default function ElfelejtettJelszo() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage("");
+    setError("");
 
-    // Itt küldhetsz egy API kérést a jelszó visszaállításához
-    console.log("Jelszó visszaállítás kérés elküldve:", email);
-
-    setMessage("Ha az e-mail cím szerepel a rendszerünkben, küldtünk egy visszaállítási linket.");
+    try {
+      const response = await myAxios.post("/api/forgot-password", { email });
+      setMessage(response.data.message);
+    } catch (err) {
+      setError("Hiba történt a jelszó visszaállításakor.");
+    }
   };
 
   return (
@@ -18,9 +24,7 @@ export default function ElfelejtettJelszo() {
       <h1 className="text-center">Elfelejtett jelszó</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email címed:
-          </label>
+          <label htmlFor="email" className="form-label">Email címed:</label>
           <input
             type="email"
             value={email}
@@ -29,6 +33,7 @@ export default function ElfelejtettJelszo() {
             id="email"
             placeholder="Add meg az e-mail címed"
             name="email"
+            required
           />
         </div>
         <div className="text-center">
@@ -38,6 +43,7 @@ export default function ElfelejtettJelszo() {
         </div>
       </form>
       {message && <p className="text-success text-center mt-3">{message}</p>}
+      {error && <p className="text-danger text-center mt-3">{error}</p>}
     </div>
   );
 }
