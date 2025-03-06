@@ -1,8 +1,16 @@
 import React from "react";
-import { useAdminContext } from "../../contexts/AdminContext"; // Importáljuk az admin kontextust
+import { useAdminContext } from "../../contexts/AdminContext";
 
-export function TermekAdmin({ termek }) { // ✅ props helyett közvetlenül destrukturáljuk a `termek`-et
-  const { torol, modosit } = useAdminContext(); // ✅ Helyes függvénynevek az AdminContextből
+export function TermekAdmin({ termek }) { 
+  const { torolVideo } = useAdminContext(); 
+  
+
+  // Törlés megerősítése és végrehajtása
+  const handleDelete = (id) => {
+    if (window.confirm("Biztosan törölni szeretnéd ezt a videót?")) {
+      torolVideo(id);
+    }
+  };
 
   // Dátum formázás
   const formatDate = (dateString) => {
@@ -31,16 +39,11 @@ export function TermekAdmin({ termek }) { // ✅ props helyett közvetlenül des
         }
       })}
       <td>
-        <button className="btn btn-outline-danger" onClick={() => torol(termek?.id)}>
-          ✘
-        </button>
-      </td>
-      <td>
         <button 
-          className="btn btn-outline-primary" 
-          onClick={() => modosit(termek.id, { name: "Új név", price: 9999 })}
+          className="btn btn-outline-danger" 
+          onClick={() => handleDelete(termek?.termek_id)}
         >
-          ✎
+          ✘
         </button>
       </td>
     </tr>

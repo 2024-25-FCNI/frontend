@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { myAxios } from "./MyAxios"; // Helyes import
+import { myAxios } from "./MyAxios"; 
 
 // Kontextus létrehozása
 const AdminContext = createContext();
@@ -8,6 +8,10 @@ const AdminContext = createContext();
 export function AdminProvider({ children }) {
   const [termekek, setTermekek] = useState([]);
 
+  // CSRF token biztosítása
+  const csrf = () => myAxios.get("/sanctum/csrf-cookie");
+  
+
   // Termékek betöltése az API-ból
   useEffect(() => {
     fetchTermekek();
@@ -15,51 +19,41 @@ export function AdminProvider({ children }) {
 
   const fetchTermekek = async () => {
     try {
-      const response = await myAxios.get("/termekek");
-      console.log("Backend válasz:", response.data);
+      console.log("Termékek lekérése...");
+      const response = await myAxios.get("/api/termekek"); // Ellenőrizd, hogy 'api/' kell-e
+      console.log("API válasz:", response.data);
       setTermekek(response.data);
     } catch (error) {
       console.error("Hiba a termékek betöltésekor:", error);
     }
   };
 
-  // **Termék törlése**
-  const torol = async (id) => {
-    if (!id) {
-      console.error("Nincs termék ID megadva!");
-      return;
-    }
-  
+  const torolVideo = async (id) => {
     try {
-      console.log("Törlés ID:", id);
-      await myAxios.delete(`/termekek/${id}`);
+      await myAxios.get("/sanctum/csrf-cookie"); // CSRF cookie frissítése
+      console.log(`Videó törlése: ${id}`);
   
-      // Frissítjük a termékek listáját úgy, hogy kiszűrjük a törölt elemet
-      setTermekek((prevTermekek) => prevTermekek.filter(termek => termek.id !== id));
-      
+      const response = await myAxios.delete(`/api/termekek/${id}`, {
+        withCredentials: true, // Ez biztosítja, hogy az autentikációs sütik átmenjenek
+      });
+  
+      if (response.status === 200) {
+        setTermekek((prevTermekek) =>
+          prevTermekek.filter((termek) => termek.termek_id !== id)
+        );
+        console.log("Videó sikeresen törölve.");
+      } else {
+        console.error("Nem sikerült törölni a videót.");
+      }
     } catch (error) {
       console.error("Hiba történt a törlés során:", error);
     }
   };
-
-  // **Termék módosítása**
-  const modosit = async (id, ujAdatok) => {
-    if (!id) {
-      console.error("Nincs termék ID megadva a módosításhoz!");
-      return;
-    }
-
-    try {
-      console.log("Módosítás ID:", id, "Új adatok:", ujAdatok);
-      await myAxios.put(`/termekek/${id}`, ujAdatok);
-      fetchTermekek(); // Frissítjük az adatokat módosítás után
-    } catch (error) {
-      console.error("Hiba történt a módosítás során:", error);
-    }
-  };
+  
+  
 
   return (
-    <AdminContext.Provider value={{ termekek, torol, modosit, fetchTermekek }}>
+    <AdminContext.Provider value={{ termekek, torolVideo, fetchTermekek }}>
       {children}
     </AdminContext.Provider>
   );
