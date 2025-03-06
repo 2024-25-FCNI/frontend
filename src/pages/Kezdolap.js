@@ -1,7 +1,7 @@
  import { useContext, useEffect, useState } from "react";
 import useAuthContext from "../contexts/AuthContext";
 import { ApiContext } from "../contexts/ApiContext";
-import TermekekPublic from "../components/public/TermekekPublic";
+import TermekekPublic from "../components/public/VideokPublic";
 import Kereso from "../components/public/Kereso";
 
 export default function Kezdolap() {

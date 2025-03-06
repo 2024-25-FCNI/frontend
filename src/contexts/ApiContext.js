@@ -7,7 +7,7 @@ export const ApiProvider = ({ children }) => {
   const [apiData, setApiData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  
   function getData(vegpont, fv) {
     setLoading(true);
     setError(null);
@@ -26,8 +26,7 @@ export const ApiProvider = ({ children }) => {
       });
   }
 
-  
-
+ 
   const postData = async (vegpont, data) => {
     setLoading(true);
     setError(null);
@@ -41,13 +40,29 @@ export const ApiProvider = ({ children }) => {
     }
   };
 
+
+  const sendEmail = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await myAxios.get("/send-mail");
+      console.log("Email sikeresen elküldve:", response.data);
+    } catch (error) {
+      console.error("Hiba az email küldése közben:", error);
+      setError("Hiba történt az email küldésekor.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
   useEffect(() => {
     getData("/api/termekek", setApiData); // Adatok automatikus lekérése
   }, []);
 
 
   return (
-    <ApiContext.Provider value={{ getData, apiData, postData, loading, error }}>
+    <ApiContext.Provider value={{ getData, apiData, sendEmail, postData, loading, error }}>
       {children}
     </ApiContext.Provider>
   );

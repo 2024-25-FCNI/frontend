@@ -1,5 +1,5 @@
 import React from 'react';
-import TermekPublic from './TermekPublic';
+import TermekPublic from './VideoPublic';
 
 function TermekekPublic(props) {
   return (
