@@ -32,8 +32,14 @@ export const KosarProvider = ({ children }) => {
     setTotal(szum);
   }
 
+  
+  function uritKosar() {
+    setKosar([]); // Kosár teljes kiürítése
+    setTotal(0);  // Teljes ár nullázása
+  }
+
   return (
-    <KosarContext.Provider value={{ kosarba, torolTermek, kosar, total }}>
+    <KosarContext.Provider value={{ kosarba, torolTermek, uritKosar, kosar, total }}>
       {children}
     </KosarContext.Provider>
   );

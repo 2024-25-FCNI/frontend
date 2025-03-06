@@ -1,54 +1,47 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { KosarContext } from "../contexts/KosarContext";
-import { ApiContext } from "../contexts/ApiContext";
 import { myAxios } from "../api/axios";
 import { FaTimes } from "react-icons/fa";
 
 export default function Fizetes() {
-  const { kosar, total, torolTermek } = useContext(KosarContext);
-  const { sendEmail } = useContext(ApiContext);
+  const { kosar, total, torolTermek, uritKosar } = useContext(KosarContext);
+  const [sikeresVasarlas, setSikeresVasarlas] = useState(false);
 
   const handlePayment = async (event) => {
-    event.preventDefault();  // Ne töltse újra az oldalt!
-    console.log("handlePayment() meghívva!");
+    event.preventDefault();
 
     try {
-      await myAxios.get("/sanctum/csrf-cookie"); // Először kérjük a CSRF tokent
+      await myAxios.get("/sanctum/csrf-cookie"); // CSRF token kérés
 
-      const response = await myAxios.post(
-        "/api/send-payment-confirmation",
-        {
-          kosar,
-          total,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
-          },
-        }
-      );
+      const response = await myAxios.post("/api/send-payment-confirmation", {
+        kosar,
+        total,
+      });
 
-      alert(response.data.message); // Sikeres fizetés esetén visszajelzés
+      console.log("Sikeres fizetés:", response.data.message); // 🔍 Debug log
 
-      // Email küldése a sikeres fizetés után
-      await sendEmail();
+      // 🔥 Kosár kiürítése és sikeres állapot beállítása
+      uritKosar();
+      setSikeresVasarlas(true);
     } catch (error) {
       console.error("Hiba történt a fizetés során:", error);
       alert("Nem sikerült elküldeni a visszaigazoló e-mailt.");
     }
   };
 
-  const handleRemove = (termek_id) => {
-    if (typeof torolTermek === "function") {
-      torolTermek(termek_id);
-    } else {
-      console.warn("A torolTermek függvény nincs definiálva a KosarContext-ben.");
-    }
-  };
+  // 🔥 Ha sikeres volt a vásárlás, akkor csak ezt jelenítsük meg
+  if (sikeresVasarlas) {
+    return (
+      <div className="container mt-5 text-center">
+        <h1 className="text-success">Sikeres vásárlás!</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="container mt-5">
       <h1>Fizetés</h1>
+
       <table className="table table-bordered mt-4">
         <thead>
           <tr>
@@ -66,7 +59,11 @@ export default function Fizetes() {
                   <img
                     src={termek.kep}
                     alt={termek.cim}
-                    style={{ width: "50px", height: "50px", objectFit: "cover" }}
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      objectFit: "cover",
+                    }}
                   />
                 </td>
                 <td>{termek.cim}</td>
@@ -74,7 +71,7 @@ export default function Fizetes() {
                 <td>
                   <button
                     className="btn btn-danger btn-sm"
-                    onClick={() => handleRemove(termek.termek_id)}
+                    onClick={() => torolTermek(termek.termek_id)}
                   >
                     <FaTimes />
                   </button>
@@ -83,32 +80,38 @@ export default function Fizetes() {
             ))
           ) : (
             <tr>
-              <td colSpan="4" className="text-center">A kosár üres.</td>
+              <td colSpan="4" className="text-center">
+                A kosár üres.
+              </td>
             </tr>
           )}
         </tbody>
       </table>
+
+      {/* Fizetendő végösszeg */}
       {total > 0 && (
         <div className="text-end mb-4">
           <h4>Fizetendő végösszeg: {total} Ft</h4>
         </div>
       )}
+
+      {/* Fizetési űrlap */}
       <form onSubmit={handlePayment}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">Teljes név</label>
-          <input type="text" className="form-control" id="name" placeholder="Adja meg a nevét" required />
+          <input type="text" className="form-control" id="name" required />
         </div>
         <div className="mb-3">
           <label htmlFor="cardNumber" className="form-label">Kártyaszám</label>
-          <input type="text" className="form-control" id="cardNumber" placeholder="Adja meg a kártyaszámot" required />
+          <input type="text" className="form-control" id="cardNumber" required />
         </div>
         <div className="mb-3">
           <label htmlFor="expirationDate" className="form-label">Lejárati dátum</label>
-          <input type="text" className="form-control" id="expirationDate" placeholder="MM/YY" required />
+          <input type="text" className="form-control" id="expirationDate" required />
         </div>
         <div className="mb-3">
           <label htmlFor="cvv" className="form-label">CVV</label>
-          <input type="text" className="form-control" id="cvv" placeholder="CVV kód" required />
+          <input type="text" className="form-control" id="cvv" required />
         </div>
         <button type="submit" className="btn btn-success">Fizetés</button>
       </form>
