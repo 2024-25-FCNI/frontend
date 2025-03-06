@@ -2,11 +2,13 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { KosarContext } from "../contexts/KosarContext";
+import useAuthContext from "../contexts/AuthContext";
 
 export default function Termek() {
   const { termekId } = useParams(); // URL-ből kinyert ID
   const [termek, setTermek] = useState(null);
   const { kosarba } = useContext(KosarContext);
+  const { user } = useAuthContext();
 
   useEffect(() => {
     console.log("Lekérdezett termék ID:", termekId); // Debug log
@@ -46,7 +48,8 @@ export default function Termek() {
           <p>
             <strong>Hozzáférési idő:</strong> {termek.hozzaferesi_ido} nap
           </p>
-          <button className="btn btn-primary" onClick={() => kosarba(termek)}>
+          <button 
+            className="btn btn-primary" onClick={() => kosarba(termek)} disabled={user && user.role === 0}>
             Kosárba
           </button>
         </div>

@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { KosarContext } from "../../contexts/KosarContext";
+import useAuthContext from "../../contexts/AuthContext";
 
 export function TermekPublic(props) {
   const { kosarba } = useContext(KosarContext);
+  const { user } = useAuthContext();
 
   // Ellenőrzés: Kiírjuk a termék ID-t a konzolba
   console.log("Termék adatok a TermekPublic komponensben:", props.termek);
@@ -32,10 +34,8 @@ export function TermekPublic(props) {
           </div>
         </Link>
         <div className="card-footer">
-          <button
-            className="btn btn-primary card-link"
-            onClick={() => kosarba(props.termek)}
-          >
+          <button 
+            className="btn btn-primary card-link" onClick={() => kosarba(props.termek)}disabled={user && user.role === 0}>
             Kosárba
           </button>
           <b className="card-link">{props.termek.ar} Ft</b>

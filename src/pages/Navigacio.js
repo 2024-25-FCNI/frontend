@@ -39,6 +39,11 @@ export default function Navigacio() {
                 Bemutatkozás
               </Link>
             </li>
+            <li className="navbar-item">
+              <Link className="nav-link" to="/videok">
+                Videók
+              </Link>
+            </li>           
             {user ? (
               user.role === 0 ? (
                 <>
@@ -67,11 +72,11 @@ export default function Navigacio() {
                     Bejelentkezés
                   </Link>
                 </li>
-                <li className="navbar-item">
+                {/* <li className="navbar-item">
                   <Link className="nav-link" to="/regisztracio">
                     Regisztráció
                   </Link>
-                </li>
+                </li> */}
               </>
             )}
 

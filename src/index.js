@@ -10,6 +10,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ApiProvider } from "./contexts/ApiContext";
 import { KosarProvider } from "./contexts/KosarContext";
 import { AnalitikaProvider } from "./contexts/AnalitikaContext";
+import { AdminProvider } from "./contexts/AdminContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -17,11 +18,13 @@ root.render(
     <BrowserRouter>
       <AuthProvider>
         <ApiProvider>
-          <AnalitikaProvider>
-            <KosarProvider>
-              <App />
-            </KosarProvider>
-          </AnalitikaProvider>
+          <AdminProvider>
+            <AnalitikaProvider>
+              <KosarProvider>
+                <App />
+              </KosarProvider>
+            </AnalitikaProvider>
+          </AdminProvider>
         </ApiProvider>
       </AuthProvider>
     </BrowserRouter>

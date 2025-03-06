@@ -11,6 +11,7 @@ import Bemutatkozas from "./pages/Bemutatkozas";
 import Konyv from "./pages/Konyv";
 import Analitika from "./pages/Analitika";
 import ElfelejtettJelszo from "./pages/ElfelejtettJelszo";
+import Videok from "./pages/Videok";
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/" element={<VendegLayout />}>
                 {/* <Route index element={<Kezdolap />} /> */}
                 <Route index element={<Kezdolap />} />
+                <Route path="/videok" element={<Videok />} />
                 <Route path="/profil" element={<Profil />} />
                 <Route path="bejelentkezes" element={<Bejelentkezes />} />
                 <Route path="regisztracio" element={<Regisztracio />} />
