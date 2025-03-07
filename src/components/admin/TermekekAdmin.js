@@ -2,17 +2,20 @@ import React from "react";
 import TermekAdmin from "./TermekAdmin";
 import TablaFejlec from "./TablaFejlec";
 
-function TermekekAdmin(props) {
-  console.log(props)
+function TermekekAdmin({ termekek }) {  // Destructuring props
+  if (!termekek || termekek.length === 0) {
+    return <p>Nincsenek termékek.</p>;
+  }
+
   return (
-    <table className="table table-stripped">
+    <table className="table table-striped">
       <thead>
-        <TablaFejlec termek={props.termekek[0]} />
+        <TablaFejlec key="tabla-fejlec" termek={termekek[0]} />
       </thead>
       <tbody>
-        {props.termekek.map((termek) => {
-          return <TermekAdmin termek={termek} key={termek.id} />;
-        })}
+        {termekek.map((termek) => (
+          <TermekAdmin key={termek.termek_id || termek.id} termek={termek} />
+        ))}
       </tbody>
     </table>
   );
