@@ -1,14 +1,20 @@
 import React, { useContext } from "react";
 import { KosarContext } from "../../contexts/KosarContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Kosar.css";
 import { FaTimes } from "react-icons/fa";
 
 function Kosar({ toggleKosar }) {
   const { total, kosar, torolTermek } = useContext(KosarContext);
+  const navigate = useNavigate();
 
   const handleRemove = (termek_id) => {
     torolTermek(termek_id);
+  };
+
+  const handleCheckout = () => {
+    toggleKosar(); // Bezárja a kosarat
+    navigate("/fizetes"); // Navigál a fizetés oldalra
   };
 
   return (
@@ -53,7 +59,14 @@ function Kosar({ toggleKosar }) {
         )}
       </ul>
 
-      {total > 0 && <p className="text-end mt-3 fizetendo">Fizetendő: {total} Ft</p>}
+      {total > 0 && (
+        <>
+          <p className="text-end mt-3 fizetendo">Fizetendő: {total} Ft</p>
+          <button className="btn btn-primary w-100 mt-2" onClick={handleCheckout}>
+            Tovább a fizetésre
+          </button>
+        </>
+      )}
     </div>
   );
 }

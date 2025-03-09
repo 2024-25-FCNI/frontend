@@ -1,26 +1,28 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { KosarContext } from "../contexts/KosarContext";
 import { myAxios } from "../api/axios";
 import { FaTimes } from "react-icons/fa";
+import { useNavigate } from "react-router-dom"; 
 
 export default function Fizetes() {
   const { kosar, total, torolTermek, uritKosar } = useContext(KosarContext);
   const [sikeresVasarlas, setSikeresVasarlas] = useState(false);
+  const navigate = useNavigate(); 
 
   const handlePayment = async (event) => {
     event.preventDefault();
 
     try {
-      await myAxios.get("/sanctum/csrf-cookie"); // CSRF token kérés
+      await myAxios.get("/sanctum/csrf-cookie"); 
 
       const response = await myAxios.post("/api/send-payment-confirmation", {
         kosar,
         total,
       });
 
-      console.log("Sikeres fizetés:", response.data.message); // 🔍 Debug log
+      console.log("Sikeres fizetés:", response.data.message); 
 
-      // 🔥 Kosár kiürítése és sikeres állapot beállítása
+      
       uritKosar();
       setSikeresVasarlas(true);
     } catch (error) {
@@ -29,11 +31,23 @@ export default function Fizetes() {
     }
   };
 
-  // 🔥 Ha sikeres volt a vásárlás, akkor csak ezt jelenítsük meg
+  
+  useEffect(() => {
+    if (sikeresVasarlas) {
+      const timer = setTimeout(() => {
+        navigate("/");
+      }, 2000); 
+
+      return () => clearTimeout(timer); 
+    }
+  }, [sikeresVasarlas, navigate]);
+
+ 
   if (sikeresVasarlas) {
     return (
       <div className="container mt-5 text-center">
         <h1 className="text-success">Sikeres vásárlás!</h1>
+        <p>Átirányítás a kezdőlapra...</p>
       </div>
     );
   }

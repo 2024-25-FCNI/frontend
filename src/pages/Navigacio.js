@@ -97,9 +97,9 @@ export default function Navigacio() {
             onClick={(e) => e.stopPropagation()} // Megakadályozza a bezárást ha a kosárra kattintanak
           >
             <Kosar toggleKosar={toggleKosar} />
-            <button onClick={handleFizetes} className="btn btn-primary mt-3">
+            {/* <button onClick={handleFizetes} className="btn btn-primary mt-3">
               Tovább a fizetéshez
-            </button>
+            </button> */}
           </div>
         </div>
       )}
