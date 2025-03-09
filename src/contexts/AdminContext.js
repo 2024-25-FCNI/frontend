@@ -30,11 +30,11 @@ export function AdminProvider({ children }) {
 
   const torolVideo = async (id) => {
     try {
-      await myAxios.get("/sanctum/csrf-cookie"); // CSRF cookie frissítése
+      await myAxios.get("/sanctum/csrf-cookie"); 
       console.log(`Videó törlése: ${id}`);
   
       const response = await myAxios.delete(`/api/termekek/${id}`, {
-        withCredentials: true, // Ez biztosítja, hogy az autentikációs sütik átmenjenek
+        withCredentials: true, 
       });
   
       if (response.status === 200) {
@@ -49,8 +49,6 @@ export function AdminProvider({ children }) {
       console.error("Hiba történt a törlés során:", error);
     }
   };
-  
-  
 
   return (
     <AdminContext.Provider value={{ termekek, torolVideo, fetchTermekek }}>
@@ -59,7 +57,6 @@ export function AdminProvider({ children }) {
   );
 }
 
-// Hook az egyszerűbb használathoz
 export function useAdminContext() {
   return useContext(AdminContext);
 }
