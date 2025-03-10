@@ -29,7 +29,7 @@ function UjTermek({ postData, existingVideos = [] }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    postData("/products", termek);
+    postData("/termekek", termek);
   }
 
   return (
