@@ -21,7 +21,7 @@ export default function Termek() {
         console.error("Hiba a termék lekérdezésekor:", error);
       });
 
-    if (user) {
+    if (user?.id) { 
       axios.get(`http://localhost:8000/api/ellenoriz-vasarlas/${termekId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
       })
@@ -32,21 +32,22 @@ export default function Termek() {
         console.error("Hiba a vásárlás ellenőrzésekor:", error);
       });
     }
-  }, [termekId, user]); // 🔹 Biztosítja, hogy ne legyen végtelen renderelés!
+  }, [termekId]); // 🔹 `user` eltávolítva, így nincs végtelen újrahívás
 
+  // 🔹 Ha az API még nem töltötte be az adatokat, jelenítsünk meg egy "Betöltés..." üzenetet
   if (!termek) {
     return <div>Betöltés...</div>;
   }
 
-  // 🔹 Kép URL átalakítása (Google Drive és relatív útvonal támogatás)
-  let imageUrl = termek.kep;
+  // 🔹 Ellenőrizzük, hogy a `termek.kep` létezik-e, mielőtt használjuk
+  let imageUrl = termek.kep || "/placeholder.jpg"; // Ha nincs kép, alapértelmezett kép beállítása
   if (imageUrl.includes("drive.google.com")) {
-    const driveFileId = imageUrl.match(/[-\w]{25,}/); // Google Drive fájlazonosító kivétele
+    const driveFileId = imageUrl.match(/[-\w]{25,}/);
     if (driveFileId) {
       imageUrl = `https://drive.google.com/uc?export=view&id=${driveFileId[0]}`;
     }
   } else if (!imageUrl.startsWith("http")) {
-    imageUrl = `http://localhost:8000${imageUrl}`; // Relatív URL-ek esetén
+    imageUrl = `http://localhost:8000${imageUrl}`;
   }
 
   return (
@@ -54,14 +55,13 @@ export default function Termek() {
       <h1>Termék részletek</h1>
       <div className="row">
         <div className="col-md-6">
-          {/* 🔹 Ha a user nem vásárolta meg, mutassuk a képet */}
           {!vasarolt && termek.kep && (
             <img
               src={imageUrl}
               alt={termek.cim}
               className="img-fluid"
               style={{ maxHeight: "400px", objectFit: "cover" }}
-              onError={(e) => e.target.src = "/placeholder.jpg"} // Ha nem található, helyettesítjük egy alapértelmezett képpel
+              onError={(e) => e.target.src = "/placeholder.jpg"}
             />
           )}
         </div>
@@ -81,9 +81,7 @@ export default function Termek() {
         </div>
       </div>
 
-      {/* 🔹 Videó csak akkor jelenjen meg, ha a felhasználó megvette */}
       <div className="mt-4">
-        <h3>Termék videó</h3>
         {vasarolt ? (
           <iframe
             src={termek.url}
