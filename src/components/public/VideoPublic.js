@@ -13,7 +13,7 @@ export function TermekPublic(props) {
 
   return (
     <div className="col">
-      <div className="card h-100">
+      <div className="card h-200">
         <Link
           to={`/termek/${props.termek.termek_id}`}
           style={{ textDecoration: "none", color: "inherit" }}
