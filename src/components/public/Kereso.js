@@ -18,7 +18,6 @@ export default function Kereso({ termekek, setFilteredTermekek }) {
     const value = e.target.value;
     setKereses(value);
 
-    // Ha a keresőmezőt törlik, az összes terméket visszaállítjuk
     if (value.trim() === "") {
       setFilteredTermekek(termekek);
     }
@@ -26,26 +25,22 @@ export default function Kereso({ termekek, setFilteredTermekek }) {
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault(); // Megakadályozza az űrlap elküldését
+      e.preventDefault();
       handleSearch();
     }
   };
 
   return (
-    <div className="input-group mb-3">
+    <div className="search-container">
       <input
         type="text"
-        className="form-control"
+        className="search-input"
         placeholder="Keresés termék cím, címke vagy leírás alapján..."
         value={kereses}
         onChange={handleInputChange}
-        onKeyDown={handleKeyPress} // Frissítve onKeyPress helyett
+        onKeyDown={handleKeyPress}
       />
-      <button
-        className="btn btn-primary"
-        type="button"
-        onClick={handleSearch}
-      >
+      <button className="search-button" type="button" onClick={handleSearch}>
         <FaSearch />
       </button>
     </div>
