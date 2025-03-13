@@ -1,49 +1,64 @@
-/* 🔹 NAVIGÁCIÓS MENÜ */
+/* 🔹 NAVIGÁCIÓS MENÜ ALAPSTÍLUSOK */
 .custom-navbar {
-  background-color: #ffffff;
-  padding: 0.6em 1.2em;
+  padding: 0.2em 1em;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.1);
+  background-color: transparent;
 }
 
 /* 🔹 LOGÓ MÉRETE */
 .logo-img {
-  width: 3.5em;
+  width: 2.5em;
   height: auto;
-  max-height: 3em;
   object-fit: contain;
+  margin: 0 1em;
 }
 
-/* 🔹 NAVIGÁCIÓS LINKEK ASZTALI NÉZETBEN */
-.nav-left,
-.nav-right {
+/* 🔹 ASZTALI NAVIGÁCIÓS LINKEK */
+.left-nav, .right-nav {
   display: flex;
   align-items: center;
-  gap: 2em; /* Egyenletes távolság */
 }
 
-.right-nav {
-  margin-left: auto; /* Jobbra igazítás */
+.left-nav .navbar-nav,
+.right-nav .navbar-nav {
+  display: flex;
+  flex-direction: row;
+  gap: 1.2em;
 }
 
-/* 🔹 NAVIGÁCIÓS ELEMEK */
 .nav-item {
-  margin: 0 0.5em;
+  margin: 0;
 }
 
 .nav-link {
   text-decoration: none;
   color: #333;
-  font-size: 1em;
+  font-size: 0.9em;
   font-weight: 500;
   transition: color 0.2s ease-in-out;
 }
 
 .nav-link:hover {
-  color: #f55;
+  color: rgb(158, 157, 157);
+}
+
+/* 🔹 KOSÁR GOMB */
+.kosar-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8em;
+  display: flex;
+  align-items: center;
+}
+
+.kosar-icon {
+  font-size: 1.2em;
+  margin-right: 0.3em;
 }
 
 /* 🔹 MOBIL NAVIGÁCIÓ */
@@ -53,9 +68,8 @@
 }
 
 /* 🔹 MOBILNÉZET STÍLUSOK */
-@media (max-width: 999px) {
-  .nav-left,
-  .nav-right {
+@media (max-width: 800px) {
+  .left-nav, .right-nav {
     display: none;
   }
 
@@ -67,7 +81,6 @@
     position: absolute;
     top: 4em;
     right: 1em;
-    background: white;
     padding: 1em;
     box-shadow: 0 0.2em 0.5em rgba(0, 0, 0, 0.1);
     border-radius: 0.5em;

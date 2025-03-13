@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
 import { KosarContext } from "../contexts/KosarContext";
 import Kosar from "../components/public/Kosar";
 import { FaShoppingBag, FaBars, FaTimes } from "react-icons/fa";
-import logo from "./wvlogo.png"; // 📌 Logó elérési útja
+import logo from "./wvlogo.png";
 import "../styles/Navigacio.css";
 
 export default function Navigacio() {
@@ -12,7 +12,6 @@ export default function Navigacio() {
   const { kosar } = useContext(KosarContext);
   const [isKosarOpen, setKosarOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const navigate = useNavigate();
 
   const toggleKosar = () => {
     setKosarOpen(!isKosarOpen);
@@ -27,7 +26,7 @@ export default function Navigacio() {
       <nav className="custom-navbar">
         <div className="container-fluid d-flex justify-content-between align-items-center">
           
-          {/* 🔹 Bal oldali tartalom: Logó és Bemutatkozás + Videók */}
+          {/* 🔹 Bal oldal: Logó + Menüelemek */}
           <div className="left-nav d-flex align-items-center">
             <Link to="/" className="navbar-brand">
               <img src={logo} alt="Weszky Dance" className="logo-img" />
@@ -46,7 +45,7 @@ export default function Navigacio() {
             </ul>
           </div>
 
-          {/* 🔹 Jobb oldali tartalom: Bejelentkezés és Kosár */}
+          {/* 🔹 Jobb oldal: Bejelentkezés + Kosár */}
           <div className="right-nav d-flex align-items-center">
             <ul className="navbar-nav nav-right">
               {user ? (
@@ -78,7 +77,7 @@ export default function Navigacio() {
                 </li>
               )}
 
-              {/* 🔹 Kosár ikon */}
+              {/* 🔹 Kosár ikon működő funkcióval */}
               <li className="nav-item">
                 <button className="nav-link kosar-btn" onClick={toggleKosar}>
                   <FaShoppingBag className="kosar-icon" /> ({kosar.length})
@@ -87,7 +86,7 @@ export default function Navigacio() {
             </ul>
           </div>
 
-          {/* 🔹 Mobil navigáció: Hamburger ikon + Kosár */}
+          {/* 🔹 Mobil navigáció: Hamburger + Kosár */}
           <div className="mobile-nav">
             <button className="hamburger-btn" onClick={toggleMenu}>
               {menuOpen ? <FaTimes /> : <FaBars />}
@@ -98,7 +97,7 @@ export default function Navigacio() {
           </div>
         </div>
 
-        {/* 🔹 Mobil navigáció lenyíló menüje */}
+        {/* 🔹 Lenyíló menü mobilon */}
         {menuOpen && (
           <div className="mobile-menu">
             <ul className="navbar-nav">
@@ -144,6 +143,15 @@ export default function Navigacio() {
           </div>
         )}
       </nav>
+      
+      {/* 🔹 Kosár működőképes megnyitása */}
+      {isKosarOpen && (
+        <div className="kosar-overlay" onClick={toggleKosar}>
+          <div className="kosar-panel open" onClick={(e) => e.stopPropagation()}>
+            <Kosar toggleKosar={toggleKosar} />
+          </div>
+        </div>
+      )}
     </>
   );
 }

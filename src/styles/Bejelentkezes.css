@@ -1,0 +1,117 @@
+/* 📌 Bejelentkezési oldal teljes háttér */
+.bejelentkezes-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: #ffffff;
+    font-family: "Poppins", sans-serif;
+}
+
+.title {
+    font-size: 2em;
+    font-weight: bold;
+    color: #3a2a28;
+    margin-bottom: 1em;
+}
+
+.login-box {
+    background: #fcede8;
+    padding: 2em;
+    border-radius: 3em;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+
+.input-group label {
+    font-weight: 500;
+    margin-bottom: 0.3em;
+    color: #3a2a28;
+}
+
+.input-field {
+    padding: 0.8em;
+    border: none;
+    border-radius: 1.3em;
+    font-size: 1em;
+    width: 100%;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.input-field:focus {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.password-container {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 1.3em;
+    overflow: hidden;
+}
+
+.password-container .input-field {
+    flex-grow: 1;
+    border: none;
+}
+
+.toggle-password {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0 1em;
+    font-size: 1.2em;
+    color: #3a2a28;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+}
+
+.login-button {
+    background: #e49788;
+    color: white;
+    border: none;
+    padding: 0.8em 1.5em;
+    border-radius: 20px;
+    font-size: 1em;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.3s ease-in-out;
+}
+
+.login-button:hover {
+    background: #c76c6c;
+}
+
+.extra-links {
+    text-align: center;
+    margin-top: 1em;
+}
+
+.extra-links p {
+    font-size: 0.9em;
+}
+
+.register-link,
+.forgot-password {
+    color: #3a2a28;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.register-link:hover,
+.forgot-password:hover {
+    text-decoration: underline;
+}

@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import "../styles/Bejelentkezes.css"; // 📌 Új CSS fájl a formázásokhoz
 
 export default function Bejelentkezes() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const navigate = useNavigate();
   const { loginReg, errors } = useAuthContext();
 
   const handleSubmit = async (e) => {
@@ -18,75 +18,63 @@ export default function Bejelentkezes() {
       email: email,
       password: password,
     };
-    console.log(adat);
 
     loginReg(adat, "/login");
   };
 
   return (
-    <div className="m-auto" style={{ maxWidth: "400px" }}>
-      <h1 className="text-center">Bejelentkezés</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3 mt-3">
-          <label htmlFor="email" className="form-label">
-            Email:
-          </label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="form-control"
-            id="email"
-            placeholder="email"
-            name="email"
-          />
-        </div>
-        <div>
-          {errors.email && <span className="text-danger">{errors.email[0]}</span>}
-        </div>
-        <div className="mb-3 position-relative">
-          <label htmlFor="pwd" className="form-label">
-            Jelszó:
-          </label>
+    <div className="bejelentkezes-container">
+      <div className="login-box">
+      <h1 className="title text-center">Bejelentkezés</h1>
+
+        <form onSubmit={handleSubmit}>
           <div className="input-group">
+            <label htmlFor="email">Email</label>
             <input
-              type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="form-control"
-              id="pwd"
-              placeholder="jelszó"
-              name="pwd"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="input-field"
+              id="email"
+              placeholder=""
+              name="email"
             />
-            <button
-              type="button"
-              className="btn btn-outline-secondary"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </button>
           </div>
-          <div>
-            {errors.password && <span className="text-danger">{errors.password[0]}</span>}
+          {errors.email && <span className="error-text">{errors.email[0]}</span>}
+
+          <div className="input-group">
+            <label htmlFor="pwd">Jelszó</label>
+            <div className="password-container">
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="input-field"
+                id="pwd"
+                placeholder=""
+                name="pwd"
+              />
+              <button
+                type="button"
+                className="toggle-password"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
           </div>
-        </div>
-        <div className="text-center">
-          <button type="submit" className="btn btn-primary w-100">
-            Login
-          </button>
-          <p>
-            Még nincs felhasználóneve?{" "}
-            <Link className="nav-link text-info" to="/regisztracio">
-              Regisztráció
-            </Link>
-          </p>
-          <p>
-            <Link className="nav-link text-danger" to="/elfelejtett-jelszo">
-              Elfelejtettem a jelszavam
-            </Link>
-          </p>
-        </div>
-      </form>
+          {errors.password && <span className="error-text">{errors.password[0]}</span>}
+
+          <div className="button-container">
+            <button type="submit" className="login-button">Bejelentkezés</button>
+          </div>
+
+          <div className="extra-links">
+            <p>Még nincs fiókja? <Link to="/regisztracio" className="register-link">Regisztráció</Link></p>
+            <p><Link to="/elfelejtett-jelszo" className="forgot-password">Elfelejtettem a jelszavam</Link></p>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

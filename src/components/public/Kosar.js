@@ -13,45 +13,32 @@ function Kosar({ toggleKosar }) {
   };
 
   const handleCheckout = () => {
-    toggleKosar(); // Bezárja a kosarat
-    navigate("/fizetes"); // Navigál a fizetés oldalra
+    toggleKosar();
+    navigate("/fizetes");
   };
 
   return (
-    <div className="kosar-container">
-      {/* X ikon a bezáráshoz */}
+    <div className="kosar-container open">
       <button className="close-btn" onClick={toggleKosar}>
         <FaTimes />
       </button>
 
-      {/* Kosár címsor */}
       <h3 className="kosar-title">Kosár</h3>
 
-      <ul className="list-group kosar-list">
+      <ul className="kosar-list">
         {kosar.length > 0 ? (
           kosar.map((termek) => (
-            <li className="row border p-2 align-items-center kosar-item" key={termek.termek_id}>
-              <div className="col-3">
-                <Link to={`/termek/${termek.termek_id}`} onClick={toggleKosar}>
-                  <img src={termek.kep} alt={termek.cim} className="img-fluid rounded" />
-                </Link>
+            <li className="kosar-item" key={termek.termek_id}>
+              <div className="kosar-img-container">
+                <img src={termek.kep} alt={termek.cim} className="kosar-img" />
               </div>
-              <div className="col-5">
-                <Link to={`/termek/${termek.termek_id}`} className="termek-link" onClick={toggleKosar}>
-                  <span className="termek-cim">{termek.cim}</span>
-                </Link>
-              </div>
-              <div className="col-2">
+              <div className="kosar-info">
+                <span className="termek-cim">{termek.cim}</span>
                 <span className="termek-ar">{termek.ar} Ft</span>
               </div>
-              <div className="col-2 text-end">
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleRemove(termek.termek_id)}
-                >
-                  <FaTimes />
-                </button>
-              </div>
+              <button className="remove-btn" onClick={() => handleRemove(termek.termek_id)}>
+                <FaTimes />
+              </button>
             </li>
           ))
         ) : (
@@ -61,8 +48,8 @@ function Kosar({ toggleKosar }) {
 
       {total > 0 && (
         <>
-          <p className="text-end mt-3 fizetendo">Fizetendő: {total} Ft</p>
-          <button className="btn btn-primary w-100 mt-2" onClick={handleCheckout}>
+          <p className="fizetendo">Fizetendő: <span>{total} Ft</span></p>
+          <button className="checkout-btn" onClick={handleCheckout}>
             Tovább a fizetésre
           </button>
         </>

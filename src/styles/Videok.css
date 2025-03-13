@@ -4,15 +4,18 @@
   border-radius: 0 15px 15px 15px;
 }
 
+/* 📌 Keresőmező */
 .search-container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
-  max-width: 30em; /* ✅ Arányos méret asztali nézetben */
+  max-width: 30em;
   background-color: white;
   border-radius: 2em;
-  margin: auto; /* 📌 Középre igazítás */
+  margin: auto;
   
+  position: relative; /* 🔹 FONTOS: Az ikon pozícióját ehhez igazítjuk */
 }
 
 .search-input {
@@ -20,23 +23,24 @@
   border: none;
   outline: none;
   font-size: 1em;
-  padding: 0.3em;
+  padding: 0.5em;
   border-radius: 2em;
   background: transparent;
 }
 
-.search-input:focus {
-  border: none;
-  outline: none;
-  box-shadow: none;
-}
 
 .search-button {
   background: none;
   border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 0.3em;
-  margin: auto;
+  position: absolute;
+  right: 0.8em; /* 🔹 Nem csúszik ki */
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 /* 🔹 Kereső ikon */
@@ -51,16 +55,24 @@
   color: #f7a69b;
 }
 
-/* 📌 Reszponzivitás: Mobil nézetben a kereső szélesebb lesz */
-@media (max-width: 37.5em) {
+@media (max-width: 600px) {
   .search-container {
-    max-width: 80%;
-/*     padding: 0.4em 1em;
- */  
-    margin: auto;
+    width: 100%;
+    max-width: none;
+    margin: 0 auto;
+    padding: 0.4em 0.8em; 
+  }
+  .search-button {
+    padding: 0.4em;
+    right: 0.6em; 
+  }
+
+  .search-button svg {
+    font-size: 1.1em; 
+  }
 }
 
-}
+
 
 .videok-card {
   padding: 1.5em;
@@ -102,7 +114,7 @@
 
 @media (max-width: 1200px) {
   .col-lg-4 {
-    width: 33.3333%;
+    width: 33.3333%; 
   } 
 }
 
