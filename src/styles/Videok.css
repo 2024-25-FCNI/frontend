@@ -1,0 +1,124 @@
+/* 📌 Alap háttér és formázás */
+.custom-wrapper {
+  background-color: #fcede8;
+  border-radius: 0 15px 15px 15px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 30em; /* ✅ Arányos méret asztali nézetben */
+  background-color: white;
+  border-radius: 2em;
+  margin: auto; /* 📌 Középre igazítás */
+  
+}
+
+.search-input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  padding: 0.3em;
+  border-radius: 2em;
+  background: transparent;
+}
+
+.search-input:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.search-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.3em;
+  margin: auto;
+}
+
+/* 🔹 Kereső ikon */
+.search-button svg {
+  color: black;
+  font-size: 1.2em;
+  transition: color 0.2s ease-in-out;
+}
+
+/* 🔹 Hover állapot */
+.search-button:hover svg {
+  color: #f7a69b;
+}
+
+/* 📌 Reszponzivitás: Mobil nézetben a kereső szélesebb lesz */
+@media (max-width: 37.5em) {
+  .search-container {
+    max-width: 80%;
+/*     padding: 0.4em 1em;
+ */  
+    margin: auto;
+}
+
+}
+
+.videok-card {
+  padding: 1.5em;
+  background-color: #f7a69b;
+  border-radius: 1em;
+  min-height: 18em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.videok-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5em;
+}
+
+/* .videok-card .card-body {
+  flex-grow: 1; 
+} */
+
+.cart-button {
+  width: 2em;
+  height: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.cart-icon {
+  font-size: 1.4em; 
+  color: #333;
+  transition: color 0.2s ease-in-out;
+}
+
+
+@media (max-width: 1200px) {
+  .col-lg-4 {
+    width: 33.3333%;
+  } 
+}
+
+@media (max-width: 999px) {
+  .col-md-6 {
+    width: 50%;
+  } 
+}
+
+@media (max-width: 600px) {
+  .col-12 {
+    width: 100%;
+  } 
+  .search-container {
+    width: 100%; 
+    max-width: none;
+    margin: 0 auto;
+  }
+}

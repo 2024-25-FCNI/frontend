@@ -133,9 +133,7 @@ function UjTermek({ existingVideos = [] }) {
       </div>
  
       <div className="mb-3">
-        <label htmlFor="useExistingVideos" className="form-label">
-          Csak meglévő videó használata
-        </label>
+        <label htmlFor="useExistingVideos" className="form-label">Csak meglévő videó használata</label>
         <input
           type="checkbox"
           id="useExistingVideos"
