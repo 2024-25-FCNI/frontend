@@ -104,7 +104,6 @@
     padding: 4em 2em;
     text-align: center;
     scroll-snap-align: start; 
-    max-height: fit-content;
 }
 
 .products-section h2 {
