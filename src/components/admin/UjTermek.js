@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { myAxios } from "../../contexts/MyAxios"; // ✅ Axios konfiguráció importálása
 
-
 function UjTermek({ existingVideos = [] }) {
   const [termek, setTermek] = useState({
     title: "",

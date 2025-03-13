@@ -1,8 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import { myAxios } from "./MyAxios";
-
+ 
 export const ApiContext = createContext("");
-
+ 
 export const ApiProvider = ({ children }) => {
   const [apiData, setApiData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -26,7 +26,6 @@ export const ApiProvider = ({ children }) => {
         setLoading(false);
       });
   }
-
   const postData = async (vegpont, data) => {
     setLoading(true);
     setError(null);
@@ -60,17 +59,18 @@ export const ApiProvider = ({ children }) => {
       setLoading(false);
     }
   };
-
-
+ 
+ 
   useEffect(() => {
     getData("/api/termekek", setApiData); // Adatok automatikus lekérése
   }, []);
-
-
+ 
+ 
   return (
     <ApiContext.Provider value={{ getData, apiData, sendEmail, postData, loading, error }}>
       {children}
     </ApiContext.Provider>
   );
-  
+ 
 };
+ 

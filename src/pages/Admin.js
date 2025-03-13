@@ -1,14 +1,13 @@
 import { useContext } from "react";
 import { ApiContext } from "../contexts/ApiContext";
 import useAuthContext from "../contexts/AuthContext";
-
+ 
 import TermekekAdmin from "../components/admin/TermekekAdmin";
 import UjTermek from "../components/admin/UjTermek";
-
+ 
 function Admin() {
   const { apiData, fetchData } = useContext(ApiContext); // Ha szükséges frissítés
   const { logout } = useAuthContext();
-
   // ✅ `postData` függvény fájlfeltöltéssel
   const postData = async (url, data, isFormData = false) => {
     try {
@@ -39,7 +38,7 @@ function Admin() {
       console.error("❌ Kijelentkezési hiba:", error);
     }
   };
-
+ 
   return (
     <main className="row g-5" style={{ margin: "20px" }}>
       <section style={{ marginBottom: "20px" }}>
