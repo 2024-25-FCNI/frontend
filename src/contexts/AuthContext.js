@@ -1,23 +1,24 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { myAxios } from "../api/axios";
 import { useNavigate } from "react-router-dom";
-
+ 
 const AuthContext = createContext();
-
+ 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState({});
-
+ 
   // CSRF token beszerzése
   const csrf = async () => {
     try {
-      await myAxios.get("/sanctum/csrf-cookie");
+      await myAxios.get("/sanctum/csrf-cookie", { withCredentials: true });
     } catch (error) {
       console.error("CSRF token lekérése sikertelen:", error);
     }
-  };
-
+};
+ 
+ 
   // Bejelentkezett felhasználó adatainak lekérdezése
   const getUser = async () => {
     try {
@@ -29,11 +30,11 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
     }
   };
-
+ 
   // Kijelentkezés
   const logout = async () => {
     await csrf();
-
+ 
     try {
       await myAxios.post("/logout");
       setUser(null);
@@ -46,20 +47,20 @@ export const AuthProvider = ({ children }) => {
       }
     }
   };
-
+ 
   // Bejelentkezés / Regisztráció
   const loginReg = async (adat, vegpont) => {
     await csrf();
     setErrors({}); // Hibaüzenetek törlése az új próbálkozás előtt
-
+ 
     try {
-      const response = await myAxios.post(vegpont, adat);
+      const response = await myAxios.post(vegpont, adat, { withCredentials: true });
       console.log("Sikeres művelet:", response.data);
       await getUser(); // User adatainak frissítése
       navigate("/"); // Sikeres bejelentkezés vagy regisztráció után átirányítás
     } catch (error) {
       console.error("Hiba történt:", error);
-
+ 
       if (error.response?.status === 422) {
         setErrors(error.response.data.errors || {});
       } else {
@@ -67,21 +68,22 @@ export const AuthProvider = ({ children }) => {
       }
     }
   };
-
+ 
   // Bejelentkezett felhasználó lekérdezése, ha nincs beállítva
   useEffect(() => {
     if (!user) {
       getUser();
     }
   }, [user]);
-
+ 
   return (
     <AuthContext.Provider value={{ logout, loginReg, errors, getUser, user }}>
       {children}
     </AuthContext.Provider>
   );
 };
-
+ 
 export default function useAuthContext() {
   return useContext(AuthContext);
 }
+ 

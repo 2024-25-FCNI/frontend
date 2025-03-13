@@ -1,69 +1,94 @@
 import React, { useState } from "react";
-
-function UjTermek({ postData, existingVideos = [] }) {
+import { useAdminContext } from "../../contexts/AdminContext";
+ 
+ 
+function UjTermek({ existingVideos = [] }) {
+  const { postData } = useAdminContext();
+ 
   const [termek, setTermek] = useState({
-    title: "",
-    price: 10,
-    description: "",
-    accessTime: 30,
-    image: null,
-    video: null,
+    cim: "",
+    ar: 10,
+    leiras: "",
+    hozzaferesi_ido: 30,
+    kep: "",
+    url: "",
   });
-
+ 
   const [useExistingVideos, setUseExistingVideos] = useState(false);
-
+ 
   function handleChange(event) {
     const { id, value, type, files } = event.target;
-    setTermek((prevTermek) => ({
-      ...prevTermek,
-      [id]: type === "file" ? files[0] : value,
-    }));
-  }
 
+    setTermek((prevTermek) => ({
+        ...prevTermek,
+        [id]: id === "kep" ? files[0] : value, // 🔹 Fájlként tároljuk
+    }));
+}
+
+ 
   function handleCheckboxChange(event) {
     setUseExistingVideos(event.target.checked);
     if (event.target.checked) {
-      setTermek((prevTermek) => ({ ...prevTermek, video: null }));
+      setTermek((prevTermek) => ({ ...prevTermek, url: null }));
     }
   }
-
+ 
   function handleSubmit(event) {
     event.preventDefault();
-    postData("/products", termek);
-  }
 
+    const formData = new FormData(); // 🔹 FormData létrehozása
+    formData.append("cim", termek.cim);
+    formData.append("leiras", termek.leiras);
+    formData.append("url", termek.url);
+    formData.append("hozzaferesi_ido", termek.hozzaferesi_ido);
+    formData.append("ar", termek.ar);
+    formData.append("jelzes", termek.jelzes);
+    
+    if (termek.kep) {
+        formData.append("kep", termek.kep); // 🔹 Fájl csatolása
+    }
+
+    if (postData) {
+        postData("/api/termekek", formData);
+    } else {
+        console.error("postData nem elérhető az AdminContextből!");
+    }
+}
+
+ 
+ 
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-3">
-        <label htmlFor="title" className="form-label">
+        <label htmlFor="cim" className="form-label">
           Cím
         </label>
         <input
           type="text"
           className="form-control"
-          id="title"
+          id="cim"
           required
           placeholder="Termék címe"
-          value={termek.title}
+          value={termek.cim}
           onChange={handleChange}
         />
       </div>
-
+ 
       <div className="mb-3">
-        <label htmlFor="description" className="form-label">
+        <label htmlFor="leiras" className="form-label">
           Leírás
         </label>
         <textarea
           className="form-control"
-          id="description"
+          id="leiras"
           rows="3"
-          value={termek.description}
+          value={termek.leiras}
           onChange={handleChange}
         ></textarea>
       </div>
-
+ 
       <div className="mb-3">
-        <label htmlFor="price" className="form-label">
+        <label htmlFor="ar" className="form-label">
           Ár
         </label>
         <input
@@ -71,15 +96,15 @@ function UjTermek({ postData, existingVideos = [] }) {
           min="10"
           max="100000"
           className="form-control"
-          id="price"
+          id="ar"
           required
-          value={termek.price}
+          value={termek.ar}
           onChange={handleChange}
         />
       </div>
-
+ 
       <div className="mb-3">
-        <label htmlFor="accessTime" className="form-label">
+        <label htmlFor="hozzaferesi_ido" className="form-label">
           Hozzáférési idő (napban)
         </label>
         <input
@@ -87,26 +112,26 @@ function UjTermek({ postData, existingVideos = [] }) {
           min="1"
           max="365"
           className="form-control"
-          id="accessTime"
+          id="hozzaferesi_ido"
           required
-          value={termek.accessTime}
+          value={termek.hozzaferesi_ido}
           onChange={handleChange}
         />
       </div>
-
+ 
       <div className="mb-3">
-        <label htmlFor="image" className="form-label">
+        <label htmlFor="kep" className="form-label">
           Kép feltöltése
         </label>
         <input
           type="file"
-          accept="image/*"
+          accept="kep/*"
           className="form-control"
-          id="image"
+          id="kep"
           onChange={handleChange}
         />
       </div>
-
+ 
       <div className="mb-3">
         <label htmlFor="useExistingVideos" className="form-label">
           Csak meglévő videó használata
@@ -118,48 +143,50 @@ function UjTermek({ postData, existingVideos = [] }) {
           onChange={handleCheckboxChange}
         />
       </div>
-
+ 
       {!useExistingVideos && (
         <div className="mb-3">
-          <label htmlFor="video" className="form-label">
+          <label htmlFor="url" className="form-label">
             Videó feltöltése
           </label>
           <input
-            type="file"
-            accept="video/*"
+            type="text"
             className="form-control"
-            id="video"
+            id="url"
+            placeholder="Videó linkje"
+            value={termek.url}
             onChange={handleChange}
           />
         </div>
       )}
-
+ 
       {useExistingVideos && (
         <div className="mb-3">
-          <label htmlFor="video" className="form-label">
+          <label htmlFor="url" className="form-label">
             Válassz meglévő videót
           </label>
           <select
             className="form-select"
-            id="video"
-            value={termek.video || ""}
+            id="url"
+            value={termek.url || ""}
             onChange={handleChange}
           >
             <option value="">Válassz egy videót</option>
-            {existingVideos.map((video, index) => (
-              <option key={index} value={video}>
-                {video}
+            {existingVideos.map((url, index) => (
+              <option key={index} value={url}>
+                {url}
               </option>
             ))}
           </select>
         </div>
       )}
-
+ 
       <button type="submit" className="btn btn-primary">
         Feltölt
       </button>
     </form>
   );
 }
-
+ 
 export default UjTermek;
+ 
