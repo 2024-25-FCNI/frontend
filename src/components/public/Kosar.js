@@ -3,29 +3,39 @@ import { KosarContext } from "../../contexts/KosarContext";
 import { Link, useNavigate } from "react-router-dom";
 import "./Kosar.css";
 import { FaTimes } from "react-icons/fa";
-
+import useAuthContext from "../../contexts/AuthContext";
+ 
+ 
 function Kosar({ toggleKosar }) {
   const { total, kosar, torolTermek } = useContext(KosarContext);
   const navigate = useNavigate();
-
+  const { user } = useAuthContext();
+ 
+ 
   const handleRemove = (termek_id) => {
     torolTermek(termek_id);
   };
-
+ 
   const handleCheckout = () => {
-    toggleKosar();
-    navigate("/fizetes");
+    toggleKosar(); // Bezárja a kosarat
+    if (user) {
+      navigate("/fizetes"); // Ha van bejelentkezett user, a fizetés oldalra megy
+    } else {
+      navigate("/bejelentkezes"); // Ha nincs, a bejelentkezés oldalra megy
+    }
   };
-
+ 
+ 
   return (
     <div className="kosar-container open">
       <button className="close-btn" onClick={toggleKosar}>
         <FaTimes />
       </button>
-
+ 
+      {/* Kosár címsor */}
       <h3 className="kosar-title">Kosár</h3>
-
-      <ul className="kosar-list">
+ 
+      <ul className="list-group kosar-list">
         {kosar.length > 0 ? (
           kosar.map((termek) => (
             <li className="kosar-item" key={termek.termek_id}>
@@ -45,7 +55,7 @@ function Kosar({ toggleKosar }) {
           <p className="text-muted text-center mt-3">A kosár üres.</p>
         )}
       </ul>
-
+ 
       {total > 0 && (
         <>
           <p className="fizetendo">Fizetendő: <span>{total} Ft</span></p>
@@ -57,5 +67,6 @@ function Kosar({ toggleKosar }) {
     </div>
   );
 }
-
+ 
 export default Kosar;
+ 
