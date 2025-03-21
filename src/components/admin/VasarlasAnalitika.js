@@ -3,14 +3,16 @@ import axios from "axios";
 import { saveAs } from "file-saver"; // CSV/PDF exporthoz
 import { Bar } from "react-chartjs-2"; // Grafikonokhoz
 import "chart.js/auto"; // Chart.js automatikus beállítása
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function VasarlasAnalitika() {
   const [termekek, setTermekek] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [rendezes, setRendezes] = useState("desc");
-  const [kezdodatum, setKezdodatum] = useState(""); // Szűrés kezdő dátuma
-  const [vegdatum, setVegdatum] = useState(""); // Szűrés vége dátuma
+  const [kezdodatum, setKezdodatum] = useState(null);
+  const [vegdatum, setVegdatum] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -19,9 +21,17 @@ export default function VasarlasAnalitika() {
   async function fetchData() {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:8000/api/vasarlasok-analitika", {
-        params: { kezdodatum, vegdatum }, // Küldjük a szűrési feltételeket
-      });
+      const response = await axios.get(
+        "http://localhost:8000/api/vasarlasok-analitika",
+        {
+          params: {
+            kezdodatum: kezdodatum
+              ? kezdodatum.toISOString().split("T")[0]
+              : "",
+            vegdatum: vegdatum ? vegdatum.toISOString().split("T")[0] : "",
+          },
+        }
+      );
       setTermekek(response.data);
       setLoading(false);
     } catch (error) {
@@ -43,13 +53,18 @@ export default function VasarlasAnalitika() {
   };
 
   // Összbevétel kiszámítása
-  const teljesBevetel = termekek.reduce((osszeg, termek) => osszeg + (termek.osszBevetel || 0), 0);
+  const teljesBevetel = termekek.reduce(
+    (osszeg, termek) => osszeg + (termek.osszBevetel || 0),
+    0
+  );
 
   // **CSV Exportálás**
   const exportCSV = () => {
     const csvData = ["Termék,Név,Darabszám,Összbevétel (Ft)"];
-    termekek.forEach(termek => {
-      csvData.push(`${termek.termek_id},${termek.cim},${termek.darabszam},${termek.osszBevetel}`);
+    termekek.forEach((termek) => {
+      csvData.push(
+        `${termek.termek_id},${termek.cim},${termek.darabszam},${termek.osszBevetel}`
+      );
     });
     const csvString = csvData.join("\n");
     const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
@@ -58,11 +73,11 @@ export default function VasarlasAnalitika() {
 
   // **Grafikon beállítások**
   const data = {
-    labels: termekek.map(t => t.cim),
+    labels: termekek.map((t) => t.cim),
     datasets: [
       {
         label: "Eladások száma",
-        data: termekek.map(t => t.darabszam),
+        data: termekek.map((t) => t.darabszam),
         backgroundColor: "rgba(75, 192, 192, 0.6)",
       },
     ],
@@ -76,17 +91,53 @@ export default function VasarlasAnalitika() {
       <h1>Vásárlási Analitika</h1>
 
       {/* **Dátumszűrés** */}
-      <div className="mb-3">
-        <label>Kezdő dátum:</label>
-        <input type="date" className="form-control" value={kezdodatum} onChange={(e) => setKezdodatum(e.target.value)} />
-        <label className="mt-2">Vég dátum:</label>
-        <input type="date" className="form-control" value={vegdatum} onChange={(e) => setVegdatum(e.target.value)} />
+      <div className="mb-3 d-flex align-items-center">
+        <label className="me-2">Szűrés időszak szerint:</label>
+        <DatePicker
+          selected={kezdodatum}
+          onChange={(date) => setKezdodatum(date)}
+          selectsStart
+          startDate={kezdodatum}
+          endDate={vegdatum}
+          maxDate={new Date()}
+          className="form-control me-2"
+          placeholderText="Kezdő dátum"
+        />
+        <DatePicker
+          selected={vegdatum}
+          onChange={(date) => {
+            if (date) {
+              date.setHours(23, 59, 59, 999);
+            }
+            setVegdatum(date);
+          }}
+          selectsEnd
+          startDate={kezdodatum}
+          endDate={vegdatum}
+          minDate={kezdodatum}
+          maxDate={new Date()}
+          className="form-control me-2"
+          placeholderText="Vég dátum"
+        />
+        <button
+          className="btn btn-secondary"
+          onClick={() => {
+            setKezdodatum(null);
+            setVegdatum(null);
+          }}
+        >
+          Szűrés törlése
+        </button>
       </div>
 
       {/* **Rendezés** */}
       <div className="mb-3">
         <label className="form-label">Rendezés:</label>
-        <select className="form-select" value={rendezes} onChange={(e) => rendezesModositas(e.target.value)}>
+        <select
+          className="form-select"
+          value={rendezes}
+          onChange={(e) => rendezesModositas(e.target.value)}
+        >
           <option value="desc">Legtöbbet vásárolt elöl</option>
           <option value="asc">Legkevesebbet vásárolt elöl</option>
         </select>
@@ -122,7 +173,9 @@ export default function VasarlasAnalitika() {
       <div className="alert alert-primary text-center">
         <h4>Teljes bevétel: {teljesBevetel.toLocaleString()} Ft</h4>
       </div>
-      <button className="btn btn-secondary" onClick={exportCSV}>📥 Exportálás CSV-be</button>
+      <button className="btn btn-secondary" onClick={exportCSV}>
+        📥 Exportálás CSV-be
+      </button>
     </div>
   );
 }

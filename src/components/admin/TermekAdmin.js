@@ -2,13 +2,14 @@ import React from "react";
 import { useAdminContext } from "../../contexts/AdminContext";
 
 export function TermekAdmin({ termek }) { 
-  const { torolVideo } = useAdminContext(); 
+  const { torol } = useAdminContext(); 
+
   
 
   // Törlés megerősítése és végrehajtása
-  const handleDelete = (id) => {
+  const handleDelete = (termek_id) => {
     if (window.confirm("Biztosan törölni szeretnéd ezt a videót?")) {
-      torolVideo(id);
+      torol(termek_id);
     }
   };
 
