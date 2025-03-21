@@ -41,23 +41,26 @@ export default function Bemutatkozas() {
 
       {/* 🔹 Második szekció */}
       <section className="bemutatkozas-section">
-        <div className="bemutatkozas-content reverse">
-          <div className="bemutatkozas-text" data-aos="fade-up">
-            <h1>Könyv</h1>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id
-              pellentesque sapien. Donec in sapien eget leo efficitur pharetra
-              at quis dui.
-            </p>
-            <Link to="/konyv">
-              <button className="btn-primary">Rendelés</button>
-            </Link>
-          </div>
-          <div className="bemutatkozas-image" data-aos="fade-up">
-            <img src={b2} alt="Könyv" className="bemutatkozas-img" />
-          </div>
-        </div>
-      </section>
+  <div className="bemutatkozas-content reverse">
+    <div className="bemutatkozas-text" data-aos="fade-up">
+      <h1>Könyv</h1>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id
+        pellentesque sapien. Donec in sapien eget leo efficitur pharetra
+        at quis dui.
+      </p>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSclO4PQRtFGlEVtB1bKhMXO7Tab8j4LDbr8MwmYlOcKD8OBKw/viewform" 
+         target="_blank" 
+         rel="noopener noreferrer">
+        <button className="btn-primary">Rendelés</button>
+      </a>
+    </div>
+    <div className="bemutatkozas-image" data-aos="fade-up">
+      <img src={b2} alt="Könyv" className="bemutatkozas-img" />
+    </div>
+  </div>
+</section>
+
     </div>
   );
 }
