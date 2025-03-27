@@ -11,46 +11,37 @@ export default function Fizetes() {
 
   const handlePayment = async (event) => {
     event.preventDefault();
-
+  
     try {
-      await myAxios.get("/sanctum/csrf-cookie"); 
-
-      const response = await myAxios.post("/api/send-payment-confirmation", {
+      await myAxios.get("/sanctum/csrf-cookie");
+  
+      const emailResponse = await myAxios.post("/api/send-payment-confirmation", {
         kosar,
         total,
       });
-
-      console.log("Sikeres fizetés:", response.data.message); 
-
-      
+  
+      console.log("Sikeres fizetés (email):", emailResponse.data.message);
+  
+      // Vásárlás mentése adatbázisba
+      await myAxios.post("/api/vasarlas", {
+        vasarlas: {
+          datum: new Date().toISOString().slice(0, 10),
+          osszeg: total,
+        },
+        tetelek: kosar.map((termek) => ({
+          termek_id: termek.termek_id,
+          lejarat_datum: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
+        })),
+      });
+  
       uritKosar();
       setSikeresVasarlas(true);
     } catch (error) {
       console.error("Hiba történt a fizetés során:", error);
-      alert("Nem sikerült elküldeni a visszaigazoló e-mailt.");
+      alert("Nem sikerült elküldeni a visszaigazoló e-mailt vagy menteni a vásárlást.");
     }
   };
-
   
-  useEffect(() => {
-    if (sikeresVasarlas) {
-      const timer = setTimeout(() => {
-        navigate("/");
-      }, 2000); 
-
-      return () => clearTimeout(timer); 
-    }
-  }, [sikeresVasarlas, navigate]);
-
- 
-  if (sikeresVasarlas) {
-    return (
-      <div className="container mt-5 text-center">
-        <h1 className="text-success">Sikeres vásárlás!</h1>
-        <p>Átirányítás a kezdőlapra...</p>
-      </div>
-    );
-  }
 
   return (
     <div className="container mt-5">
