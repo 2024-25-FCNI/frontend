@@ -17,11 +17,9 @@ function Analitika() {
 
   return (
     <div className="container mt-5">
-      <h1>Admin Analitika</h1>
 
       {/* Felhasználói Analitika */}
       <div className="mb-5">
-        <h2>Felhasználói Analitika</h2>
         <UserAnalitika
           felhasznalok={felhasznalok}
           torolFelhasznalo={torolFelhasznalo}
@@ -30,7 +28,6 @@ function Analitika() {
 
       {/* Vásárlási Analitika */}
       <div className="mt-5">
-        <h2>Vásárlási Analitika</h2>
         <VasarlasAnalitika />
       </div>
     </div>
