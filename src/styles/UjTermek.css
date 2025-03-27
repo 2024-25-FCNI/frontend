@@ -1,0 +1,177 @@
+.video-form {
+    max-width: 900px;
+    margin: 2em auto;
+    padding: 1.5em;
+    background-color: #fef5ec;
+    border-radius: 1em;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    font-family: "Georgia", serif;
+  }
+  
+  .form-title {
+    font-size: 2em;
+    margin-bottom: 1em;
+    font-weight: 500;
+  }
+  
+  /* 🟠 Csoportok, spacing, egységes elrendezés */
+  .form-group {
+    margin-bottom: 1.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+  }
+  
+  .form-group label {
+    font-size: 1em;
+    margin-bottom: 0.3em;
+  }
+  
+  /* 🟠 Mezők */
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    font-size: 1em;
+    padding: 0.5em 0.8em;
+    border: 1px solid #888;
+    border-radius: 0.6em;
+    background-color: white;
+    font-family: inherit;
+  }
+  
+  .form-group input[type="file"] {
+    border: none;
+    background-color: transparent;
+    padding-left: 0;
+  }
+  
+  /* 🟠 Flex layout sorokhoz */
+  .form-row {
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+  }
+  
+  .form-row .form-group {
+    flex: 1 1 45%;
+  }
+  
+  /* 🟠 Checkbox */
+  .checkbox-group {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5em;
+  }
+  
+  /* 🟠 Gombok – egységes méret */
+  .upload-button,
+  .tag-input-wrapper button,
+  .file-input-wrapper .upload-button {
+    background-color: #f4a261;
+    color: white;
+    border: none;
+    border-radius: 999px;
+    padding: 0.5em 1.2em;
+    font-size: 1em;
+    cursor: pointer;
+    min-width: 7em;
+    text-align: center;
+    transition: background-color 0.3s;
+  }
+  
+  .upload-button:hover,
+  .tag-input-wrapper button:hover,
+  .file-input-wrapper .upload-button:hover {
+    background-color: #e76f51;
+  }
+  
+  /* 🟠 Feltöltés gomb külön dobozban */
+  .form-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2em;
+  }
+  
+  /* 🟠 Címkék megjelenítése */
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin-top: 0.5em;
+  }
+  
+  .tag {
+    background-color: #ffe0cc;
+    color: #333;
+    padding: 0.3em 0.8em;
+    border-radius: 999px;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+  
+  .tag button {
+    background: none;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1em;
+    line-height: 1;
+  }
+  
+  /* 🟠 Új címke hozzáadás */
+  .tag-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+  }
+  
+  .tag-input-wrapper input {
+    flex-grow: 1;
+    font-size: 1em;
+    padding: 0.5em 0.8em;
+    border: 1px solid #888;
+    border-radius: 0.6em;
+  }
+  
+  /* 🟠 Fájlmező stílus ugyanúgy */
+  .file-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+  }
+  
+  .file-input-wrapper input[type="text"] {
+    flex-grow: 1;
+    font-size: 1em;
+    padding: 0.5em 0.8em;
+    border: 1px solid #888;
+    border-radius: 0.6em;
+    background-color: white;
+    font-family: inherit;
+  }
+  
+  .file-input-wrapper input[type="file"] {
+    display: none;
+  }
+  
+  /* 🟠 Mobilbarát */
+  @media (max-width: 768px) {
+    .video-form {
+      padding: 1em;
+    }
+  
+    .form-row {
+      flex-direction: column;
+    }
+  
+    .form-row .form-group {
+      width: 100%;
+    }
+  
+    .form-footer {
+      justify-content: center;
+    }
+  }
+  
