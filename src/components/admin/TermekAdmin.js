@@ -52,3 +52,5 @@ export function TermekAdmin({ termek }) {
 }
 
 export default TermekAdmin;
+
+
