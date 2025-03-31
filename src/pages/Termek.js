@@ -12,7 +12,8 @@ export default function Termek() {
   const { user } = useAuthContext();
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/termekek/${termekId}`)
+    axios
+      .get(`http://localhost:8000/api/termekek/${termekId}`)
       .then((response) => {
         console.log("Termék adatok:", response.data);
         setTermek(response.data);
@@ -21,16 +22,19 @@ export default function Termek() {
         console.error("Hiba a termék lekérdezésekor:", error);
       });
 
-    if (user?.id) { 
-      axios.get(`http://localhost:8000/api/ellenoriz-vasarlas/${termekId}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
-      })
-      .then((response) => {
-        setVasarolt(response.data.megvette);
-      })
-      .catch((error) => {
-        console.error("Hiba a vásárlás ellenőrzésekor:", error);
-      });
+    if (user?.id) {
+      axios
+        .get(`http://localhost:8000/api/ellenoriz-vasarlas/${termekId}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        })
+        .then((response) => {
+          setVasarolt(response.data.megvette);
+        })
+        .catch((error) => {
+          console.error("Hiba a vásárlás ellenőrzésekor:", error);
+        });
     }
   }, [termekId]); // 🔹 `user` eltávolítva, így nincs végtelen újrahívás
 
@@ -47,7 +51,7 @@ export default function Termek() {
       imageUrl = `https://drive.google.com/uc?export=view&id=${driveFileId[0]}`;
     }
   } else if (!imageUrl.startsWith("http")) {
-    imageUrl = `http://localhost:8000${imageUrl}`;
+    imageUrl = `http://localhost:8000/storage/${imageUrl}`;
   }
 
   return (
@@ -55,21 +59,25 @@ export default function Termek() {
       <h1>Termék részletek</h1>
       <div className="row">
         <div className="col-md-6">
-          {!vasarolt && termek.kep && (
+          {termek.kep && (
             <img
               src={imageUrl}
               alt={termek.cim}
               className="img-fluid"
               style={{ maxHeight: "400px", objectFit: "cover" }}
-              onError={(e) => e.target.src = "/placeholder.jpg"}
+              onError={(e) => (e.target.src = "/placeholder.jpg")}
             />
           )}
         </div>
         <div className="col-md-6">
           <h2>{termek.cim}</h2>
           <p>{termek.leiras}</p>
-          <p><strong>Ár:</strong> {termek.ar} Ft</p>
-          <p><strong>Hozzáférési idő:</strong> {termek.hozzaferesi_ido} nap</p>
+          <p>
+            <strong>Ár:</strong> {termek.ar} Ft
+          </p>
+          <p>
+            <strong>Hozzáférési idő:</strong> {termek.hozzaferesi_ido} nap
+          </p>
 
           <button
             className="btn btn-primary"

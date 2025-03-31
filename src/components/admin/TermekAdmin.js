@@ -13,6 +13,7 @@ export function TermekAdmin({ termek }) {
     }
   };
 
+
   // Dátum formázás
   const formatDate = (dateString) => {
     if (!dateString) return "";
@@ -52,3 +53,5 @@ export function TermekAdmin({ termek }) {
 }
 
 export default TermekAdmin;
+
+

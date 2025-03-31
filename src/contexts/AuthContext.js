@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState({});
+  
  
   // CSRF token beszerzése
   const csrf = async () => {
@@ -74,7 +75,11 @@ export const AuthProvider = ({ children }) => {
     if (!user) {
       getUser();
     }
-  }, [user]);
+  }, [user]); 
+
+/*   useEffect(() => {
+    getUser(); // mindig lekéri frissen, ha betölt
+  }, []); */
  
   return (
     <AuthContext.Provider value={{ logout, loginReg, errors, getUser, user }}>

@@ -15,24 +15,60 @@ function UjTermek({ existingVideos = [] }) {
   });
  
   const [useExistingVideos, setUseExistingVideos] = useState(false);
- 
+  const [ujCimke, setUjCimke] = useState("");
+  const [elerhetoCimkek, setElerhetoCimkek] = useState([
+    "nyújtás",
+    "lazítás",
+    "spárga",
+    "erősítés",
+  ]);
+
+  useEffect(() => {
+    fetch("/api/cimkek")
+      .then((res) => {
+        if (!res.ok) throw new Error("Hiba a címkék lekérdezésekor");
+        return res.json();
+      })
+      .then((data) => {
+        if (Array.isArray(data)) setElerhetoCimkek(data);
+      })
+      .catch((error) => console.error("Címkék betöltési hiba:", error));
+  }, []);
+
   function handleChange(event) {
-    const { id, value, type, files } = event.target;
-
-    setTermek((prevTermek) => ({
-        ...prevTermek,
-        [id]: id === "kep" ? files[0] : value, // 🔹 Fájlként tároljuk
+    const { id, value, files } = event.target;
+    setTermek((prev) => ({
+      ...prev,
+      [id]: id === "kep" ? files[0] : value,
     }));
-}
+  }
 
- 
   function handleCheckboxChange(event) {
     setUseExistingVideos(event.target.checked);
     if (event.target.checked) {
-      setTermek((prevTermek) => ({ ...prevTermek, url: null }));
+      setTermek((prev) => ({ ...prev, url: null }));
     }
   }
- 
+
+  function hozzaadCimket() {
+    const cimke = ujCimke.trim();
+    if (cimke !== "" && !termek.cimkek.includes(cimke)) {
+      setTermek((prev) => ({ ...prev, cimkek: [...prev.cimkek, cimke] }));
+      if (!elerhetoCimkek.includes(cimke)) {
+        setElerhetoCimkek((prev) => [...prev, cimke]);
+      }
+      setUjCimke("");
+    }
+  }
+
+  function torolCimket(index) {
+    setTermek((prev) => {
+      const cimkek = [...prev.cimkek];
+      cimkek.splice(index, 1);
+      return { ...prev, cimkek };
+    });
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -43,11 +79,8 @@ function UjTermek({ existingVideos = [] }) {
     formData.append("hozzaferesi_ido", termek.hozzaferesi_ido);
     formData.append("ar", termek.ar);
     formData.append("jelzes", termek.jelzes);
-    
-    if (termek.kep) {
-        formData.append("kep", termek.kep); // 🔹 Fájl csatolása
-    }
-
+    formData.append("cimkek", JSON.stringify(termek.cimkek));
+    if (termek.kep) formData.append("kep", termek.kep);
     if (postData) {
         postData("/api/termekek", formData);
     } else {
@@ -58,103 +91,84 @@ function UjTermek({ existingVideos = [] }) {
  
  
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="mb-3">
-        <label htmlFor="cim" className="form-label">
-          Cím
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="cim"
-          required
-          placeholder="Termék címe"
-          value={termek.cim}
-          onChange={handleChange}
-        />
+    <form onSubmit={handleSubmit} className="video-form">
+      <h2 className="form-title">Új termék feltöltése</h2>
+
+      <div className="form-row">
+        <div className="form-group">
+          <label htmlFor="cim">Cím</label>
+          <input type="text" id="cim" required value={termek.cim} onChange={handleChange} />
+        </div>
+        <div className="form-group">
+          <label htmlFor="bemutatas">Bemutatás</label>
+          <input type="text" id="bemutatas" value={termek.bemutatas} onChange={handleChange} />
+        </div>
       </div>
- 
-      <div className="mb-3">
-        <label htmlFor="leiras" className="form-label">
-          Leírás
-        </label>
-        <textarea
-          className="form-control"
-          id="leiras"
-          rows="3"
-          value={termek.leiras}
-          onChange={handleChange}
-        ></textarea>
+
+      <div className="form-group">
+        <label htmlFor="leiras">Leírás</label>
+        <textarea id="leiras" rows="3" value={termek.leiras} onChange={handleChange}></textarea>
       </div>
- 
-      <div className="mb-3">
-        <label htmlFor="ar" className="form-label">
-          Ár
-        </label>
-        <input
-          type="number"
-          min="10"
-          max="100000"
-          className="form-control"
-          id="ar"
-          required
-          value={termek.ar}
-          onChange={handleChange}
-        />
+
+      <div className="form-row">
+        <div className="form-group">
+          <label htmlFor="ar">Ár</label>
+          <input type="number" id="ar" min="10" max="100000" required value={termek.ar} onChange={handleChange} />
+        </div>
+        <div className="form-group">
+          <label htmlFor="hozzaferesi_ido">Hozzáférési idő (napban)</label>
+          <input type="number" id="hozzaferesi_ido" min="1" max="365" required value={termek.hozzaferesi_ido} onChange={handleChange} />
+        </div>
       </div>
- 
-      <div className="mb-3">
-        <label htmlFor="hozzaferesi_ido" className="form-label">
-          Hozzáférési idő (napban)
-        </label>
-        <input
-          type="number"
-          min="1"
-          max="365"
-          className="form-control"
-          id="hozzaferesi_ido"
-          required
-          value={termek.hozzaferesi_ido}
-          onChange={handleChange}
-        />
+
+      <div className="form-group">
+        <label htmlFor="cimkek-select">Címkék</label>
+        <select id="cimkek-select" value="" onChange={(e) => {
+          const valasztott = e.target.value;
+          if (valasztott && !termek.cimkek.includes(valasztott)) {
+            setTermek((prev) => ({ ...prev, cimkek: [...prev.cimkek, valasztott] }));
+          }
+        }}>
+          <option value="">Válassz meglévő címkét...</option>
+          {elerhetoCimkek.map((tag, index) => (
+            <option key={index} value={tag}>{tag}</option>
+          ))}
+        </select>
+
+        <div className="tag-list">
+          {termek.cimkek.map((tag, index) => (
+            <span className="tag" key={index}>{tag}
+              <button type="button" onClick={() => torolCimket(index)}>×</button>
+            </span>
+          ))}
+        </div>
+
+        <div className="tag-input-wrapper">
+          <input type="text" value={ujCimke} onChange={(e) => setUjCimke(e.target.value)}
+            onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); hozzaadCimket(); } }}
+            placeholder="Új címke hozzáadása" />
+          <button type="button" onClick={hozzaadCimket}>Hozzáad</button>
+        </div>
       </div>
- 
-      <div className="mb-3">
-        <label htmlFor="kep" className="form-label">
-          Kép feltöltése
-        </label>
-        <input
-          type="file"
-          accept="kep/*"
-          className="form-control"
-          id="kep"
-          onChange={handleChange}
-        />
+
+      <div className="form-group">
+        <label htmlFor="kep">Fotó feltöltése</label>
+        <div className="file-input-wrapper">
+          <input type="text" readOnly value={termek.kep?.name || ""} placeholder="Nincs fájl kiválasztva" />
+          <label htmlFor="kep" className="upload-button">Tallózás</label>
+          <input type="file" id="kep" accept="image/*" onChange={handleChange} />
+        </div>
       </div>
- 
-      <div className="mb-3">
-        <label htmlFor="useExistingVideos" className="form-label">Csak meglévő videó használata</label>
-        <input
-          type="checkbox"
-          id="useExistingVideos"
-          checked={useExistingVideos}
-          onChange={handleCheckboxChange}
-        />
+
+      <div className="form-group checkbox-group">
+        <input type="checkbox" id="useExistingVideos" checked={useExistingVideos} onChange={handleCheckboxChange} />
+        <label htmlFor="useExistingVideos">Csak meglévő videó használata</label>
       </div>
  
       {!useExistingVideos && (
-        <div className="mb-3">
-          <label htmlFor="url" className="form-label">
-            Videó feltöltése
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="url"
-            placeholder="Videó linkje"
-            value={termek.url}
-            onChange={handleChange}
-          />
+        <div className="form-group">
+          <label htmlFor="url">Videó linkje</label>
+          <input type="text" id="url" placeholder="Videó linkje" value={termek.url} onChange={handleChange} />
         </div>
       )}
  
@@ -171,17 +185,15 @@ function UjTermek({ existingVideos = [] }) {
           >
             <option value="">Válassz egy videót</option>
             {existingVideos.map((url, index) => (
-              <option key={index} value={url}>
-                {url}
-              </option>
+              <option key={index} value={url}>{url}</option>
             ))}
           </select>
         </div>
       )}
- 
-      <button type="submit" className="btn btn-primary">
-        Feltölt
-      </button>
+
+      <div className="form-footer">
+        <button type="submit" className="upload-button">Feltöltés</button>
+      </div>
     </form>
   );
 }
