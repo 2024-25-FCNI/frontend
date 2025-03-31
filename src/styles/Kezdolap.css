@@ -114,14 +114,13 @@
     opacity: 1;
     transform: translateY(0);
 }
-
 .product-box {
     background: #ffebe5;
     padding: 1.5em;
     border-radius: 3em;
     text-align: center;
     width: 100%;
-    max-width: 250px;
+    max-width: 300px; /* <-- módosítva: szélesebb legyen */
     height: 400px;
     transition: 0.3s ease-in-out;
     overflow: hidden;
@@ -129,6 +128,13 @@
     flex-direction: column;
     justify-content: space-between;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.product-box h3,
+.product-box h2,
+.product-box p {
+    color: black;
+    text-decoration: none; /* <-- hozzáadva: ne legyen aláhúzás */
 }
 
 .product-box img {

@@ -64,25 +64,25 @@ export default function Kezdolap() {
         <h2 className="animate-up">Mozgás, Erő, Szenvedély –<br /> Minden, ami a fejlődésedhez kell!</h2>
         <div className="row">
           <div className="col-md-4 col-sm-12 product-card animate-up delay-1">
-            <Link to="/videok" className="no-underline">
+            <Link to="/videok" >
               <div className="product-box">
-                <img src={v} alt="konyv" className="book-image" />
+                <img src={v} alt="videok" className="book-image" />
                 <h3>Videók</h3>
                 <p>Fejleszd hajlékonyságod és erőnléted szakértői útmutatással!</p>
               </div>
             </Link>
           </div>
           <div className="col-md-4 col-sm-12 product-card animate-up delay-2">
-            <Link to="/videok" className="no-underline">
+            <Link to="/videok" >
               <div className="product-box">
-                <img src={v} alt="konyv" className="book-image" />
+                <img src={v} alt="csomagok" className="book-image" />
                 <h3>Videós csomagok</h3>
                 <p>Komplex edzésprogramok a rugalmasság, koordináció és erő fejlesztéséhez!</p>
               </div>
             </Link>
           </div>
           <div className="col-md-4 col-sm-12 product-card animate-up delay-3">
-            <Link to="/konyv" className="no-underline">
+            <Link to="/konyv" >
               <div className="product-box">
                 <img src={v} alt="konyv" className="book-image" />
                 <h3>Könyv</h3>

@@ -1,0 +1,76 @@
+/* Külső konténer, ami sliderként viselkedik kis kijelzőn */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  padding: 1em 0;
+}
+
+/* A táblázat maga */
+.table {
+  min-width: 60em; /* Szélesség, hogy slider működjön kis képernyőn */
+  border-collapse: collapse;
+  background-color: #ffffff;
+  font-family: 'Georgia', serif;
+  color: #1a1a1a;
+}
+
+.table th,
+.table td {
+  border: 0.1em solid #e0cfc1;
+  text-align: left;
+  vertical-align: middle;
+  word-wrap: break-word;
+  font-size: 0.8em;
+  background-color: #ffffff;
+}
+
+.table thead th {
+  font-weight: bold;
+  color: #3e3e3e;
+  font-size: 0.8em;
+}
+
+
+.admintermekkep {
+  width: 6em;
+  height: auto;
+  border-radius: 0.4em;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.08);
+}
+
+/* Törlés gomb */
+.btn-outline-danger {
+  background-color: #333;
+  color: white;
+  border: none;
+  font-size: 1.1em;
+  width: 2em;
+  height: 2em;
+  border-radius: 0.3em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn-outline-danger:hover {
+  background-color: #111;
+}
+
+.kijelentkezes-button {
+  margin: 2em auto;
+  display: block;
+  padding: 0.7em 1.6em;
+  background-color: #f28c8c;
+  color: #fff;
+  border: none;
+  border-radius: 1.2em;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.kijelentkezes-button:hover {
+  background-color: #e7667e;
+}

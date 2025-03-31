@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import "../styles/Bejelentkezes.css"; // 📌 Új CSS fájl a formázásokhoz
+import "../styles/Bejelentkezes.css"; 
 
 export default function Bejelentkezes() {
   const [email, setEmail] = useState("");
