@@ -74,10 +74,12 @@ export default function Fizetes() {
   
     uritKosar();
     setSikeresVasarlas(true);
-  };
-   */
+  }; */
+  
   
   useEffect(() => {
+    
+
     if (sikeresVasarlas) {
       const timer = setTimeout(() => {
         navigate("/");

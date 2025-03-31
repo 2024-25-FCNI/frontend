@@ -13,6 +13,7 @@ export function TermekAdmin({ termek }) {
     }
   };
 
+
   // Dátum formázás
   const formatDate = (dateString) => {
     if (!dateString) return "";
