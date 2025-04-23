@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useAdminContext } from "../../contexts/AdminContext";
-import "../../styles/UjTermek.css";
-
+ 
+ 
 function UjTermek({ existingVideos = [] }) {
   const { postData } = useAdminContext();
-
+ 
   const [termek, setTermek] = useState({
     cim: "",
-    bemutatas: "",
     ar: 10,
     leiras: "",
     hozzaferesi_ido: 30,
@@ -16,7 +15,7 @@ function UjTermek({ existingVideos = [] }) {
     video: null,
     cimkek: [],
   });
-
+ 
   const [useExistingVideos, setUseExistingVideos] = useState(false);
   const [ujCimke, setUjCimke] = useState("");
   const [elerhetoCimkek, setElerhetoCimkek] = useState([]);
@@ -65,9 +64,9 @@ function UjTermek({ existingVideos = [] }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const formData = new FormData();
+
+    const formData = new FormData(); // 🔹 FormData létrehozása
     formData.append("cim", termek.cim);
-    formData.append("bemutatas", termek.bemutatas);
     formData.append("leiras", termek.leiras);
     formData.append("hozzaferesi_ido", termek.hozzaferesi_ido);
     formData.append("ar", termek.ar);
@@ -95,6 +94,8 @@ function UjTermek({ existingVideos = [] }) {
     });
   }
 
+ 
+ 
   return (
     <form onSubmit={handleSubmit} className="video-form">
       <h2 className="form-title">Új termék feltöltése</h2>
@@ -197,5 +198,6 @@ function UjTermek({ existingVideos = [] }) {
     </form>
   );
 }
-
+ 
 export default UjTermek;
+ 

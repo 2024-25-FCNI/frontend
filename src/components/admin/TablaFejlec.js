@@ -11,7 +11,6 @@ function TablaFejlec(props) {
         }
       })}
       <th></th>
-      <th></th>
     </tr>
   );
 }
