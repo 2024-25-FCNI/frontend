@@ -11,29 +11,20 @@ function UjTermek({ existingVideos = [] }) {
     ar: 10,
     leiras: "",
     hozzaferesi_ido: 30,
-    kep: "",
-    url: "",
+    jelzes: "alap",
+    kep: null,
+    video: null,
     cimkek: [],
   });
 
   const [useExistingVideos, setUseExistingVideos] = useState(false);
   const [ujCimke, setUjCimke] = useState("");
-  const [elerhetoCimkek, setElerhetoCimkek] = useState([
-    "nyújtás",
-    "lazítás",
-    "spárga",
-    "erősítés",
-  ]);
+  const [elerhetoCimkek, setElerhetoCimkek] = useState([]);
 
   useEffect(() => {
     fetch("/api/cimkek")
-      .then((res) => {
-        if (!res.ok) throw new Error("Hiba a címkék lekérdezésekor");
-        return res.json();
-      })
-      .then((data) => {
-        if (Array.isArray(data)) setElerhetoCimkek(data);
-      })
+      .then((res) => res.ok && res.json())
+      .then((data) => Array.isArray(data) && setElerhetoCimkek(data))
       .catch((error) => console.error("Címkék betöltési hiba:", error));
   }, []);
 
@@ -41,20 +32,21 @@ function UjTermek({ existingVideos = [] }) {
     const { id, value, files } = event.target;
     setTermek((prev) => ({
       ...prev,
-      [id]: id === "kep" ? files[0] : value,
+      [id]: (id === "kep" || id === "video") && files ? files[0] : value,
     }));
   }
 
   function handleCheckboxChange(event) {
     setUseExistingVideos(event.target.checked);
-    if (event.target.checked) {
-      setTermek((prev) => ({ ...prev, url: null }));
-    }
+    setTermek((prev) => ({
+      ...prev,
+      video: event.target.checked ? "" : null,
+    }));
   }
 
   function hozzaadCimket() {
     const cimke = ujCimke.trim();
-    if (cimke !== "" && !termek.cimkek.includes(cimke)) {
+    if (cimke && !termek.cimkek.includes(cimke)) {
       setTermek((prev) => ({ ...prev, cimkek: [...prev.cimkek, cimke] }));
       if (!elerhetoCimkek.includes(cimke)) {
         setElerhetoCimkek((prev) => [...prev, cimke]);
@@ -77,15 +69,30 @@ function UjTermek({ existingVideos = [] }) {
     formData.append("cim", termek.cim);
     formData.append("bemutatas", termek.bemutatas);
     formData.append("leiras", termek.leiras);
-    formData.append("url", termek.url);
     formData.append("hozzaferesi_ido", termek.hozzaferesi_ido);
     formData.append("ar", termek.ar);
     formData.append("jelzes", termek.jelzes);
     formData.append("cimkek", JSON.stringify(termek.cimkek));
     if (termek.kep) formData.append("kep", termek.kep);
-    if (postData) {
-      postData("/api/termekek", formData);
+    if (useExistingVideos && termek.video) {
+      formData.append("video_existing", termek.video);
+    } else if (!useExistingVideos && termek.video) {
+      formData.append("video", termek.video);
     }
+
+    postData("/api/termekek", formData).then(() => {
+      setTermek({
+        cim: "",
+        bemutatas: "",
+        ar: 10,
+        leiras: "",
+        hozzaferesi_ido: 30,
+        jelzes: "alap",
+        kep: null,
+        video: null,
+        cimkek: [],
+      });
+    });
   }
 
   return (
@@ -163,22 +170,24 @@ function UjTermek({ existingVideos = [] }) {
         <label htmlFor="useExistingVideos">Csak meglévő videó használata</label>
       </div>
 
-      {!useExistingVideos && (
+      {useExistingVideos ? (
         <div className="form-group">
-          <label htmlFor="url">Videó linkje</label>
-          <input type="text" id="url" placeholder="Videó linkje" value={termek.url} onChange={handleChange} />
-        </div>
-      )}
-
-      {useExistingVideos && (
-        <div className="form-group">
-          <label htmlFor="url">Válassz meglévő videót</label>
-          <select id="url" value={termek.url || ""} onChange={handleChange}>
+          <label htmlFor="video">Válassz meglévő videót</label>
+          <select id="video" value={termek.video || ""} onChange={handleChange}>
             <option value="">Válassz egy videót</option>
-            {existingVideos.map((url, index) => (
-              <option key={index} value={url}>{url}</option>
+            {existingVideos.map((video, index) => (
+              <option key={index} value={video}>{video}</option>
             ))}
           </select>
+        </div>
+      ) : (
+        <div className="form-group">
+          <label htmlFor="video">Videó feltöltése</label>
+          <div className="file-input-wrapper">
+            <input type="text" readOnly value={termek.video?.name || ""} placeholder="Nincs fájl kiválasztva" />
+            <label htmlFor="video" className="upload-button">Tallózás</label>
+            <input type="file" id="video" accept="video/*" onChange={handleChange} />
+          </div>
         </div>
       )}
 
