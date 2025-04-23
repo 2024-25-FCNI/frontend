@@ -16,9 +16,15 @@ const VideokPublic = (props) => {
         >
           <div className="position-relative">
             <img
-              src={props.termek.kep}
+              src={
+                props.termek.kep
+                  ? `http://localhost:8000/kepek/${props.termek.kep}`
+                  : "/placeholder.jpg"
+              }
               alt={props.termek.cim}
               className="card-img-top rounded"
+              style={{ maxHeight: "200px", objectFit: "cover", width: "100%" }}
+              onError={(e) => (e.target.src = "/placeholder.jpg")}
             />
           </div>
 
@@ -31,7 +37,11 @@ const VideokPublic = (props) => {
             </h6>
             <p
               className="small text-wrap flex-grow-1"
-              style={{ fontSize: "0.9em", minHeight: "3.6em", overflow: "hidden" }}
+              style={{
+                fontSize: "0.9em",
+                minHeight: "3.6em",
+                overflow: "hidden",
+              }}
             >
               {props.termek.leiras}
             </p>

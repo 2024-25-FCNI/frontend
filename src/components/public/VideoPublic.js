@@ -11,6 +11,11 @@ export function TermekPublic(props) {
   console.log("Termék adatok a TermekPublic komponensben:", props.termek);
   console.log("Navigációs útvonal:", `/termek/${props.termek.termek_id}`);
 
+  // 📸 Helyes képútvonal kialakítása
+  const kepUrl = props.termek.kep
+    ? `/kepek/${props.termek.kep}`
+    : "/placeholder.jpg";
+
   return (
     <div className="col">
       <div className="card h-200">
@@ -25,17 +30,21 @@ export function TermekPublic(props) {
             <h5 className="card-title">{props.termek.cim}</h5>
           </div>
           <div className="card-body">
-            <img
-              src={props.termek.kep}
+            {/* <img
+              src={kepUrl}
               alt={props.termek.cim}
               className="card-img-top"
-            />
+              style={{ maxHeight: "200px", objectFit: "cover" }}
+            /> */}
             <p>{props.termek.leiras}</p>
           </div>
         </Link>
         <div className="card-footer">
           <button 
-            className="btn btn-primary card-link" onClick={() => kosarba(props.termek)}disabled={user && user.role === 0}>
+            className="btn btn-primary card-link"
+            onClick={() => kosarba(props.termek)}
+            disabled={user && user.role === 0}
+          >
             Kosárba
           </button>
           <b className="card-link">{props.termek.ar} Ft</b>

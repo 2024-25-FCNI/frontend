@@ -44,15 +44,10 @@ export default function Termek() {
   }
 
   // 🔹 Ellenőrizzük, hogy a `termek.kep` létezik-e, mielőtt használjuk
-  let imageUrl = termek.kep || "/placeholder.jpg"; // Ha nincs kép, alapértelmezett kép beállítása
-  if (imageUrl.includes("drive.google.com")) {
-    const driveFileId = imageUrl.match(/[-\w]{25,}/);
-    if (driveFileId) {
-      imageUrl = `https://drive.google.com/uc?export=view&id=${driveFileId[0]}`;
-    }
-  } else if (!imageUrl.startsWith("http")) {
-    imageUrl = `http://localhost:8000/storage/${imageUrl}`;
-  }
+  const imageUrl = termek.kep
+  ? `http://localhost:8000/kepek/${termek.kep}`
+  : "/placeholder.jpg";
+
 
   return (
     <div className="container mt-5">

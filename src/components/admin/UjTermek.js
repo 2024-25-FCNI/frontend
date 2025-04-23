@@ -1,19 +1,21 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useAdminContext } from "../../contexts/AdminContext";
- 
- 
+import "../../styles/UjTermek.css";
+
 function UjTermek({ existingVideos = [] }) {
   const { postData } = useAdminContext();
- 
+
   const [termek, setTermek] = useState({
     cim: "",
+    bemutatas: "",
     ar: 10,
     leiras: "",
     hozzaferesi_ido: 30,
     kep: "",
     url: "",
+    cimkek: [],
   });
- 
+
   const [useExistingVideos, setUseExistingVideos] = useState(false);
   const [ujCimke, setUjCimke] = useState("");
   const [elerhetoCimkek, setElerhetoCimkek] = useState([
@@ -39,7 +41,7 @@ function UjTermek({ existingVideos = [] }) {
     const { id, value, files } = event.target;
     setTermek((prev) => ({
       ...prev,
-      [id]: id === "kep" ? files[0] : value,
+      [id]: id === "kep" || id === "url" ? files[0] : value
     }));
   }
 
@@ -69,27 +71,40 @@ function UjTermek({ existingVideos = [] }) {
     });
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-
-    const formData = new FormData(); // 🔹 FormData létrehozása
+    const formData = new FormData();
     formData.append("cim", termek.cim);
+    formData.append("bemutatas", termek.bemutatas);
     formData.append("leiras", termek.leiras);
-    formData.append("url", termek.url);
+    formData.append("url", termek.url); // fájlként várjuk már
     formData.append("hozzaferesi_ido", termek.hozzaferesi_ido);
     formData.append("ar", termek.ar);
     formData.append("jelzes", termek.jelzes);
     formData.append("cimkek", JSON.stringify(termek.cimkek));
     if (termek.kep) formData.append("kep", termek.kep);
-    if (postData) {
-        postData("/api/termekek", formData);
-    } else {
-        console.error("postData nem elérhető az AdminContextből!");
+  
+    try {
+      await postData("/api/termekek", formData);
+      alert("Sikeres feltöltés!"); // ✅ 1. lépés
+      // ✅ 2. lépés: mezők kiürítése
+      setTermek({
+        cim: "",
+        bemutatas: "",
+        ar: 10,
+        leiras: "",
+        hozzaferesi_ido: 30,
+        kep: "",
+        url: "",
+        cimkek: [],
+      });
+    } catch (error) {
+      alert("Hiba történt a feltöltéskor.");
+      console.error(error);
     }
-}
+  }
+  
 
- 
- 
   return (
     <form onSubmit={handleSubmit} className="video-form">
       <h2 className="form-title">Új termék feltöltése</h2>
@@ -164,25 +179,18 @@ function UjTermek({ existingVideos = [] }) {
         <input type="checkbox" id="useExistingVideos" checked={useExistingVideos} onChange={handleCheckboxChange} />
         <label htmlFor="useExistingVideos">Csak meglévő videó használata</label>
       </div>
- 
+
       {!useExistingVideos && (
         <div className="form-group">
           <label htmlFor="url">Videó linkje</label>
-          <input type="text" id="url" placeholder="Videó linkje" value={termek.url} onChange={handleChange} />
+          <input type="file" id="url" accept="video/*" onChange={handleChange} />
         </div>
       )}
- 
+
       {useExistingVideos && (
-        <div className="mb-3">
-          <label htmlFor="url" className="form-label">
-            Válassz meglévő videót
-          </label>
-          <select
-            className="form-select"
-            id="url"
-            value={termek.url || ""}
-            onChange={handleChange}
-          >
+        <div className="form-group">
+          <label htmlFor="url">Válassz meglévő videót</label>
+          <select id="url" value={termek.url || ""} onChange={handleChange}>
             <option value="">Válassz egy videót</option>
             {existingVideos.map((url, index) => (
               <option key={index} value={url}>{url}</option>
@@ -197,6 +205,5 @@ function UjTermek({ existingVideos = [] }) {
     </form>
   );
 }
- 
+
 export default UjTermek;
- 

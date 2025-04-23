@@ -24,13 +24,13 @@ export function TermekAdmin({ termek }) {
   return (
     <tr>
       {Object.entries(termek).map(([kulcs, value]) => {
-        if (kulcs === "image") {
+        if (kulcs === "kep") {
           return (
             <td key={kulcs}>
               <img className="admintermekkep" src={value} alt="" />
             </td>
           );
-        } else if (kulcs === "price") {
+        } else if (kulcs === "ar") {
           return <td key={kulcs}>{value} Ft</td>;
         } else if (kulcs === "created_at" || kulcs === "updated_at") {
           return <td key={kulcs}>{formatDate(value)}</td>;
