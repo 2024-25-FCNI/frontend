@@ -9,7 +9,56 @@ export default function Fizetes() {
   const [sikeresVasarlas, setSikeresVasarlas] = useState(false);
   const navigate = useNavigate();
 
-  const handlePayment = async (event) => {
+ /*  const handlePayment = async (event) => {
+    event.preventDefault();
+  
+    try {
+      await myAxios.get("/sanctum/csrf-cookie");
+    } catch (e) {
+      console.error("CSRF hiba:", e);
+      alert("CSRF hiba");
+      return;
+    }
+  
+    try {
+      // 🔹 Vásárlás mentése adatbázisba
+      await myAxios.post("/api/vasarlas", {
+        vasarlas: {
+          osszeg: total,
+          datum: new Date().toISOString().split("T")[0],
+        },
+        tetelek: kosar.map(termek => ({
+          termek_id: termek.termek_id,
+          lejarat_datum: new Date(Date.now() + termek.hozzaferesi_ido * 24 * 60 * 60 * 1000)
+            .toISOString()
+            .split("T")[0],
+        })),
+      });
+    } catch (e) {
+      console.error("Vásárlás mentési hiba:", e.response?.data || e);
+      alert("Hiba a vásárlás mentésekor.");
+      return;
+    }
+  
+    try {
+      // 🔹 E-mail küldés
+      await myAxios.post("/api/send-payment-confirmation", {
+        kosar,
+        total,
+      });
+    } catch (e) {
+      console.error("Emailküldési hiba:", e.response?.data || e);
+      alert("Nem sikerült visszaigazoló emailt küldeni.");
+      return;
+    }
+  
+    uritKosar();
+    setSikeresVasarlas(true);
+  }; */
+
+
+
+   const handlePayment = async (event) => {
     event.preventDefault();
 
     try {
@@ -28,7 +77,21 @@ export default function Fizetes() {
       console.error("Hiba történt a fizetés során:", error);
       alert("Nem sikerült elküldeni a visszaigazoló e-mailt.");
     }
-  };
+
+
+    await myAxios.post("/api/vasarlas", {
+      vasarlas: {
+        osszeg: total,
+        datum: new Date().toISOString().split("T")[0],
+      },
+      tetelek: kosar.map(termek => ({
+        termek_id: termek.termek_id,
+      })),
+    });
+    
+  }; 
+
+  
 
   /* const handlePayment = async (event) => {
     event.preventDefault();
