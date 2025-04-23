@@ -41,7 +41,7 @@ function UjTermek({ existingVideos = [] }) {
     const { id, value, files } = event.target;
     setTermek((prev) => ({
       ...prev,
-      [id]: id === "kep" ? files[0] : value,
+      [id]: id === "kep" || id === "url" ? files[0] : value
     }));
   }
 
@@ -71,22 +71,39 @@ function UjTermek({ existingVideos = [] }) {
     });
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData();
     formData.append("cim", termek.cim);
     formData.append("bemutatas", termek.bemutatas);
     formData.append("leiras", termek.leiras);
-    formData.append("url", termek.url);
+    formData.append("url", termek.url); // fájlként várjuk már
     formData.append("hozzaferesi_ido", termek.hozzaferesi_ido);
     formData.append("ar", termek.ar);
     formData.append("jelzes", termek.jelzes);
     formData.append("cimkek", JSON.stringify(termek.cimkek));
     if (termek.kep) formData.append("kep", termek.kep);
-    if (postData) {
-      postData("/api/termekek", formData);
+  
+    try {
+      await postData("/api/termekek", formData);
+      alert("Sikeres feltöltés!"); // ✅ 1. lépés
+      // ✅ 2. lépés: mezők kiürítése
+      setTermek({
+        cim: "",
+        bemutatas: "",
+        ar: 10,
+        leiras: "",
+        hozzaferesi_ido: 30,
+        kep: "",
+        url: "",
+        cimkek: [],
+      });
+    } catch (error) {
+      alert("Hiba történt a feltöltéskor.");
+      console.error(error);
     }
   }
+  
 
   return (
     <form onSubmit={handleSubmit} className="video-form">
@@ -166,7 +183,7 @@ function UjTermek({ existingVideos = [] }) {
       {!useExistingVideos && (
         <div className="form-group">
           <label htmlFor="url">Videó linkje</label>
-          <input type="text" id="url" placeholder="Videó linkje" value={termek.url} onChange={handleChange} />
+          <input type="file" id="url" accept="video/*" onChange={handleChange} />
         </div>
       )}
 

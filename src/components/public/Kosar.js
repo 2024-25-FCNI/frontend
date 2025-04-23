@@ -37,13 +37,25 @@ function Kosar({ toggleKosar }) {
           kosar.map((termek) => (
             <li className="kosar-item" key={termek.termek_id}>
               <div className="kosar-img-container">
-                <img src={termek.kep} alt={termek.cim} className="kosar-img" />
+                <img
+                  src={
+                    termek.kep
+                      ? `http://localhost:8000/kepek/${termek.kep}`
+                      : "/placeholder.jpg"
+                  }
+                  alt={termek.cim}
+                  className="kosar-img"
+                  onError={(e) => (e.target.src = "/placeholder.jpg")}
+                />
               </div>
               <div className="kosar-info">
                 <span className="termek-cim">{termek.cim}</span>
                 <span className="termek-ar">{termek.ar} Ft</span>
               </div>
-              <button className="remove-btn" onClick={() => handleRemove(termek.termek_id)}>
+              <button
+                className="remove-btn"
+                onClick={() => handleRemove(termek.termek_id)}
+              >
                 <FaTimes />
               </button>
             </li>
@@ -55,9 +67,11 @@ function Kosar({ toggleKosar }) {
 
       {total > 0 && (
         <>
-          <p className="fizetendo">Fizetendő: <span>{total} Ft</span></p>
-          <button 
-            className="checkout-btn" 
+          <p className="fizetendo">
+            Fizetendő: <span>{total} Ft</span>
+          </p>
+          <button
+            className="checkout-btn"
             onClick={handleCheckout}
             disabled={user && user.role === 0}
           >

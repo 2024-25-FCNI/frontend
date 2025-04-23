@@ -2,34 +2,33 @@ import React, { useContext, useState, useEffect } from "react";
 import { KosarContext } from "../contexts/KosarContext";
 import { myAxios } from "../api/axios";
 import { FaTimes } from "react-icons/fa";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 
 export default function Fizetes() {
   const { kosar, total, torolTermek, uritKosar } = useContext(KosarContext);
   const [sikeresVasarlas, setSikeresVasarlas] = useState(false);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
-   const handlePayment = async (event) => {
+  const handlePayment = async (event) => {
     event.preventDefault();
 
     try {
-      await myAxios.get("/sanctum/csrf-cookie"); 
+      await myAxios.get("/sanctum/csrf-cookie");
 
       const response = await myAxios.post("/api/send-payment-confirmation", {
         kosar,
         total,
       });
 
-      console.log("Sikeres fizetés:", response.data.message); 
+      console.log("Sikeres fizetés:", response.data.message);
 
-      
       uritKosar();
       setSikeresVasarlas(true);
     } catch (error) {
       console.error("Hiba történt a fizetés során:", error);
       alert("Nem sikerült elküldeni a visszaigazoló e-mailt.");
     }
-  }; 
+  };
 
   /* const handlePayment = async (event) => {
     event.preventDefault();
@@ -75,21 +74,17 @@ export default function Fizetes() {
     uritKosar();
     setSikeresVasarlas(true);
   }; */
-  
-  
-  useEffect(() => {
-    
 
+  useEffect(() => {
     if (sikeresVasarlas) {
       const timer = setTimeout(() => {
         navigate("/");
-      }, 2000); 
+      }, 2000);
 
-      return () => clearTimeout(timer); 
+      return () => clearTimeout(timer);
     }
   }, [sikeresVasarlas, navigate]);
 
- 
   if (sikeresVasarlas) {
     return (
       <div className="container mt-5 text-center">
@@ -118,7 +113,11 @@ export default function Fizetes() {
               <tr key={termek.termek_id}>
                 <td>
                   <img
-                    src={termek.kep}
+                    src={
+                      termek.kep
+                        ? `http://localhost:8000/kepek/${termek.kep}`
+                        : "/placeholder.jpg"
+                    }
                     alt={termek.cim}
                     style={{
                       width: "50px",
@@ -159,22 +158,42 @@ export default function Fizetes() {
       {/* Fizetési űrlap */}
       <form onSubmit={handlePayment}>
         <div className="mb-3">
-          <label htmlFor="name" className="form-label">Teljes név</label>
+          <label htmlFor="name" className="form-label">
+            Teljes név
+          </label>
           <input type="text" className="form-control" id="name" required />
         </div>
         <div className="mb-3">
-          <label htmlFor="cardNumber" className="form-label">Kártyaszám</label>
-          <input type="text" className="form-control" id="cardNumber" required />
+          <label htmlFor="cardNumber" className="form-label">
+            Kártyaszám
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="cardNumber"
+            required
+          />
         </div>
         <div className="mb-3">
-          <label htmlFor="expirationDate" className="form-label">Lejárati dátum</label>
-          <input type="text" className="form-control" id="expirationDate" required />
+          <label htmlFor="expirationDate" className="form-label">
+            Lejárati dátum
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="expirationDate"
+            required
+          />
         </div>
         <div className="mb-3">
-          <label htmlFor="cvv" className="form-label">CVV</label>
+          <label htmlFor="cvv" className="form-label">
+            CVV
+          </label>
           <input type="text" className="form-control" id="cvv" required />
         </div>
-        <button type="submit" className="btn btn-success">Fizetés</button>
+        <button type="submit" className="btn btn-success">
+          Fizetés
+        </button>
       </form>
     </div>
   );
