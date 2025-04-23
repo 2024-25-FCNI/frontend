@@ -4,7 +4,7 @@ import useAuthContext from "../contexts/AuthContext";
 import { KosarContext } from "../contexts/KosarContext";
 import Kosar from "../components/public/Kosar";
 import { FaShoppingBag, FaBars, FaTimes } from "react-icons/fa";
-import logo from "./wvlogo.png";
+import logo from "../kepek/wvlogo.png";
 import "../styles/Navigacio.css";
 
 export default function Navigacio() {

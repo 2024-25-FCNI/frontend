@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css"; // AOS CSS importálása
 import "../styles/Bemutatkozas.css";
-import b1 from "./b1.jpg";
-import b2 from "./b2.jpg";
+import b1 from "../kepek/b1.jpg";
+import b2 from "../kepek/b2.jpg";
+
 
 export default function Bemutatkozas() {
   // 🔹 AOS inicializálás, hogy az animációk működjenek

@@ -93,7 +93,7 @@
     font-size: 2em;
     font-weight: bold;
     margin-bottom: 2em;
-    opacity: 0;
+   /*  opacity: 0; */
     transform: translateY(50px);
     transition: opacity 1s ease-in-out, transform 1s ease-in-out;
 }
@@ -109,6 +109,10 @@
     margin-top: 2em;
     transition: opacity 1s ease-in-out, transform 1s ease-in-out;
 }
+.product-card a {
+    text-decoration: none;
+    color: inherit;
+}
 
 .scroll-animate .product-card {
     opacity: 1;
@@ -120,7 +124,7 @@
     border-radius: 3em;
     text-align: center;
     width: 100%;
-    max-width: 300px; /* <-- módosítva: szélesebb legyen */
+    max-width: 300px;
     height: 400px;
     transition: 0.3s ease-in-out;
     overflow: hidden;
@@ -130,11 +134,13 @@
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
 }
 
+.product-box a {
+    text-decoration: none;
+}
 .product-box h3,
 .product-box h2,
 .product-box p {
     color: black;
-    text-decoration: none; /* <-- hozzáadva: ne legyen aláhúzás */
 }
 
 .product-box img {

@@ -43,7 +43,7 @@ function Admin() {
     <main className="row g-5" style={{ margin: "20px" }}>
       <section style={{ marginBottom: "20px" }}>
         {/* ✅ `postData` átadása a `UjTermek` komponensnek */}
-        <UjTermek postData={postData} />
+        <UjTermek postData={postData} existingVideos={[]} />
       </section>
       <article style={{ marginBottom: "20px", padding: "10px" }}>
         {apiData ? <TermekekAdmin termekek={apiData} /> : "Nincs adat"}
