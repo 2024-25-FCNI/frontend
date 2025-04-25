@@ -3,10 +3,10 @@ import useAuthContext from "../contexts/AuthContext";
 import { ApiContext } from "../contexts/ApiContext";
 import { Link } from "react-router-dom";
 import "../styles/Kezdolap.css";
-import viviImg from "./vivi.jpeg";
-import v from "./v.jpg";
-import i from "./i.png";
-import f from "./f.png";
+import viviImg from "../kepek/vivi.jpeg";
+import f from "../kepek/f.png";
+import v from "../kepek/v.jpg";
+import i from "../kepek/i.png";
 
 export default function Kezdolap() {
   const { user } = useAuthContext();
@@ -60,7 +60,7 @@ export default function Kezdolap() {
         </div>
       </section>
 
-      <section className="products-section container-fluid">
+      <section className="products-section container-fluid scroll-animate">
         <h2 className="animate-up">Mozgás, Erő, Szenvedély –<br /> Minden, ami a fejlődésedhez kell!</h2>
         <div className="row">
           <div className="col-md-4 col-sm-12 product-card animate-up delay-1">
@@ -77,7 +77,7 @@ export default function Kezdolap() {
               <div className="product-box">
                 <img src={v} alt="csomagok" className="book-image" />
                 <h3>Videós csomagok</h3>
-                <p>Komplex edzésprogramok a rugalmasság, koordináció és erő fejlesztéséhez!</p>
+                <p>Komplex edzésprogramok a rugalmasság és erő fejlesztéséhez!</p>
               </div>
             </Link>
           </div>
