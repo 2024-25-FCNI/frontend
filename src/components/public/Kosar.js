@@ -41,11 +41,11 @@ function Kosar({ toggleKosar }) {
                   src={
                     termek.kep
                       ? `http://localhost:8000/kepek/${termek.kep}`
-                      : "/placeholder.jpg"
+                      : "/placeholder.png"
                   }
                   alt={termek.cim}
                   className="kosar-img"
-                  onError={(e) => (e.target.src = "/placeholder.jpg")}
+                  onError={(e) => (e.target.src = "/placeholder.png")}
                 />
               </div>
               <div className="kosar-info">

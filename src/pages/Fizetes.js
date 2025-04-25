@@ -180,7 +180,7 @@ export default function Fizetes() {
                     src={
                       termek.kep
                         ? `http://localhost:8000/kepek/${termek.kep}`
-                        : "/placeholder.jpg"
+                        : "/placeholder.png"
                     }
                     alt={termek.cim}
                     style={{

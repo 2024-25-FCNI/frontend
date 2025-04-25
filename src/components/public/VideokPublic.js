@@ -19,12 +19,12 @@ const VideokPublic = (props) => {
               src={
                 props.termek.kep
                   ? `http://localhost:8000/kepek/${props.termek.kep}`
-                  : "/placeholder.jpg"
+                  : "/placeholder.png"
               }
               alt={props.termek.cim}
               className="card-img-top rounded"
               style={{ maxHeight: "200px", objectFit: "cover", width: "100%" }}
-              onError={(e) => (e.target.src = "/placeholder.jpg")}
+              onError={(e) => (e.target.src = "/placeholder.png")}
             />
           </div>
 

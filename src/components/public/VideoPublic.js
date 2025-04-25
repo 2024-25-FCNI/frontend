@@ -14,7 +14,7 @@ export function TermekPublic(props) {
   // 📸 Helyes képútvonal kialakítása
   const kepUrl = props.termek.kep
     ? `/kepek/${props.termek.kep}`
-    : "/placeholder.jpg";
+    : "/placeholder.png";
 
   return (
     <div className="col">
