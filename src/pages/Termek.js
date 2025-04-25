@@ -12,6 +12,7 @@ export default function Termek() {
   const { user } = useAuthContext();
 
   useEffect(() => {
+    // Termék betöltés
     axios
       .get(`http://localhost:8000/api/termekek/${termekId}`)
       .then((response) => {
@@ -22,21 +23,23 @@ export default function Termek() {
         console.error("Hiba a termék lekérdezésekor:", error);
       });
 
+    // Vásárlás ellenőrzés csak ha van bejelentkezett felhasználó
     if (user?.id) {
       axios
         .get(`http://localhost:8000/api/ellenoriz-vasarlas/${termekId}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-          },
+          withCredentials: true,
         })
         .then((response) => {
           setVasarolt(response.data.megvette);
         })
         .catch((error) => {
-          console.error("Hiba a vásárlás ellenőrzésekor:", error);
+          console.error("Vásárlás ellenőrzés hiba:", error);
         });
+    } else {
+      // 🔹 Ha nincs user, alapértelmezés szerint nincs jogosultság
+      setVasarolt(false);
     }
-  }, [termekId]); // 🔹 `user` eltávolítva, így nincs végtelen újrahívás
+  }, [termekId, user]);
 
   // 🔹 Ha az API még nem töltötte be az adatokat, jelenítsünk meg egy "Betöltés..." üzenetet
   if (!termek) {
@@ -45,9 +48,8 @@ export default function Termek() {
 
   // 🔹 Ellenőrizzük, hogy a `termek.kep` létezik-e, mielőtt használjuk
   const imageUrl = termek.kep
-  ? `http://localhost:8000/kepek/${termek.kep}`
-  : "/placeholder.jpg";
-
+    ? `http://localhost:8000/kepek/${termek.kep}`
+    : "/placeholder.jpg";
 
   return (
     <div className="container mt-5">
@@ -86,14 +88,18 @@ export default function Termek() {
 
       <div className="mt-4">
         {vasarolt ? (
-          <iframe
-            src={termek.url}
+          <video
+            src={`http://localhost:8000/videok/${termek.url}`}
             width="640"
             height="360"
-            allowFullScreen
-          ></iframe>
+            controls
+            controlsList="nodownload"
+            disablePictureInPicture
+            onContextMenu={(e) => e.preventDefault()}
+            style={{ borderRadius: "1em" }}
+          />
         ) : (
-          <p>Vásárlás után lesz elérhető a videó.</p>
+          <p>A videó csak vásárlás után érhető el.</p>
         )}
       </div>
     </div>

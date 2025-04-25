@@ -58,39 +58,37 @@ export default function Fizetes() {
 
 
 
-   const handlePayment = async (event) => {
+  const handlePayment = async (event) => {
     event.preventDefault();
-
+  
     try {
       await myAxios.get("/sanctum/csrf-cookie");
-
-      const response = await myAxios.post("/api/send-payment-confirmation", {
+  
+      // 🔹 1. Vásárlási adatok mentése
+      await myAxios.post("/api/vasarlas", {
+        vasarlas: {
+          osszeg: total,
+          datum: new Date().toISOString().split("T")[0],
+        },
+        tetelek: kosar.map(termek => ({
+          termek_id: termek.termek_id
+        }))
+      });
+  
+      // 🔹 2. E-mail küldés
+      await myAxios.post("/api/send-payment-confirmation", {
         kosar,
         total,
       });
-
-      console.log("Sikeres fizetés:", response.data.message);
-
+  
       uritKosar();
       setSikeresVasarlas(true);
     } catch (error) {
       console.error("Hiba történt a fizetés során:", error);
-      alert("Nem sikerült elküldeni a visszaigazoló e-mailt.");
+      alert("Nem sikerült a vásárlás vagy az e-mail küldés.");
     }
-
-
-
-    await myAxios.post("/api/vasarlas", {
-      vasarlas: {
-        osszeg: total,
-        datum: new Date().toISOString().split("T")[0],
-      },
-      tetelek: kosar.map(termek => ({
-        termek_id: termek.termek_id
-      }))
-    });
-    
-  }; 
+  };
+  
 
   
 
