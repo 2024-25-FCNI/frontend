@@ -79,14 +79,15 @@ export default function Fizetes() {
     }
 
 
+
     await myAxios.post("/api/vasarlas", {
       vasarlas: {
         osszeg: total,
         datum: new Date().toISOString().split("T")[0],
       },
       tetelek: kosar.map(termek => ({
-        termek_id: termek.termek_id,
-      })),
+        termek_id: termek.termek_id
+      }))
     });
     
   }; 
