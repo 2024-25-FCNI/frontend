@@ -9,133 +9,81 @@ export default function Fizetes() {
   const [sikeresVasarlas, setSikeresVasarlas] = useState(false);
   const navigate = useNavigate();
 
- /*  const handlePayment = async (event) => {
-    event.preventDefault();
-  
-    try {
-      await myAxios.get("/sanctum/csrf-cookie");
-    } catch (e) {
-      console.error("CSRF hiba:", e);
-      alert("CSRF hiba");
-      return;
-    }
-  
-    try {
-      // 🔹 Vásárlás mentése adatbázisba
-      await myAxios.post("/api/vasarlas", {
-        vasarlas: {
-          osszeg: total,
-          datum: new Date().toISOString().split("T")[0],
-        },
-        tetelek: kosar.map(termek => ({
-          termek_id: termek.termek_id,
-          lejarat_datum: new Date(Date.now() + termek.hozzaferesi_ido * 24 * 60 * 60 * 1000)
-            .toISOString()
-            .split("T")[0],
-        })),
-      });
-    } catch (e) {
-      console.error("Vásárlás mentési hiba:", e.response?.data || e);
-      alert("Hiba a vásárlás mentésekor.");
-      return;
-    }
-  
-    try {
-      // 🔹 E-mail küldés
-      await myAxios.post("/api/send-payment-confirmation", {
-        kosar,
-        total,
-      });
-    } catch (e) {
-      console.error("Emailküldési hiba:", e.response?.data || e);
-      alert("Nem sikerült visszaigazoló emailt küldeni.");
-      return;
-    }
-  
-    uritKosar();
-    setSikeresVasarlas(true);
-  }; */
-
 
 
   const handlePayment = async (event) => {
     event.preventDefault();
   
+    let folyamat = "Kezdés"; // Állapot követés
+  
     try {
+      folyamat = "CSRF cookie lekérése";
       await myAxios.get("/sanctum/csrf-cookie");
   
+      folyamat = "Vásárlási adatok mentése";
+      const vasarlasValasz = await myAxios.post("/api/vasarlas", {
+        vasarlas: {
+          osszeg: total,
+          datum: new Date().toISOString().split("T")[0],
+        },
+        tetelek: kosar.map((termek) => ({
+          termek_id: termek.termek_id,
+        })),
+      });
+  
+      if (vasarlasValasz.status !== 201) {
+        throw new Error("A vásárlás mentése nem sikerült (nem 201-es státuszkód).");
+      }
+  
+      folyamat = "E-mail küldés";
+      await myAxios.post("/api/send-payment-confirmation", {
+        kosar,
+        total,
+      });
+  
+      folyamat = "Kosár ürítése és sikeres vásárlás jelzése";
+      uritKosar();
+      setSikeresVasarlas(true);
+  
+    } catch (error) {
+      console.error(`❌ Hiba történt a fizetés során. Folyamat: ${folyamat}`, error);
+      alert(`Hiba történt a következő lépésnél: ${folyamat}. Kérlek, próbáld újra!`);
+    }
+  };
+  
+/* 
+ const handlePayment = async (event) => {
+    event.preventDefault();
+
+    try {
+      await myAxios.get("/sanctum/csrf-cookie");
+
       // 🔹 1. Vásárlási adatok mentése
       await myAxios.post("/api/vasarlas", {
         vasarlas: {
           osszeg: total,
           datum: new Date().toISOString().split("T")[0],
         },
-        tetelek: kosar.map(termek => ({
-          termek_id: termek.termek_id
-        }))
+        tetelek: kosar.map((termek) => ({
+          termek_id: termek.termek_id,
+        })),
       });
-  
+
       // 🔹 2. E-mail küldés
       await myAxios.post("/api/send-payment-confirmation", {
         kosar,
         total,
       });
-  
+
       uritKosar();
       setSikeresVasarlas(true);
     } catch (error) {
       console.error("Hiba történt a fizetés során:", error);
       alert("Nem sikerült a vásárlás vagy az e-mail küldés.");
     }
-  };
-  
+  };  */
 
-  
-
-  /* const handlePayment = async (event) => {
-    event.preventDefault();
-  
-    try {
-      await myAxios.get("/sanctum/csrf-cookie");
-    } catch (e) {
-      console.error("CSRF hiba:", e);
-      alert("CSRF hiba");
-      return;
-    }
-  
-    try {
-      await myAxios.post("/api/vasarlas", {
-        vasarlas: {
-          osszeg: total,
-          datum: new Date().toISOString().split("T")[0],
-        },
-        tetelek: kosar.map(termek => ({
-          termek_id: termek.termek_id,
-          lejarat_datum: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000)
-            .toISOString()
-            .split("T")[0],
-        })),
-      });
-    } catch (e) {
-      console.error("Vásárlás mentési hiba:", e.response?.data || e);
-      alert("Hiba a vásárlás mentésekor.");
-      return;
-    }
-  
-    try {
-      await myAxios.post("/api/send-payment-confirmation", {
-        kosar,
-        total,
-      });
-    } catch (e) {
-      console.error("Emailküldési hiba:", e.response?.data || e);
-      alert("Nem sikerült visszaigazoló emailt küldeni.");
-      return;
-    }
-  
-    uritKosar();
-    setSikeresVasarlas(true);
-  }; */
+ 
 
   useEffect(() => {
     if (sikeresVasarlas) {
@@ -223,7 +171,14 @@ export default function Fizetes() {
           <label htmlFor="name" className="form-label">
             Teljes név
           </label>
-          <input type="text" className="form-control" id="name" required />
+          <input
+            type="text"
+            className="form-control"
+            id="name"
+            required
+            pattern="[A-Za-zÁÉÍÓÖŐÚÜŰáéíóöőúüű]{2,}(?: [A-Za-zÁÉÍÓÖŐÚÜŰáéíóöőúüű]{2,})+"
+            title="Adj meg legalább két nevet, pl. Kiss Béla"
+          />
         </div>
         <div className="mb-3">
           <label htmlFor="cardNumber" className="form-label">
@@ -234,6 +189,8 @@ export default function Fizetes() {
             className="form-control"
             id="cardNumber"
             required
+            pattern="\d{16}"
+            title="Adj meg 16 számjegyet szóköz nélkül"
           />
         </div>
         <div className="mb-3">
@@ -245,13 +202,22 @@ export default function Fizetes() {
             className="form-control"
             id="expirationDate"
             required
+            pattern="(0[1-9]|1[0-2])\/\d{2}"
+            title="Formátum: MM/YY, pl. 08/25"
           />
         </div>
         <div className="mb-3">
           <label htmlFor="cvv" className="form-label">
             CVV
           </label>
-          <input type="text" className="form-control" id="cvv" required />
+          <input
+            type="text"
+            className="form-control"
+            id="cvv"
+            required
+            pattern="\d{3,4}"
+            title="3 vagy 4 számjegy"
+          />
         </div>
         <button type="submit" className="btn btn-success">
           Fizetés
@@ -260,3 +226,10 @@ export default function Fizetes() {
     </div>
   );
 }
+
+
+
+/* Teljes név	Legalább 2 szó betűkkel, pl. "Kiss Béla"	[A-Za-zÁÉÍÓÖŐÚÜŰáéíóöőúüű]{2,}(?: [A-Za-zÁÉÍÓÖŐÚÜŰáéíóöőúüű]{2,})+
+Kártyaszám	16 számjegy, szóköz vagy kötőjel nélkül	\d{16}
+Lejárati dátum	MM/YY formátum, pl. 08/25	`(0[1-9]
+CVV	3 vagy 4 számjegy	\d{3,4} */

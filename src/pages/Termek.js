@@ -68,7 +68,7 @@ export default function Termek() {
         </div>
         <div className="col-md-6">
           <h2>{termek.cim}</h2>
-          <p>{termek.leiras}</p>
+          <p>{vasarolt ? termek.leiras : termek.bemutatas}</p>
           <p>
             <strong>Ár:</strong> {termek.ar} Ft
           </p>
