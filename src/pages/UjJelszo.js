@@ -1,32 +1,34 @@
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { myAxios } from "../api/axios";
 
 export default function UjJelszo() {
   const [searchParams] = useSearchParams();
-  const token = searchParams.get("token"); // Token kinyerése az URL-ből
+  const token = searchParams.get("token"); // Token az URL-ből
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage("");
     setError("");
 
     try {
-      const response = await myAxios.post("/api/reset-password", {
+      await myAxios.post("/api/reset-password", {
         email,
         password,
         password_confirmation: passwordConfirm,
         token,
       });
 
-      setMessage(response.data.message);
+      alert("Sikeres jelszócsere! Jelentkezz be az új jelszóval.");
+      navigate("/bejelentkezes"); // Átirányítás a login oldalra
     } catch (err) {
-      setError("Hiba történt a jelszó visszaállításakor.");
+      console.error("Hiba a jelszó visszaállításkor:", err);
+      setError("Hiba történt a jelszó visszaállításakor. Ellenőrizd az adatokat.");
     }
   };
 
@@ -54,7 +56,7 @@ export default function UjJelszo() {
             onChange={(e) => setPassword(e.target.value)}
             className="form-control"
             id="password"
-            placeholder="Adja meg az új jelszót"
+            placeholder="Írd be az új jelszavad"
             required
           />
         </div>
@@ -76,7 +78,7 @@ export default function UjJelszo() {
           </button>
         </div>
       </form>
-      {message && <p className="text-success text-center mt-3">{message}</p>}
+
       {error && <p className="text-danger text-center mt-3">{error}</p>}
     </div>
   );
