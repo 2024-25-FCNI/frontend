@@ -120,7 +120,7 @@ export default function Fizetes() {
                     <td>
                       <button
                         className="btn btn-danger btn-sm"
-                        onClick={() => {
+                        onClick={(e) => {
                           e.stopPropagation();
                           torolTermek(termek.termek_id);
                         }}
