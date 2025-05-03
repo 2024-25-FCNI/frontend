@@ -64,7 +64,7 @@ export default function Kezdolap() {
         <h2 className="animate-up">Mozgás, Erő, Szenvedély –<br /> Minden, ami a fejlődésedhez kell!</h2>
         <div className="row">
           <div className="col-md-4 col-sm-12 product-card animate-up delay-1">
-            <Link to="/videok" >
+          <Link to="/videok" style={{ textDecoration: "none", color: "black" }}>
               <div className="product-box">
                 <img src={v} alt="videok" className="book-image" />
                 <h3>Videók</h3>
@@ -73,7 +73,7 @@ export default function Kezdolap() {
             </Link>
           </div>
           <div className="col-md-4 col-sm-12 product-card animate-up delay-2">
-            <Link to="/videok" >
+          <Link to="/videok" style={{ textDecoration: "none", color: "black" }}>
               <div className="product-box">
                 <img src={v} alt="csomagok" className="book-image" />
                 <h3>Videós csomagok</h3>
@@ -82,7 +82,7 @@ export default function Kezdolap() {
             </Link>
           </div>
           <div className="col-md-4 col-sm-12 product-card animate-up delay-3">
-            <Link to="/konyv" >
+            <Link to="/konyv"  style={{ textDecoration: "none", color: "black" }}>
               <div className="product-box">
                 <img src={v} alt="konyv" className="book-image" />
                 <h3>Könyv</h3>
