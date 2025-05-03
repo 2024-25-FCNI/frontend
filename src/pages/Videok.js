@@ -5,20 +5,20 @@ import useAuthContext from "../contexts/AuthContext";
 import { ApiContext } from "../contexts/ApiContext";
 import VideokPublic from "../components/public/VideokPublic";
 import Kereso from "../components/public/Kereso";
-
+ 
 export default function Videok() {
   const { getData } = useContext(ApiContext);
   const [termekek, setTermekek] = useState([]);
   const [filteredTermekek, setFilteredTermekek] = useState([]);
   const [activeTab, setActiveTab] = useState("videok");
-  
+ 
   useEffect(() => {
     getData("/api/termekek", (adatok) => {
       setTermekek(adatok);
       setFilteredTermekek(adatok);
     });
   }, [getData]);
-
+ 
   return (
     <div className="container mt-4">
       {/* Tabs */}
@@ -42,7 +42,7 @@ export default function Videok() {
           </button>
         </li>
       </ul>
-
+ 
       {/* Content wrapper with background */}
       <div className="p-4 custom-wrapper">
         {/* Search bar centered */}
@@ -51,7 +51,7 @@ export default function Videok() {
             <Kereso termekek={termekek} setFilteredTermekek={setFilteredTermekek} />
           </div>
         </div>
-
+ 
         {/* Termékek listázása */}
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 p-3">
           {filteredTermekek.map((termek) => (

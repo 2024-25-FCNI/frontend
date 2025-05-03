@@ -3,7 +3,7 @@
   background-color: #fcede8;
   border-radius: 0 15px 15px 15px;
 }
-
+ 
 /* 📌 Keresőmező */
 .search-container {
   display: flex;
@@ -14,10 +14,10 @@
   background-color: white;
   border-radius: 2em;
   margin: auto;
-  
-  position: relative; /* 🔹 FONTOS: Az ikon pozícióját ehhez igazítjuk */
+ 
+  position: relative;
 }
-
+ 
 .search-input {
   flex-grow: 1;
   border: none;
@@ -27,8 +27,8 @@
   border-radius: 2em;
   background: transparent;
 }
-
-
+ 
+ 
 .search-button {
   background: none;
   border: none;
@@ -42,38 +42,38 @@
   top: 50%;
   transform: translateY(-50%);
 }
-
+ 
 /* 🔹 Kereső ikon */
 .search-button svg {
   color: black;
   font-size: 1.2em;
   transition: color 0.2s ease-in-out;
 }
-
+ 
 /* 🔹 Hover állapot */
 .search-button:hover svg {
   color: #f7a69b;
 }
-
+ 
 @media (max-width: 600px) {
   .search-container {
     width: 100%;
     max-width: none;
     margin: 0 auto;
-    padding: 0.4em 0.8em; 
+    padding: 0.4em 0.8em;
   }
   .search-button {
     padding: 0.4em;
-    right: 0.6em; 
+    right: 0.6em;
   }
-
+ 
   .search-button svg {
-    font-size: 1.1em; 
+    font-size: 1.1em;
   }
 }
-
-
-
+ 
+ 
+ 
 .videok-card {
   padding: 1.5em;
   background-color: #f7a69b;
@@ -83,17 +83,17 @@
   flex-direction: column;
   justify-content: space-between;
 }
-
+ 
 .videok-card img {
   max-width: 100%;
   height: auto;
   border-radius: 0.5em;
 }
-
+ 
 /* .videok-card .card-body {
-  flex-grow: 1; 
+  flex-grow: 1;
 } */
-
+ 
 .cart-button {
   width: 2em;
   height: 2em;
@@ -104,32 +104,32 @@
   border: none;
   cursor: pointer;
 }
-
+ 
 .cart-icon {
-  font-size: 1.4em; 
+  font-size: 1.4em;
   color: #333;
   transition: color 0.2s ease-in-out;
 }
-
-
+ 
+ 
 @media (max-width: 1200px) {
   .col-lg-4 {
-    width: 33.3333%; 
-  } 
+    width: 33.3333%;
+  }
 }
-
+ 
 @media (max-width: 999px) {
   .col-md-6 {
     width: 50%;
-  } 
+  }
 }
-
+ 
 @media (max-width: 600px) {
   .col-12 {
     width: 100%;
-  } 
+  }
   .search-container {
-    width: 100%; 
+    width: 100%;
     max-width: none;
     margin: 0 auto;
   }

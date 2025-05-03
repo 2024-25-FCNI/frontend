@@ -1,0 +1,251 @@
+* {
+    box-sizing: border-box;
+  }
+   
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  .profil-container {
+      background: #fdebe5;
+      font-family: "Poppins", sans-serif;
+      border-radius: 2em;
+      margin: 3em auto;
+      padding: 2em;
+      max-width: 1200px;
+    }
+   
+    /* Tartalom blokk */
+    .profil-tartalom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2em;
+      flex-wrap: nowrap;
+    }
+   
+    /* Profilkártya */
+    .profilkartya {
+      background: #fcede8;
+      border-radius: 2em;
+      padding: 2em;
+      text-align: center;
+      max-width: 350px;
+      flex-shrink: 0;
+      border: 2px solid #e49788;
+    }
+   
+   
+    .profilkep {
+      width: 10em;
+      height: 10em;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid #e49788;
+      background: white;
+      margin-bottom: 1em;
+    }
+   
+    /* Profil szövegek */
+    .profilkartya h5 {
+      margin:auto;
+      color: #3a2a28;
+      font-weight: 600;
+      font-size: 1em;
+    }
+   
+    .profilkartya p {
+      font-size: 0.9em;
+      color: #3a2a28;
+      margin-bottom: 1.5em;
+    }
+   
+   
+    .custom-file-upload {
+      text-align: center;
+      margin-bottom: 1em;
+    }
+   
+    .custom-file-upload input[type="file"] {
+      display: none;
+    }
+   
+    .custom-file-upload label {
+      display: inline-block;
+      background-color: #eaa79b;
+      color: white;
+      padding: 0.6em 1.5em;
+      font-size: 0.9em;
+      font-weight: bold;
+      border-radius: 1.5em;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+    }
+   
+    .custom-file-upload label:hover {
+      background-color: #d0897f;
+    }
+   
+   
+    .custom-logout-button {
+      background: #e95050;
+      border: none;
+      padding: 0.4em 1em;
+      border-radius: 2em;
+      font-weight: bold;
+      font-size: 0.8em;
+      color: white;
+      width: fit-content;
+      display: block;
+      margin: 0 auto;
+      box-shadow: none;
+      outline: none;
+    }
+   
+    .custom-logout-button:hover {
+      background: #d43e3e;
+    }
+   
+    /* Videók rész */
+    .videoszekcio {
+      flex-grow: 1;
+      min-width: 0;
+    }
+   
+    .videok-cim {
+      font-weight: 600;
+      color: #3a2a28;
+      font-size: 1.3em;
+      margin: 0 0 1em 0;
+      text-align: center;
+    }
+   
+    .videolista {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+    }
+   
+    .videokartya {
+      background: #fdebe5;
+      border: 2px solid #e49788;
+      border-radius: 2em;
+      padding: 1em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 160px;
+      transition: transform 0.2s ease-in-out;
+      cursor: pointer;
+    }
+   
+    .videokartya:hover {
+      transform: scale(1.01);
+    }
+   
+    .videokartya img {
+      height: 100%;
+      width: 130px;
+      object-fit: cover;
+      border-radius: 1em;
+      flex-shrink: 0;
+    }
+   
+    .videokartya-content {
+      flex-grow: 1;
+      padding: 0 1em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+   
+    .videokartya-title {
+      font-weight: bold;
+      color: #3a2a28;
+      margin-bottom: 0.3em;
+      font-size: 1em;
+    }
+   
+    .videokartya-description {
+      font-size: 0.9em;
+      color: #3a2a28;
+    }
+   
+    .videokartya-date {
+      font-size: 0.8em;
+      color: #3a2a28;
+      white-space: nowrap;
+      margin-left: 1em;
+    }
+   
+    /* Tablet nézet */
+    @media (max-width: 850px) {
+   
+      .profil-tartalom {
+        flex-direction: column;
+        align-items: center;
+      }
+   
+      .profilkartya {
+        margin:auto;
+      }
+   
+      .videokartya {
+        height: 130px;
+        padding: 0.8em;
+      }
+   
+      .videokartya img {
+        width: 100px;
+      }
+   
+      .videokartya-title {
+        font-size: 0.9em;
+      }
+   
+      .videokartya-description {
+        font-size: 0.8em;
+      }
+   
+      .videokartya-date {
+        font-size: 0.7em;
+      }
+    }
+   
+    /* Mobil nézet */
+    @media (max-width: 480px) {
+      .videokartya {
+        height: 110px;
+        padding: 0.6em;
+      }
+   
+      .videokartya img {
+        width: 80px;
+      }
+   
+      .videokartya-title {
+        font-size: 0.85em;
+      }
+   
+      .videokartya-description {
+        font-size: 0.75em;
+      }
+   
+      .videokartya-date {
+        font-size: 0.65em;
+        margin-left: 0.5em;
+      }
+   
+      .profilkep {
+        width: 110px;
+        height: 110px;
+      }
+   
+      .custom-logout-button,
+      .custom-file-upload label {
+        font-size: 0.8em;
+        padding: 0.4em 1em;
+      }
+    }
+   

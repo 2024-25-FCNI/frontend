@@ -1,0 +1,110 @@
+
+.fizetes-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #ffffff;
+    font-family: "Poppins", sans-serif;
+    padding: 2em;
+    margin: auto;
+}
+ 
+.fizetes-box {
+    background: #fcede8;
+    padding: 2em;
+    border-radius: 3em;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    width: 100%;
+    overflow-x: auto;
+    box-sizing: border-box;
+}
+ 
+/* Görgethető táblázat konténer telefonon */
+.fizetes-table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+}
+ 
+/* A táblázat belül fix szélességet használ a gördüléshez */
+.fizetes-table {
+    min-width: 600px;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+ 
+/* Oszlopszélességek */
+.fizetes-table th:nth-child(1),
+.fizetes-table td:nth-child(1) {
+    width: 20%;
+}
+ 
+.fizetes-table th:nth-child(2),
+.fizetes-table td:nth-child(2) {
+    width: 40%; /* Leírás – legyen szélesebb */
+}
+ 
+.fizetes-table th:nth-child(3),
+.fizetes-table td:nth-child(3) {
+    width: 20%;
+}
+ 
+.fizetes-table th:nth-child(4),
+.fizetes-table td:nth-child(4) {
+    width: 3em; /* csak az X */
+    text-align: center;
+}
+ 
+.fizetes-table th,
+.fizetes-table td {
+    vertical-align: middle;
+    word-wrap: break-word;
+    white-space: normal;
+    text-align: center;
+}
+ 
+ 
+.vegosszeg {
+    text-align: right;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 1em;
+    color: #3a2a28;
+}
+ 
+.fizetesi-urlap {
+    margin-top: 2em;
+}
+ 
+.fizetesi-urlap .form-label {
+    font-weight: 500;
+    color: #3a2a28;
+}
+ 
+.fizetesi-urlap .form-control {
+    padding: 0.5em 1em;
+    border-radius: 1.3em;
+    border: none;
+    font-size: 0.95em;
+    outline: none;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+}
+ 
+.fizetesi-urlap .form-control:focus {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+ 
+.fizetesi-urlap .btn-success {
+    background: #e49788;
+    border: none;
+    border-radius: 2em;
+    padding: 0.7em 1.5em;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out;
+}
+ 
+.fizetesi-urlap .btn-success:hover {
+    background: #c76c6c;
+}
