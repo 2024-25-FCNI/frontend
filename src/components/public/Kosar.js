@@ -36,18 +36,23 @@ function Kosar({ toggleKosar }) {
         {kosar.length > 0 ? (
           kosar.map((termek) => (
             <li className="kosar-item" key={termek.termek_id}>
-              <div className="kosar-img-container">
-                <img
-                  src={
-                    termek.kep
-                      ? `http://localhost:8000/kepek/${termek.kep}`
-                      : "/placeholder.png"
-                  }
-                  alt={termek.cim}
-                  className="kosar-img"
-                  onError={(e) => (e.target.src = "/placeholder.png")}
-                />
-              </div>
+              <img
+                src={
+                  termek.kep
+                    ? `http://localhost:8000/kepek/${termek.kep}`
+                    : "/placeholder.png"
+                }
+                alt={termek.cim}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "/placeholder.png";
+                }}
+                style={{
+                  width: "50px",
+                  height: "50px",
+                  objectFit: "cover",
+                }}
+              />
               <div className="kosar-info">
                 <span className="termek-cim">{termek.cim}</span>
                 <span className="termek-ar">{termek.ar} Ft</span>
