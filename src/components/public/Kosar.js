@@ -35,7 +35,15 @@ function Kosar({ toggleKosar }) {
       <ul className="list-group kosar-list">
         {kosar.length > 0 ? (
           kosar.map((termek) => (
-            <li className="kosar-item" key={termek.termek_id}>
+            <li
+            className="kosar-item"
+            key={termek.termek_id}
+            onClick={() => {
+              toggleKosar();
+              navigate(`/termek/${termek.termek_id}`);
+            }}
+            style={{ cursor: "pointer" }}
+            >
               <div className="kosar-img-container">
                 <img
                   src={
@@ -54,7 +62,10 @@ function Kosar({ toggleKosar }) {
               </div>
               <button
                 className="remove-btn"
-                onClick={() => handleRemove(termek.termek_id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleRemove(termek.termek_id);
+                }}
               >
                 <FaTimes />
               </button>

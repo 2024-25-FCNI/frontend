@@ -1,6 +1,9 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { myAxios } from "../api/axios";
 import { useNavigate } from "react-router-dom";
+
+import { KosarContext } from "./KosarContext";
+
  
 const AuthContext = createContext();
  
@@ -8,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState({});
+  const { uritKosar } = useContext(KosarContext);
   
  
   // CSRF token beszerzése
@@ -39,6 +43,7 @@ export const AuthProvider = ({ children }) => {
     try {
       await myAxios.post("/logout");
       setUser(null);
+      uritKosar();
       navigate("/"); // Kijelentkezés után átirányítás
     } catch (error) {
       console.error("Hiba történt a kijelentkezés során:", error);
@@ -75,11 +80,12 @@ export const AuthProvider = ({ children }) => {
     if (!user) {
       getUser();
     }
-  }, [user]); 
+  }, [user]);  
+  
 
-/*   useEffect(() => {
+  /* useEffect(() => {
     getUser(); // mindig lekéri frissen, ha betölt
-  }, []); */
+  }, []);  */
  
   return (
     <AuthContext.Provider value={{ logout, loginReg, errors, getUser, user }}>

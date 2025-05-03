@@ -18,17 +18,19 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+    <KosarProvider>
       <AuthProvider>
         <ApiProvider>
           <AdminProvider>
             <AnalitikaProvider>
-              <KosarProvider>
+              
                 <App />
-              </KosarProvider>
+              
             </AnalitikaProvider>
           </AdminProvider>
         </ApiProvider>
       </AuthProvider>
+      </KosarProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
