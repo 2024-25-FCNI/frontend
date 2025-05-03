@@ -56,6 +56,8 @@ export default function Fizetes() {
     }
   };
 
+ 
+
   useEffect(() => {
     if (sikeresVasarlas) {
       const timer = setTimeout(() => {
@@ -114,11 +116,14 @@ export default function Fizetes() {
                       />
                     </td>
                     <td>{termek.cim}</td>
-                    <td>{termek.ar}</td>
+                    <td>{termek.ar} Ft</td>
                     <td>
                       <button
                         className="btn btn-danger btn-sm"
-                        onClick={() => torolTermek(termek.termek_id)}
+                        onClick={() => {
+                          e.stopPropagation();
+                          torolTermek(termek.termek_id);
+                        }}
                       >
                         <FaTimes />
                       </button>

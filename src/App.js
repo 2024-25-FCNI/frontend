@@ -31,11 +31,9 @@ function App() {
                 <Route path="/bemutatkozas" element={<Bemutatkozas />} />
                 <Route path="/analitika" element={<Analitika />} />
                 <Route path="/elfelejtett-jelszo" element={<ElfelejtettJelszo />} />
-                
             </Route>
         </Routes>
       
     );
 }
-
 export default App;

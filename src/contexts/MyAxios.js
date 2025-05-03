@@ -7,11 +7,11 @@ export const myAxios = axios.create({
   withCredentials: true,
   headers: {
     "X-Requested-With": "XMLHttpRequest",
-    "Accept": "application/json", // 🔹 JSON válasz fogadása
+    "Accept": "application/json", 
   },
 });
  
-  // 🔹 CSRF token kiolvasása és beállítása minden kéréshez
+  //CSRF token kiolvasása és beállítása minden kéréshez
 myAxios.interceptors.request.use((config) => {
   const token = document.cookie.split('; ').find(row => row.startsWith('XSRF-TOKEN='));
   if (token) {
