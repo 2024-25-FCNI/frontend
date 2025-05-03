@@ -62,10 +62,10 @@ export default function Profil() {
         {/* Profilkártya */}
         <div className="profilkartya">
           <img
-            src={profilKep || "/profil-placeholder.jpg"}
+            src={profilKep || "/profil.png"}
             alt="Profilkép"
             className="profilkep"
-            onError={(e) => (e.target.src = "/profil-placeholder.jpg")}
+            onError={(e) => (e.target.src = "/profil.png")}
           />
           <h5>{user.name}</h5>
           <p>{user.email}</p>

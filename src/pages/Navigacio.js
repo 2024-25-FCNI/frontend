@@ -25,7 +25,7 @@ export default function Navigacio() {
     <>
       <nav className="custom-navbar">
         <div className="container-fluid d-flex justify-content-between align-items-center">
-          
+
           {/* 🔹 Bal oldal: Logó + Menüelemek */}
           <div className="left-nav d-flex align-items-center">
             <Link to="/" className="navbar-brand">
@@ -86,64 +86,64 @@ export default function Navigacio() {
             </ul>
           </div>
 
-          {/* 🔹 Mobil navigáció: Hamburger + Kosár */}
+          {/* 🔹 Mobil navigáció: Kosár + Hamburger */}
           <div className="mobile-nav">
-            <button className="hamburger-btn" onClick={toggleMenu}>
-              {menuOpen ? <FaTimes /> : <FaBars />}
-            </button>
             <button className="nav-link kosar-btn" onClick={toggleKosar}>
               <FaShoppingBag className="kosar-icon" /> ({kosar.length})
             </button>
+            <button className="hamburger-btn" onClick={toggleMenu}>
+              {menuOpen ? <FaTimes /> : <FaBars />}
+            </button>
           </div>
         </div>
+      </nav>
 
-        {/* 🔹 Lenyíló menü mobilon */}
-        {menuOpen && (
-          <div className="mobile-menu">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link className="nav-link" to="/bemutatkozas" onClick={toggleMenu}>
-                  Bemutatkozás
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/videok" onClick={toggleMenu}>
-                  Videók
-                </Link>
-              </li>
-              {user ? (
-                user.role === 0 ? (
-                  <>
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/admin" onClick={toggleMenu}>
-                        Admin
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/analitika" onClick={toggleMenu}>
-                        Analitika
-                      </Link>
-                    </li>
-                  </>
-                ) : (
+      {/* 🔹 Lenyíló menü mobilon */}
+      {menuOpen && (
+        <div className="mobile-menu">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <Link className="nav-link" to="/bemutatkozas" onClick={toggleMenu}>
+                Bemutatkozás
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/videok" onClick={toggleMenu}>
+                Videók
+              </Link>
+            </li>
+            {user ? (
+              user.role === 0 ? (
+                <>
                   <li className="nav-item">
-                    <Link className="nav-link" to="/profil" onClick={toggleMenu}>
-                      {user.name}
+                    <Link className="nav-link" to="/admin" onClick={toggleMenu}>
+                      Admin
                     </Link>
                   </li>
-                )
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/analitika" onClick={toggleMenu}>
+                      Analitika
+                    </Link>
+                  </li>
+                </>
               ) : (
                 <li className="nav-item">
-                  <Link className="nav-link" to="/bejelentkezes" onClick={toggleMenu}>
-                    Bejelentkezés
+                  <Link className="nav-link" to="/profil" onClick={toggleMenu}>
+                    {user.name}
                   </Link>
                 </li>
-              )}
-            </ul>
-          </div>
-        )}
-      </nav>
-      
+              )
+            ) : (
+              <li className="nav-item">
+                <Link className="nav-link" to="/bejelentkezes" onClick={toggleMenu}>
+                  Bejelentkezés
+                </Link>
+              </li>
+            )}
+          </ul>
+        </div>
+      )}
+
       {/* 🔹 Kosár működőképes megnyitása */}
       {isKosarOpen && (
         <div className="kosar-overlay" onClick={toggleKosar}>

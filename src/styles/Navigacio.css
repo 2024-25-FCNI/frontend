@@ -1,12 +1,12 @@
 /* 🔹 NAVIGÁCIÓS MENÜ ALAPSTÍLUSOK */
 .custom-navbar {
-  padding: 0.2em 1em;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: 0.5em 1em;
   width: 100%;
   box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.1);
-  background-color: transparent;
+  background-color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 /* 🔹 LOGÓ MÉRETE */
@@ -18,7 +18,8 @@
 }
 
 /* 🔹 ASZTALI NAVIGÁCIÓS LINKEK */
-.left-nav, .right-nav {
+.left-nav,
+.right-nav {
   display: flex;
   align-items: center;
 }
@@ -28,6 +29,9 @@
   display: flex;
   flex-direction: row;
   gap: 1.2em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .nav-item {
@@ -43,7 +47,7 @@
 }
 
 .nav-link:hover {
-  color: rgb(158, 157, 157);
+  color: #999;
 }
 
 /* 🔹 KOSÁR GOMB */
@@ -51,9 +55,14 @@
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 0.8em;
+  font-size: 0.9em;
   display: flex;
   align-items: center;
+  color: #333;
+}
+
+.kosar-btn:hover {
+  color: #999;
 }
 
 .kosar-icon {
@@ -67,22 +76,93 @@
   align-items: center;
 }
 
-/* 🔹 MOBILNÉZET STÍLUSOK */
+/* 🔹 HAMBURGER GOMB */
+.hamburger-btn {
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  margin-right: 1em;
+  cursor: pointer;
+  color: #333;
+}
+
+/* 🔹 MOBIL MENÜ STÍLUS */
+.mobile-menu {
+  position: absolute;
+  top: 4em;
+  right: 1em;
+  background-color: white;
+  box-shadow: 0 0.3em 0.7em rgba(0, 0, 0, 0.1);
+  border-radius: 0.6em;
+  padding: 1em 1.5em;
+  z-index: 1001;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.mobile-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mobile-menu .nav-item {
+  margin: 0.8em 0;
+  text-align: right;
+}
+
+.mobile-menu .nav-link {
+  font-size: 1em;
+  color: #333;
+  text-decoration: none;
+}
+
+.mobile-menu .nav-link:hover {
+  color: #999;
+}
+
+/* 🔹 ANIMÁCIÓ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* 🔹 MOBILNÉZET */
 @media (max-width: 800px) {
-  .left-nav, .right-nav {
-    display: none;
+  .nav-left,
+  .nav-right {
+    display: none !important;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
   }
 
   .mobile-nav {
     display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.8em;
+    margin-left: auto;
+    margin-right: 0.5em;
   }
 
-  .mobile-menu {
-    position: absolute;
-    top: 4em;
-    right: 1em;
-    padding: 1em;
-    box-shadow: 0 0.2em 0.5em rgba(0, 0, 0, 0.1);
-    border-radius: 0.5em;
+  .kosar-btn {
+    font-size: 1em;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+
+  .hamburger-btn {
+    font-size: 1.5em;
+    background: none;
+    border: none;
+    color: #333;
+    padding: 0;
+    margin: 0;
   }
 }

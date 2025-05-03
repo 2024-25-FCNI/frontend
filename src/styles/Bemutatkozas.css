@@ -82,7 +82,7 @@
 }
 
 /* 🔹 Reszponzív */
-@media (max-width: 1024px) {
+@media (max-width: 800px) {
   .bemutatkozas-content {
     flex-direction: column;
     text-align: center;
