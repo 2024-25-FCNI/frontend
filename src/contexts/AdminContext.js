@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
+import { myAxios } from "../api/axios";
 const AdminContext = createContext();
 
 export const AdminProvider = ({ children }) => {
@@ -20,29 +20,26 @@ export const AdminProvider = ({ children }) => {
   // ✅ Használható postData, ami frissíti is a terméklistát
   const postData = async (url, data, isFormData = false) => {
     try {
-      const response = await fetch(`http://localhost:8000${url}`, {
-        method: "POST",
-        body: data,
+      // ✅ Sanctum CSRF cookie – fontos Laravelhez
+      await myAxios.get("/sanctum/csrf-cookie");
+  
+      const response = await myAxios.post(url, data, {
         headers: isFormData
-          ? { Accept: "application/json" }
+          ? { Accept: "application/json" } // FormData esetén nem kell Content-Type
           : {
               "Content-Type": "application/json",
               Accept: "application/json",
             },
+        withCredentials: true, // fontos a hitelesítéshez
       });
-
-      if (!response.ok) {
-        throw new Error("Hiba a feltöltés során");
-      }
-
-      const result = await response.json();
-      console.log("✅ Feltöltve:", result);
-
+  
+      console.log("✅ Feltöltve:", response.data);
+  
       // 🔄 Terméklista frissítése
       await fetchTermekek();
     } catch (error) {
       console.error("❌ Feltöltési hiba:", error);
-      throw error; // fontos: így az UjTermek.js is tudja, ha hiba történt
+      throw error;
     }
   };
 

@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
 import axios from "axios";
 import "../styles/Profil.css";
- 
+
 export default function Profil() {
   const { user, logout } = useAuthContext();
   const navigate = useNavigate();
   const [osszesTermek, setOsszesTermek] = useState([]);
   const [megvettTermekek, setMegvettTermekek] = useState([]);
   const [profilKep, setProfilKep] = useState(null);
- 
+
   useEffect(() => {
     if (user?.id) {
       axios
@@ -18,16 +18,28 @@ export default function Profil() {
         .then((response) => {
           const termekek = response.data;
           setOsszesTermek(termekek);
- 
+
           const ellenorzesek = termekek.map((termek) =>
             axios
-              .get(`http://localhost:8000/api/ellenoriz-vasarlas/${termek.termek_id}`, {
-                withCredentials: true,
+              .get(
+                `http://localhost:8000/api/ellenoriz-vasarlas/${termek.termek_id}`,
+                {
+                  withCredentials: true,
+                }
+              )
+              .then((res) => {
+                if (res.data.megvette) {
+                  // hozzáfűzzük a lejárati dátumot a termékhez
+                  return {
+                    ...termek,
+                    lejarati_datum: res.data.lejarati_datum,
+                  };
+                }
+                return null;
               })
-              .then((res) => (res.data.megvette ? termek : null))
               .catch(() => null)
           );
- 
+
           Promise.all(ellenorzesek).then((eredmenyek) => {
             setMegvettTermekek(eredmenyek.filter((t) => t !== null));
           });
@@ -37,25 +49,25 @@ export default function Profil() {
         });
     }
   }, [user]);
- 
+
   const handleLogout = () => {
     logout();
     navigate("/");
   };
- 
+
   const handleProfilKepValtas = (e) => {
     const file = e.target.files[0];
     if (file) {
       setProfilKep(URL.createObjectURL(file));
     }
   };
- 
+
   const handleTermekClick = (termekId) => {
     navigate(`/termek/${termekId}`);
   };
- 
+
   if (!user) return <div>Nincs bejelentkezett felhasználó.</div>;
- 
+
   return (
     <div className="profil-container">
       <div className="profil-tartalom">
@@ -69,7 +81,7 @@ export default function Profil() {
           />
           <h5>{user.name}</h5>
           <p>{user.email}</p>
- 
+
           <div className="custom-file-upload">
             <label htmlFor="file-upload">Profilkép feltöltése</label>
             <input
@@ -79,16 +91,16 @@ export default function Profil() {
               onChange={handleProfilKepValtas}
             />
           </div>
- 
+
           <button onClick={handleLogout} className="custom-logout-button">
             Kijelentkezés
           </button>
         </div>
- 
+
         {/* Videók szekció */}
         <div className="videoszekcio">
           <h1 className="videok-cim">Saját videóid</h1>
- 
+
           <div className="videolista">
             {megvettTermekek.length > 0 ? (
               megvettTermekek.map((termek) => (
@@ -104,9 +116,13 @@ export default function Profil() {
                   />
                   <div className="videokartya-content">
                     <div className="videokartya-title">{termek.cim}</div>
-                    <div className="videokartya-description">{termek.bemutatas}</div>
+                    <div className="videokartya-description">
+                      {termek.bemutatas}
+                    </div>
                   </div>
-                  <div className="videokartya-date">2025.08.20.</div>
+                  <div className="videokartya-date">
+                    {termek.lejarati_datum}
+                  </div>
                 </div>
               ))
             ) : (
