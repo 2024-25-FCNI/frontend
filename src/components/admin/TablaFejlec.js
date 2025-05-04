@@ -1,16 +1,18 @@
 import React from "react";
 
-function TablaFejlec(props) {
+function TablaFejlec() {
   return (
     <tr>
-      {Object.entries(props.termek).map(([kulcs, value]) => {
-        if (kulcs !== "rating") {
-          return <th key={kulcs}>{kulcs}</th>
-        } else {
-          return (null)
-        }
-      })}
-      <th></th>
+      <th>Cím</th>
+      <th>Bemutatás</th>
+      <th>Leírás</th>
+      <th>Ár</th>
+      <th>Hozzáférési idő</th>
+      <th>Címkék</th>
+      <th>Kép</th>
+      <th>Videó</th>
+      <th>Létrehozva</th>
+      <th>Művelet</th>
     </tr>
   );
 }

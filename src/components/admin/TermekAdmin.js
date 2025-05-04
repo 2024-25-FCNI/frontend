@@ -1,20 +1,17 @@
 import React from "react";
 import { useAdminContext } from "../../contexts/AdminContext";
+import { useNavigate } from "react-router-dom";
 
-export function TermekAdmin({ termek }) { 
-  const { torol } = useAdminContext(); 
+export function TermekAdmin({ termek }) {
+  const { torol } = useAdminContext();
+  const navigate = useNavigate();
 
-  
-
-  // Törlés megerősítése és végrehajtása
   const handleDelete = (termek_id) => {
     if (window.confirm("Biztosan törölni szeretnéd ezt a videót?")) {
       torol(termek_id);
     }
   };
 
-
-  // Dátum formázás
   const formatDate = (dateString) => {
     if (!dateString) return "";
     const date = new Date(dateString);
@@ -22,28 +19,42 @@ export function TermekAdmin({ termek }) {
   };
 
   return (
-    <tr>
-      {Object.entries(termek).map(([kulcs, value]) => {
-        if (kulcs === "kep") {
-          return (
-            <td key={kulcs}>
-              <img className="admintermekkep" src={value} alt="" />
-            </td>
-          );
-        } else if (kulcs === "ar") {
-          return <td key={kulcs}>{value} Ft</td>;
-        } else if (kulcs === "created_at" || kulcs === "updated_at") {
-          return <td key={kulcs}>{formatDate(value)}</td>;
-        } else if (kulcs !== "rating") {
-          return <td key={kulcs}>{value}</td>;
-        } else {
-          return null;
-        }
-      })}
+    <tr
+      onClick={() => navigate(`/termek/${termek.termek_id}`)}
+      style={{ cursor: "pointer" }}
+    >
+      <td>{termek.cim}</td>
+      <td>{termek.bemutatas}</td>
+      
+      <td className="admincell">{termek.leiras}</td>
+
+      <td>{termek.ar} Ft</td>
+      <td>{termek.hozzaferesi_ido} nap</td>
+      <td>{Array.isArray(termek.cimkek) ? termek.cimkek.join(", ") : ""}</td>
       <td>
-        <button 
-          className="btn btn-outline-danger" 
-          onClick={() => handleDelete(termek?.termek_id)}
+        <img
+          src={
+            termek.kep && termek.kep.trim() !== ""
+              ? `http://localhost:8000/kepek/${termek.kep}`
+              : "/placeholder.png"
+          }
+          alt={termek.cim}
+          className="admintermekkep"
+          style={{ maxWidth: "80px", maxHeight: "80px", objectFit: "cover" }}
+          onError={(e) => {
+            e.target.src = "/placeholder.png";
+          }}
+        />
+      </td>
+      <td className="admincell">{termek.url}</td>
+      <td>{formatDate(termek.created_at)}</td>
+      <td>
+        <button
+          className="btn btn-outline-danger"
+          onClick={(e) => {
+            e.stopPropagation(); // ne navigáljon törlésre kattintva
+            handleDelete(termek.termek_id);
+          }}
         >
           ✘
         </button>
@@ -53,5 +64,3 @@ export function TermekAdmin({ termek }) {
 }
 
 export default TermekAdmin;
-
-
