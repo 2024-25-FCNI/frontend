@@ -1,6 +1,7 @@
 import React, { useRef,  useState, useEffect } from "react";
 import { useAdminContext } from "../../contexts/AdminContext";
 import "../../styles/UjTermek.css";
+import { myAxios } from "../../api/axios"; 
 
 function UjTermek({ existingVideos = [] }) {
   const { postData } = useAdminContext();
@@ -26,17 +27,15 @@ function UjTermek({ existingVideos = [] }) {
     "erősítés",
   ]);
 
-  useEffect(() => {
-    fetch("/api/cimkek")
-      .then((res) => {
-        if (!res.ok) throw new Error("Hiba a címkék lekérdezésekor");
-        return res.json();
-      })
-      .then((data) => {
-        if (Array.isArray(data)) setElerhetoCimkek(data);
-      })
-      .catch((error) => console.error("Címkék betöltési hiba:", error));
-  }, []);
+
+
+useEffect(() => {
+  myAxios.get("/api/cimkek")
+    .then((res) => {
+      if (Array.isArray(res.data)) setElerhetoCimkek(res.data);
+    })
+    .catch((error) => console.error("Címkék betöltési hiba:", error));
+}, []);
 
   function handleChange(event) {
     const { id, value, files } = event.target;
@@ -73,6 +72,8 @@ function UjTermek({ existingVideos = [] }) {
   }
 
   async function handleSubmit(event) {
+
+    
     event.preventDefault();
   
     const formData = new FormData();
