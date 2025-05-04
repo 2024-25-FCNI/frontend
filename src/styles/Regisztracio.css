@@ -7,7 +7,7 @@
     height: 100vh;
     background: #ffffff;
     font-family: "Poppins", sans-serif;
-    padding: 10em 2em 2em 5em;
+    padding:2em;
     
 }
 
@@ -44,7 +44,6 @@
 .input-field {
     padding: 0.8em;
     border: none;
-    border-radius: 1.3em;
     font-size: 1em;
     width: 100%;
     outline: none;
@@ -59,7 +58,6 @@
     display: flex;
     align-items: center;
     background: white;
-    border-radius: 1.3em;
     overflow: hidden;
 }
 

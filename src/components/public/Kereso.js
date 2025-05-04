@@ -35,7 +35,7 @@ export default function Kereso({ termekek, setFilteredTermekek }) {
       <input
         type="text"
         className="search-input"
-        placeholder="Keresés"
+        placeholder=""
         value={kereses}
         onChange={handleInputChange}
         onKeyDown={handleKeyPress}

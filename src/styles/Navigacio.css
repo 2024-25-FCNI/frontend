@@ -12,7 +12,7 @@
 
 /* 🔹 TARTALOM ELTOLÁS (hogy ne takarja ki a navbar) */
 body {
-  padding-top: 4em; /* vagy amilyen magas a navbar */
+  padding-top: 3em; /* vagy amilyen magas a navbar */
 }
 /* 🔹 LOGÓ MÉRETE */
 .logo-img {

@@ -1,5 +1,5 @@
 .analitika-container {
-    padding: 7em 3em 3em 3em;
+    padding: 3em;
   }
   
   .analitika-szekcio {
@@ -46,7 +46,6 @@
   .ana-table{
     border-collapse: collapse;
     background-color: white;  
-    border-radius: 1em;
 }
 .ana-table th {
     color: #333;

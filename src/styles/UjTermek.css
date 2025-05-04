@@ -1,3 +1,7 @@
+.ujtermek {
+  padding: 3em;
+}
+
 .video-form {
   max-width: 900px;
   margin: 2em auto;
@@ -148,6 +152,7 @@
 }
 
 @media (max-width: 768px) {
+  
   .video-form {
     padding: 1em;
   }

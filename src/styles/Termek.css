@@ -46,7 +46,12 @@
     color: #3a2a28;
     font-size: 0.95em;
     margin-bottom: 0.5em;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    overflow: hidden;
   }
+  
  
   .termek-leiras .ar {
     font-weight: bold;
