@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef,  useState, useEffect } from "react";
 import { useAdminContext } from "../../contexts/AdminContext";
 import "../../styles/UjTermek.css";
 
 function UjTermek({ existingVideos = [] }) {
   const { postData } = useAdminContext();
+  const urlInputRef = useRef(null);
 
   const [termek, setTermek] = useState({
     cim: "",
     bemutatas: "",
-    ar: 10,
+    ar: "",
     leiras: "",
     hozzaferesi_ido: 30,
     kep: "",
@@ -73,6 +74,7 @@ function UjTermek({ existingVideos = [] }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
+  
     const formData = new FormData();
     formData.append("cim", termek.cim);
     formData.append("bemutatas", termek.bemutatas);
@@ -85,24 +87,32 @@ function UjTermek({ existingVideos = [] }) {
     if (termek.kep) formData.append("kep", termek.kep);
   
     try {
-      await postData("/api/termekek", formData);
-      alert("Sikeres feltöltés!"); // ✅ 1. lépés
-      // ✅ 2. lépés: mezők kiürítése
+      // 🔄 Fontos: jelezd, hogy FormData-t küldesz (3. paraméter true)
+      await postData("/api/termekek", formData, true);
+      alert("Sikeres feltöltés!");
+  
+      // 🧹 Mezők kiürítése
       setTermek({
         cim: "",
         bemutatas: "",
-        ar: 10,
+        ar: "",
         leiras: "",
         hozzaferesi_ido: 30,
         kep: "",
         url: "",
         cimkek: [],
       });
+
+      if (urlInputRef.current) urlInputRef.current.value = null;
+
     } catch (error) {
       alert("Hiba történt a feltöltéskor.");
       console.error(error);
     }
+   
+
   }
+  
   
 
   return (
@@ -183,7 +193,7 @@ function UjTermek({ existingVideos = [] }) {
       {!useExistingVideos && (
         <div className="form-group">
           <label htmlFor="url">Videó linkje</label>
-          <input type="file" id="url" accept="video/*" onChange={handleChange} />
+          <input type="file" id="url" accept="video/*" onChange={handleChange} ref={urlInputRef}/>
         </div>
       )}
 
