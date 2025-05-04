@@ -4,11 +4,16 @@
   width: 100%;
   box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.1);
   background-color: #fff;
-  position: sticky;
+  position: fixed; /* változott: sticky ➜ fixed */
   top: 0;
+  left: 0;
   z-index: 1000;
 }
 
+/* 🔹 TARTALOM ELTOLÁS (hogy ne takarja ki a navbar) */
+body {
+  padding-top: 4em; /* vagy amilyen magas a navbar */
+}
 /* 🔹 LOGÓ MÉRETE */
 .logo-img {
   width: 2.5em;
