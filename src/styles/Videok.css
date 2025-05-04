@@ -1,8 +1,14 @@
-/* 📌 Alap háttér és formázás */
+.videok-container {
+  padding-top: 1em;
+  padding: 3em;
+}
+
 .custom-wrapper {
   background-color: #fcede8;
   border-radius: 0 15px 15px 15px;
+  
 }
+
  
 /* 📌 Keresőmező */
 .search-container {
@@ -14,7 +20,6 @@
   background-color: white;
   border-radius: 2em;
   margin: auto;
- 
   position: relative;
 }
  
@@ -71,7 +76,6 @@
     font-size: 1.1em;
   }
 }
- 
  
  
 .videok-card {

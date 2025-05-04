@@ -69,7 +69,7 @@ export default function Profil() {
   if (!user) return <div>Nincs bejelentkezett felhasználó.</div>;
 
   return (
-    <div className="profil-container">
+    <div className="profil-container mb-4">
       <div className="profil-tartalom">
         {/* Profilkártya */}
         <div className="profilkartya">

@@ -1,18 +1,10 @@
-* {
-    box-sizing: border-box;
-  }
-   
-  body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-  }
+
   .profil-container {
       background: #fdebe5;
       font-family: "Poppins", sans-serif;
       border-radius: 2em;
-      margin: 3em auto;
-      padding: 2em;
+      margin: auto;
+      padding: 9em 2em 2em 2em ;
       max-width: 1200px;
     }
    

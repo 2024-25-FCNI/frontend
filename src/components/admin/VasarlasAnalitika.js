@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { saveAs } from "file-saver"; // CSV/PDF exporthoz
-import { Bar } from "react-chartjs-2"; // Grafikonokhoz
-import "chart.js/auto"; // Chart.js automatikus beállítása
+import { saveAs } from "file-saver";
+import { Bar } from "react-chartjs-2";
+import "chart.js/auto";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "../../styles/Analitika.css";
 
 export default function VasarlasAnalitika() {
   const [termekek, setTermekek] = useState([]);
@@ -41,7 +42,6 @@ export default function VasarlasAnalitika() {
     }
   }
 
-  // Rendezés módosítása
   const rendezesModositas = (irany) => {
     const rendezettTermekek = [...termekek].sort((a, b) => {
       return irany === "asc"
@@ -52,13 +52,11 @@ export default function VasarlasAnalitika() {
     setRendezes(irany);
   };
 
-  // Összbevétel kiszámítása
   const teljesBevetel = termekek.reduce(
     (osszeg, termek) => osszeg + (termek.osszBevetel || 0),
     0
   );
 
-  // **CSV Exportálás**
   const exportCSV = () => {
     const csvData = ["Termék,Név,Darabszám,Összbevétel (Ft)"];
     termekek.forEach((termek) => {
@@ -71,7 +69,6 @@ export default function VasarlasAnalitika() {
     saveAs(blob, "vasarlas_analitika.csv");
   };
 
-  // **Grafikon beállítások**
   const data = {
     labels: termekek.map((t) => t.cim),
     datasets: [
@@ -88,10 +85,10 @@ export default function VasarlasAnalitika() {
 
   return (
     <div className="container mt-5">
-      <h1>Vásárlási Analitika</h1>
+      <h1 className="mb-4">Vásárlási Analitika</h1>
 
-      {/* **Dátumszűrés** */}
-      <div className="mb-3 d-flex align-items-center">
+      {/* Dátumszűrés */}
+      <div className="szures-mezok">
         <label className="me-2">Szűrés időszak szerint:</label>
         <DatePicker
           selected={kezdodatum}
@@ -106,9 +103,7 @@ export default function VasarlasAnalitika() {
         <DatePicker
           selected={vegdatum}
           onChange={(date) => {
-            if (date) {
-              date.setHours(23, 59, 59, 999);
-            }
+            if (date) date.setHours(23, 59, 59, 999);
             setVegdatum(date);
           }}
           selectsEnd
@@ -120,7 +115,7 @@ export default function VasarlasAnalitika() {
           placeholderText="Vég dátum"
         />
         <button
-          className="btn btn-secondary"
+          className="btn btn-secondary szures-torlese-btn"
           onClick={() => {
             setKezdodatum(null);
             setVegdatum(null);
@@ -130,7 +125,7 @@ export default function VasarlasAnalitika() {
         </button>
       </div>
 
-      {/* **Rendezés** */}
+      {/* Rendezés */}
       <div className="mb-3">
         <label className="form-label">Rendezés:</label>
         <select
@@ -143,33 +138,35 @@ export default function VasarlasAnalitika() {
         </select>
       </div>
 
-      {/* **Grafikon** */}
+      {/* Grafikon */}
       <div className="mb-3">
         <h3>Eladások grafikonon</h3>
         <Bar data={data} />
       </div>
 
-      {/* **Táblázat** */}
-      <table className="table table-striped mt-3">
-        <thead>
-          <tr>
-            <th>Termék</th>
-            <th>Darabszám</th>
-            <th>Összbevétel (Ft)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {termekek.map((termek, index) => (
-            <tr key={index}>
-              <td>{termek.cim}</td>
-              <td>{termek.darabszam} db</td>
-              <td>{(termek.osszBevetel || 0).toLocaleString()} Ft</td>
+      {/* Táblázat */}
+      <div className="reszponziv-tabla">
+        <table className="ana-table table-striped mt-3">
+          <thead>
+            <tr>
+              <th>Termék</th>
+              <th>Darabszám</th>
+              <th>Összbevétel (Ft)</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {termekek.map((termek, index) => (
+              <tr key={index}>
+                <td>{termek.cim}</td>
+                <td>{termek.darabszam} db</td>
+                <td>{(termek.osszBevetel || 0).toLocaleString()} Ft</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-      {/* **Összes bevétel és export gombok** */}
+      {/* Összbevétel + export */}
       <div className="alert alert-primary text-center">
         <h4>Teljes bevétel: {teljesBevetel.toLocaleString()} Ft</h4>
       </div>
