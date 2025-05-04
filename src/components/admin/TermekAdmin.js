@@ -19,23 +19,34 @@ export function TermekAdmin({ termek }) {
   };
 
   return (
-    <tr onClick={() => navigate(`/termek/${termek.termek_id}`)} style={{ cursor: "pointer" }}>
+    <tr
+      onClick={() => navigate(`/termek/${termek.termek_id}`)}
+      style={{ cursor: "pointer" }}
+    >
       <td>{termek.cim}</td>
       <td>{termek.bemutatas}</td>
-      <td>{termek.leiras}</td>
+      
+      <td className="admincell">{termek.leiras}</td>
+
       <td>{termek.ar} Ft</td>
       <td>{termek.hozzaferesi_ido} nap</td>
       <td>{Array.isArray(termek.cimkek) ? termek.cimkek.join(", ") : ""}</td>
       <td>
-        {termek.kep && (
-          <img
-            src={`http://localhost:8000/kepek/${termek.kep}`}
-            alt={termek.cim}
-            className="admintermekkep"
-            style={{ maxWidth: "80px", maxHeight: "80px", objectFit: "cover" }}
-          />
-        )}
+        <img
+          src={
+            termek.kep && termek.kep.trim() !== ""
+              ? `http://localhost:8000/kepek/${termek.kep}`
+              : "/placeholder.png"
+          }
+          alt={termek.cim}
+          className="admintermekkep"
+          style={{ maxWidth: "80px", maxHeight: "80px", objectFit: "cover" }}
+          onError={(e) => {
+            e.target.src = "/placeholder.png";
+          }}
+        />
       </td>
+      <td className="admincell">{termek.url}</td>
       <td>{formatDate(termek.created_at)}</td>
       <td>
         <button

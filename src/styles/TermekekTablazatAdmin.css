@@ -74,3 +74,10 @@
 .kijelentkezes-button:hover {
   background-color: #e7667e;
 }
+
+.admincell {
+  max-width: 150px;       /* vagy amennyi elég */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -10,6 +10,7 @@ function TablaFejlec() {
       <th>Hozzáférési idő</th>
       <th>Címkék</th>
       <th>Kép</th>
+      <th>Videó</th>
       <th>Létrehozva</th>
       <th>Művelet</th>
     </tr>

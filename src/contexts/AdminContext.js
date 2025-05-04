@@ -43,13 +43,25 @@ export const AdminProvider = ({ children }) => {
     }
   };
 
+  const torol = async (termekId) => {
+    try {
+      await myAxios.delete(`/api/termekek/${termekId}`, {
+        withCredentials: true,
+      });
+      console.log("✅ Termék törölve:", termekId);
+      await fetchTermekek(); // Frissítjük a listát törlés után
+    } catch (error) {
+      console.error("❌ Törlési hiba:", error);
+    }
+  };
+
   // 🔁 Betöltéskor automatikusan lekéri az adatokat
   useEffect(() => {
     fetchTermekek();
   }, []);
 
   return (
-    <AdminContext.Provider value={{ termekek, postData, fetchTermekek }}>
+    <AdminContext.Provider value={{ termekek, postData, fetchTermekek, torol}}>
       {children}
     </AdminContext.Provider>
   );
