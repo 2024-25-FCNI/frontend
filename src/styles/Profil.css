@@ -1,18 +1,10 @@
-* {
-    box-sizing: border-box;
-  }
-   
-  body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-  }
+
   .profil-container {
       background: #fdebe5;
       font-family: "Poppins", sans-serif;
       border-radius: 2em;
-      margin: 3em auto;
-      padding: 2em;
+      margin: 2em auto;
+      padding:4em;
       max-width: 1200px;
     }
    
@@ -23,15 +15,17 @@
       align-items: flex-start;
       gap: 2em;
       flex-wrap: nowrap;
+      margin: 0;
+      padding: 0;
     }
    
     /* Profilkártya */
     .profilkartya {
-      background: #fcede8;
+      background-color: #fff;
       border-radius: 2em;
       padding: 2em;
       text-align: center;
-      max-width: 350px;
+      max-width: 400px;
       flex-shrink: 0;
       border: 2px solid #e49788;
     }
@@ -61,7 +55,9 @@
       margin-bottom: 1.5em;
     }
    
-   
+   .videolista{
+    min-width: 22em;
+   }
     .custom-file-upload {
       text-align: center;
       margin-bottom: 1em;
@@ -128,7 +124,7 @@
     }
    
     .videokartya {
-      background: #fdebe5;
+      background-color: #fff;
       border: 2px solid #e49788;
       border-radius: 2em;
       padding: 1em;
@@ -181,7 +177,9 @@
    
     /* Tablet nézet */
     @media (max-width: 850px) {
-   
+      .profil-container {
+        padding: 2em;
+      }
       .profil-tartalom {
         flex-direction: column;
         align-items: center;

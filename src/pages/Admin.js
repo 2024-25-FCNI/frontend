@@ -2,6 +2,7 @@ import { useAdminContext } from "../contexts/AdminContext";
 import useAuthContext from "../contexts/AuthContext";
 import TermekekAdmin from "../components/admin/TermekekAdmin";
 import UjTermek from "../components/admin/UjTermek";
+import "../styles/UjTermek.css";
 
 function Admin() {
   const { termekek, postData } = useAdminContext(); // ⬅️ csak ezt használd
@@ -16,7 +17,7 @@ function Admin() {
   };
 
   return (
-    <main className="row g-5" style={{ margin: "20px" }}>
+    <main className="ujtermek row g-5">
       <section style={{ marginBottom: "20px" }}>
         <UjTermek postData={postData} existingVideos={[]} />
       </section>

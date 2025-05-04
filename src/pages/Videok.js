@@ -20,7 +20,7 @@ export default function Videok() {
   }, [getData]);
  
   return (
-    <div className="container mt-4">
+    <div className="videok-container mt-4">
       {/* Tabs */}
       <ul className="nav nav-tabs border-0" style={{ position: "relative", zIndex: "2" }}>
         <li className="nav-item">

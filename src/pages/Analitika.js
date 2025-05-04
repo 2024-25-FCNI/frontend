@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { AnalitikaContext } from "../contexts/AnalitikaContext";
 import UserAnalitika from "../components/admin/UserAnalitika";
 import VasarlasAnalitika from "../components/admin/VasarlasAnalitika";
+import "../styles/Analitika.css";
+
 
 function Analitika() {
   const { felhasznalok, loading, error, torolFelhasznalo } =
@@ -16,21 +18,18 @@ function Analitika() {
   }
 
   return (
-    <div className="container mt-5">
-
-      {/* Felhasználói Analitika */}
-      <div className="mb-5">
-        <UserAnalitika
-          felhasznalok={felhasznalok}
-          torolFelhasznalo={torolFelhasznalo}
-        />
-      </div>
-
-      {/* Vásárlási Analitika */}
-      <div className="mt-5">
-        <VasarlasAnalitika />
-      </div>
+    <div className="analitika-container">
+    <div className="analitika-szekcio">
+      <UserAnalitika
+        felhasznalok={felhasznalok}
+        torolFelhasznalo={torolFelhasznalo}
+      />
     </div>
+  
+    <div className="analitika-szekcio">
+      <VasarlasAnalitika />
+    </div>
+  </div>
   );
 }
 
