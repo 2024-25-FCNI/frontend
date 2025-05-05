@@ -53,7 +53,7 @@ export default function VasarlasAnalitika() {
   };
 
   const teljesBevetel = termekek.reduce(
-    (osszeg, termek) => osszeg + (termek.osszBevetel || 0),
+    (osszeg, termek) => osszeg + Number(termek.osszBevetel || 0),
     0
   );
 
