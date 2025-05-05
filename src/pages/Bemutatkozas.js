@@ -1,19 +1,29 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import AOS from "aos";
-import "aos/dist/aos.css"; // AOS CSS importálása
+import "aos/dist/aos.css";
 import "../styles/Bemutatkozas.css";
 import b1 from "../kepek/b1.jpg";
 import b2 from "../kepek/b2.jpg";
 
 export default function Bemutatkozas() {
-  // 🔹 AOS inicializálás, hogy az animációk működjenek
+  const location = useLocation();
+
   useEffect(() => {
     AOS.init({
-      duration: 1000, // Az animáció időtartama (1 másodperc)
-      once: true, // Az animáció csak egyszer fusson le
+      duration: 1000,
+      once: true,
     });
   }, []);
+
+  useEffect(() => {
+    if (location.state?.scrollTo) {
+      const element = document.getElementById(location.state.scrollTo);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
 
   return (
     <div className="bemutatkozas-container">
@@ -27,31 +37,27 @@ export default function Bemutatkozas() {
             <h1>Bemutatkozás</h1>
             <p>
               Szeretettel köszöntök mindenkit az online ritmikus gimnasztika
-              feladatok exkluzív tárházában!
-              <br />
-              <br />
+              feladatok exkluzív tárházában! <br /> <br />
               A nevem Wehovszky Vivien, egykori ritmikus gimnasztika válogatott
               tag és csapatkapitány. Pályafutásom során 18 éven át
               elkötelezetten műveltem ezt a kifinomult sportágat, majd a Magyar
               Testnevelési és Sporttudományi Egyetemen szereztem szakedzői
               diplomát ritmikus gimnasztikában – alap- és mesterképzés keretében
               egyaránt. Jelenleg a doktori iskola hallgatójaként folytatom
-              tudományos munkámat. <br />
-              <br />
+              tudományos munkámat. <br /> <br />
               Célom, hogy ez a platform inspirációt, szakmai támogatást és
               fejlődési lehetőséget biztosítson mindazoknak, akik a ritmikus
               gimnasztika művészetére nyitottak, és szeretnék azt magasabb
-              szintre emelni. <br />
-              <br />
+              szintre emelni. <br /> <br />
               Üdvözlöm Önöket az RG elegáns világában – fejlődjünk együtt,
-              határok nélkül!
+              határok nélkül!{" "}
             </p>
           </div>
         </div>
       </section>
 
-      {/* 🔹 Második szekció */}
-      <section className="bemutatkozas-section">
+      {/* 🔹 Második szekció – Könyv */}
+      <section id="konyv-szekcio" className="bemutatkozas-section">
         <div className="bemutatkozas-content reverse">
           <div className="bemutatkozas-text" data-aos="fade-up">
             <h1>Könyv</h1>
