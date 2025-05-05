@@ -20,12 +20,7 @@ function UjTermek({ existingVideos = [] }) {
 
   const [useExistingVideos, setUseExistingVideos] = useState(false);
   const [ujCimke, setUjCimke] = useState("");
-  const [elerhetoCimkek, setElerhetoCimkek] = useState([
-    "nyújtás",
-    "lazítás",
-    "spárga",
-    "erősítés",
-  ]);
+  const [elerhetoCimkek, setElerhetoCimkek] = useState([]);
 
 
 
