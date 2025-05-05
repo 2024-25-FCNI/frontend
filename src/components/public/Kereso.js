@@ -10,8 +10,6 @@ export default function Kereso({ termekek, setFilteredTermekek }) {
     const filtered = termekek.filter((termek) => {
       const cim = termek.cim?.toLowerCase() || "";
       const leiras = termek.leiras?.toLowerCase() || "";
-
-      // Ha a termékhez tartoznak címkék (pl. [{ nev: "zene" }, ...])
       const cimkekSzoveg = (termek.cimkek || [])
         .map((c) => c.nev.toLowerCase())
         .join(" ");
@@ -31,24 +29,30 @@ export default function Kereso({ termekek, setFilteredTermekek }) {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // biztos ami biztos
+      handleSearch();
+    }
+  };
+
   return (
-    <form
-      className="search-container"
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleSearch();
-      }}
-    >
+    <div className="search-container">
       <input
         type="text"
         className="search-input"
         placeholder="Keresés termékek és címkék között..."
         value={kereses}
         onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
       />
-      <button className="search-button" type="submit">
+      <button
+        className="search-button"
+        type="button"
+        onClick={handleSearch}
+      >
         <FaSearch />
       </button>
-    </form>
+    </div>
   );
 }

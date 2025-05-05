@@ -11,7 +11,7 @@ export default function Videok() {
   const [termekek, setTermekek] = useState([]);
   const [filteredTermekek, setFilteredTermekek] = useState([]);
   const [activeTab, setActiveTab] = useState("videok");
-  
+
   useEffect(() => {
     getData("/api/termekek", (adatok) => {
       setTermekek(adatok);
@@ -45,7 +45,8 @@ export default function Videok() {
             className={`nav-link ${activeTab === "csomagok" ? "active" : ""}`}
             onClick={() => setActiveTab("csomagok")}
             style={{
-              backgroundColor: activeTab === "csomagok" ? "#FCEDE8" : "#FFFFFF",
+              backgroundColor:
+                activeTab === "csomagok" ? "#FCEDE8" : "#FFFFFF",
               color: "black",
               borderRadius: "10px 10px 0 0",
               border: "none",
@@ -70,9 +71,17 @@ export default function Videok() {
 
         {/* Termékek listázása */}
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 p-3">
-          {filteredTermekek.map((termek) => (
-            <VideokPublic termek={termek} key={termek.termek_id} />
-          ))}
+          {filteredTermekek.length === 0 ? (
+            <div className="col-12 text-center">
+              <p style={{ fontSize: "1.2em", color: "#555", padding: "2em" }}>
+                Nincs a keresésnek megfelelő videó.
+              </p>
+            </div>
+          ) : (
+            filteredTermekek.map((termek) => (
+              <VideokPublic termek={termek} key={termek.termek_id} />
+            ))
+          )}
         </div>
       </div>
     </div>
