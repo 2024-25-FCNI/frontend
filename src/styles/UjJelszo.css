@@ -1,0 +1,33 @@
+.ujjelszo {
+  padding-top: 7em;
+  padding-bottom: 4em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+}
+.btn-primary {
+    background-color: #e49788;;
+  }  
+
+  
+  .btn-primary:hover {
+    background-color: #d43e3e;
+    border-color: #d43e3e;
+  }
+  
+  .btn-primary:active,
+  .btn-primary:focus,
+  .btn-primary:focus-visible {
+    background-color: #c73737 !important;
+    border-color: #c73737 !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+  
+@media (max-width: 768px) {
+  .ujjelszo {
+    padding-top: 8em;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+}
+

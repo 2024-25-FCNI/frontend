@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { myAxios } from "../api/axios";
+import "../styles/UjJelszo.css";
+
 
 export default function UjJelszo() {
   const [searchParams] = useSearchParams();
-  const token = searchParams.get("token"); // Token az URL-ből
+  const token = searchParams.get("token");
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -25,7 +27,7 @@ export default function UjJelszo() {
       });
 
       alert("Sikeres jelszócsere! Jelentkezz be az új jelszóval.");
-      navigate("/bejelentkezes"); // Átirányítás a login oldalra
+      navigate("/bejelentkezes");
     } catch (err) {
       console.error("Hiba a jelszó visszaállításkor:", err);
       setError("Hiba történt a jelszó visszaállításakor. Ellenőrizd az adatokat.");
@@ -33,7 +35,7 @@ export default function UjJelszo() {
   };
 
   return (
-    <div className="m-auto" style={{ maxWidth: "400px" }}>
+    <div className="ujjelszo m-auto" style={{ maxWidth: "400px" }}>
       <h1 className="text-center">Új jelszó beállítása</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
