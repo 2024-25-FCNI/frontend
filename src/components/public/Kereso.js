@@ -1,36 +1,47 @@
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
-export default function Kereso({ termekek, setFilteredTermekek }) {
+export default function Kereso({ termekek, setFilteredTermekek, setNincsTalalat }) {
   const [kereses, setKereses] = useState("");
 
   const handleSearch = () => {
     const keresesLower = kereses.toLowerCase();
-  
+
     const filtered = termekek.filter((termek) => {
       const cim = termek.cim?.toLowerCase() || "";
       const leiras = termek.leiras?.toLowerCase() || "";
+      const bemutatas = termek.bemutatas?.toLowerCase() || "";
+
+      //  JAVÍTVA: címkék nem objektumok, hanem stringek
       const cimkekSzoveg = (termek.cimkek || [])
-        .map((c) => c.nev?.toLowerCase() || "")
-        .join(" ");
-  
-      return [cim, leiras, cimkekSzoveg].join(" ").includes(keresesLower);
+      .map((c) => (typeof c === "string" ? c : c.elnevezes || ""))
+      .map((s) => s.toLowerCase())
+      .join(" ");
+
+      return [cim, leiras, bemutatas, cimkekSzoveg]
+        .join(" ")
+        .includes(keresesLower);
     });
-  
+
     setFilteredTermekek(filtered);
+
+    // állítsuk be, ha nincs találat
+    setNincsTalalat(filtered.length === 0);
   };
+
   const handleInputChange = (e) => {
     const value = e.target.value;
     setKereses(value);
 
     if (value.trim() === "") {
       setFilteredTermekek(termekek);
+      setNincsTalalat(false);
     }
   };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault(); // biztos ami biztos
+      e.preventDefault();
       handleSearch();
     }
   };
@@ -40,7 +51,7 @@ export default function Kereso({ termekek, setFilteredTermekek }) {
       <input
         type="text"
         className="search-input"
-        placeholder="Keresés termékek és címkék között..."
+        placeholder=""
         value={kereses}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}

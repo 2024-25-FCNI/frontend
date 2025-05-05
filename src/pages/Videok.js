@@ -10,12 +10,16 @@ export default function Videok() {
   const { getData } = useContext(ApiContext);
   const [termekek, setTermekek] = useState([]);
   const [filteredTermekek, setFilteredTermekek] = useState([]);
+
+  // 🔧 ÚJ: nincs találat állapot
+  const [nincsTalalat, setNincsTalalat] = useState(false);
+
   const [activeTab, setActiveTab] = useState("videok");
 
   useEffect(() => {
     getData("/api/termekek", (adatok) => {
       setTermekek(adatok);
-      setFilteredTermekek((prev) => (prev.length === 0 ? adatok : prev));
+      setFilteredTermekek(adatok);
     });
   }, [getData]);
 
@@ -57,24 +61,25 @@ export default function Videok() {
         </li>
       </ul>
 
-      {/* Content wrapper with background */}
+      {/* Kereső középre */}
       <div className="p-4 custom-wrapper">
-        {/* Search bar centered */}
         <div className="d-flex justify-content-center my-3">
           <div className="w-50 search-container rounded-pill">
+            {/* átadjuk a setNincsTalalat propot is */}
             <Kereso
               termekek={termekek}
               setFilteredTermekek={setFilteredTermekek}
+              setNincsTalalat={setNincsTalalat}
             />
           </div>
         </div>
 
-        {/* Termékek listázása */}
+        {/* Termékek listázása vagy "nincs találat" */}
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 p-3">
-          {filteredTermekek.length === 0 ? (
+          {filteredTermekek.length === 0 && nincsTalalat ? (
             <div className="col-12 text-center">
               <p style={{ fontSize: "1.2em", color: "#555", padding: "2em" }}>
-                Nincs a keresésnek megfelelő videó.
+                Nincs találat.
               </p>
             </div>
           ) : (
