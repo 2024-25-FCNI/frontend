@@ -6,20 +6,19 @@ export default function Kereso({ termekek, setFilteredTermekek }) {
 
   const handleSearch = () => {
     const keresesLower = kereses.toLowerCase();
-
+  
     const filtered = termekek.filter((termek) => {
       const cim = termek.cim?.toLowerCase() || "";
       const leiras = termek.leiras?.toLowerCase() || "";
       const cimkekSzoveg = (termek.cimkek || [])
-        .map((c) => c.nev.toLowerCase())
+        .map((c) => c.nev?.toLowerCase() || "")
         .join(" ");
-
+  
       return [cim, leiras, cimkekSzoveg].join(" ").includes(keresesLower);
     });
-
+  
     setFilteredTermekek(filtered);
   };
-
   const handleInputChange = (e) => {
     const value = e.target.value;
     setKereses(value);
