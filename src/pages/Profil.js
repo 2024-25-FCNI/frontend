@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
 import axios from "axios";
 import "../styles/Profil.css";
+import { myAxios } from "../api/axios";
 
 export default function Profil() {
-  const { user, logout } = useAuthContext();
+  
+  const { user, logout, getUser } = useAuthContext();
   const navigate = useNavigate();
   const [osszesTermek, setOsszesTermek] = useState([]);
   const [megvettTermekek, setMegvettTermekek] = useState([]);
@@ -50,17 +52,44 @@ export default function Profil() {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (user?.profilkep) {
+      setProfilKep(`http://localhost:8000/profilkep/${user.profilkep}`);
+    } else {
+      setProfilKep(null); // fallback
+    }
+  }, [user]);
+
   const handleLogout = () => {
     logout();
     navigate("/");
   };
 
-  const handleProfilKepValtas = (e) => {
+  const handleProfilKepValtas = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setProfilKep(URL.createObjectURL(file));
+    if (!file) return;
+  
+    const formData = new FormData();
+    formData.append("profilkep", file);
+  
+    try {
+      await myAxios.get("/sanctum/csrf-cookie");
+  
+      const res = await myAxios.post("/api/upload-profilkep", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+  
+      const fajlNev = res.data.profilkep;
+      setProfilKep(`http://localhost:8000/profilkep/${fajlNev}`);
+  
+      await getUser(); // 🔁 EZZEL FRISSÍTED A USER ADATOKAT
+    } catch (err) {
+      console.error("❌ Profilkép feltöltési hiba:", err);
     }
   };
+  
 
   const handleTermekClick = (termekId) => {
     navigate(`/termek/${termekId}`);
@@ -79,6 +108,7 @@ export default function Profil() {
             className="profilkep"
             onError={(e) => (e.target.src = "/profil.png")}
           />
+
           <h5>{user.name}</h5>
           <p>{user.email}</p>
 
