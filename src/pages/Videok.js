@@ -11,7 +11,7 @@ export default function Videok() {
   const [termekek, setTermekek] = useState([]);
   const [filteredTermekek, setFilteredTermekek] = useState([]);
 
-  // 🔧 ÚJ: nincs találat állapot
+  // ÚJ: nincs találat állapot
   const [nincsTalalat, setNincsTalalat] = useState(false);
 
   const [activeTab, setActiveTab] = useState("videok");
@@ -21,7 +21,7 @@ export default function Videok() {
       setTermekek(adatok);
       setFilteredTermekek(adatok);
     });
-  }, [getData]);
+  }, []); // ✅ csak egyszer, az első betöltésnél
 
   return (
     <div className="videok-container mt-4">
