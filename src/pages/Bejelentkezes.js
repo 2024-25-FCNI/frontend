@@ -25,26 +25,28 @@ export default function Bejelentkezes() {
   return (
     <div className="bejelentkezes-container">
       <div className="login-box">
-      <h1 className="title text-center">Bejelentkezés</h1>
+        <h1 className="title text-center">Bejelentkezés</h1>
 
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="input-field"
-              id="email"
-              placeholder=""
-              name="email"
-            />
+            <div className="input-wrapper">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="input-field"
+                id="email"
+                placeholder=""
+                name="email"
+              />
+            </div>
           </div>
           {errors.email && <span className="error-text">{errors.email[0]}</span>}
 
           <div className="input-group">
             <label htmlFor="pwd">Jelszó</label>
-            <div className="password-container">
+            <div className="input-wrapper">
               <input
                 type={showPassword ? "text" : "password"}
                 value={password}
