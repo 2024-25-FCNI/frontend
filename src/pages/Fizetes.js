@@ -61,7 +61,7 @@ export default function Fizetes() {
   useEffect(() => {
     if (sikeresVasarlas) {
       const timer = setTimeout(() => {
-        navigate("/");
+        navigate("/profil");
       }, 2000);
 
       return () => clearTimeout(timer);
