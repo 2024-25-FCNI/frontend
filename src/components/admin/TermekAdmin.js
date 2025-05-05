@@ -42,7 +42,19 @@ export function TermekAdmin({ termek }) {
 
       <td>{termek.ar} Ft</td>
       <td>{termek.hozzaferesi_ido} nap</td>
-      <td>{Array.isArray(termek.cimkek) ? termek.cimkek.join(", ") : ""}</td>
+      {/* <td>{Array.isArray(termek.cimkek) ? termek.cimkek.join(", ") : ""}</td> */}
+      <td>
+        {Array.isArray(termek.cimkek)
+          ? termek.cimkek
+              .map((cimke) =>
+                typeof cimke === "string"
+                  ? cimke
+                  : cimke?.elnevezes ?? JSON.stringify(cimke)
+              )
+              .join(", ")
+          : ""}
+      </td>
+
       <td>
         <img
           src={
