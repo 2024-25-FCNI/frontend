@@ -13,26 +13,31 @@
 .search-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 30em;
+  justify-content: center;
   background-color: white;
-  border-radius: 2em;
-  margin: auto;
+  width: 100%;
+  max-width: 40em;
   position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
- 
+
 .search-input {
   flex-grow: 1;
+  min-width: 0;
   border: none;
   outline: none;
   font-size: 1em;
-  padding: 0.5em;
+  font-family: "Poppins", sans-serif;
+  padding: 0.4em 0.6em;
   border-radius: 2em;
   background: transparent;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
- 
- 
+
+/* 🔍 Keresés gomb */
 .search-button {
   background: none;
   border: none;
@@ -40,42 +45,44 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.3em;
+  padding: 0.4em;
   position: absolute;
-  right: 0.8em; /* 🔹 Nem csúszik ki */
+  right: 0.8em;
   top: 50%;
   transform: translateY(-50%);
 }
- 
-/* 🔹 Kereső ikon */
+
 .search-button svg {
-  color: black;
+  color: #333;
   font-size: 1.2em;
   transition: color 0.2s ease-in-out;
 }
- 
-/* 🔹 Hover állapot */
+
 .search-button:hover svg {
   color: #f7a69b;
 }
- 
+
+/* 📱 Mobil optimalizálás */
 @media (max-width: 600px) {
   .search-container {
-    width: 100%;
-    max-width: none;
-    margin: 0 auto;
-    padding: 0.4em 0.8em;
+    min-width: 11em;;
   }
+
+  .search-input {
+    font-size: 0.95em;
+    padding: 0.3em 0.6em;
+  }
+
   .search-button {
-    padding: 0.4em;
-    right: 0.6em;
+    right: 0.5em;
+    padding: 0.2em;
   }
- 
+
   .search-button svg {
     font-size: 1.1em;
   }
 }
- 
+
  
 .videok-card {
   padding: 1.5em;
