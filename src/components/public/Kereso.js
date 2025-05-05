@@ -5,12 +5,20 @@ export default function Kereso({ termekek, setFilteredTermekek }) {
   const [kereses, setKereses] = useState("");
 
   const handleSearch = () => {
-    const filtered = termekek.filter((termek) =>
-      [termek.cim, termek.leiras]
-        .join(" ")
-        .toLowerCase()
-        .includes(kereses.toLowerCase())
-    );
+    const keresesLower = kereses.toLowerCase();
+
+    const filtered = termekek.filter((termek) => {
+      const cim = termek.cim?.toLowerCase() || "";
+      const leiras = termek.leiras?.toLowerCase() || "";
+
+      // Ha a termékhez tartoznak címkék (pl. [{ nev: "zene" }, ...])
+      const cimkekSzoveg = (termek.cimkek || [])
+        .map((c) => c.nev.toLowerCase())
+        .join(" ");
+
+      return [cim, leiras, cimkekSzoveg].join(" ").includes(keresesLower);
+    });
+
     setFilteredTermekek(filtered);
   };
 
@@ -23,26 +31,24 @@ export default function Kereso({ termekek, setFilteredTermekek }) {
     }
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleSearch();
-    }
-  };
-
   return (
-    <div className="search-container">
+    <form
+      className="search-container"
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSearch();
+      }}
+    >
       <input
         type="text"
         className="search-input"
-        placeholder=""
+        placeholder="Keresés termékek és címkék között..."
         value={kereses}
         onChange={handleInputChange}
-        onKeyDown={handleKeyPress}
       />
-      <button className="search-button" type="button" onClick={handleSearch}>
+      <button className="search-button" type="submit">
         <FaSearch />
       </button>
-    </div>
+    </form>
   );
 }
