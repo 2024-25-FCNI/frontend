@@ -53,55 +53,59 @@ export default function Termek() {
     : "/placeholder.png";
 
   return (
-    <div className="termek-container">
-      <div className="termek-card">
-        <img
-          src={imageUrl}
-          alt={termek.cim}
-          className="termek-kep"
-          onError={(e) => (e.target.src = "/placeholder.png")}
-        />
+    <>
+      {/* Fehér sáv a navigáció alatt, fix navbar miatt */}
+      <div style={{ height: "3em", backgroundColor: "#fff" }}></div>
+      <div className="termek-container">
+        <div className="termek-card">
+          <img
+            src={imageUrl}
+            alt={termek.cim}
+            className="termek-kep"
+            onError={(e) => (e.target.src = "/placeholder.png")}
+          />
 
-        <div className="termek-leiras">
-          <h2>{termek.cim}</h2>
+          <div className="termek-leiras">
+            <h2>{termek.cim}</h2>
 
-          {user?.role === 0 ? (
-            <>
-              <p>
-                <strong>Bemutatás:</strong> {termek.bemutatas}
-              </p>
-              <p>
-                <strong>Leírás:</strong> {termek.leiras}
-              </p>
-            </>
+            {user?.role === 0 ? (
+              <>
+                <p>
+                  <strong>Bemutatás:</strong> {termek.bemutatas}
+                </p>
+                <p>
+                  <strong>Leírás:</strong> {termek.leiras}
+                </p>
+              </>
+            ) : (
+              <p>{vasarolt ? termek.leiras : termek.bemutatas}</p>
+            )}
+
+            <p className="ar">Ár: {termek.ar} Ft</p>
+            <p>Hozzáférési idő: {termek.hozzaferesi_ido} nap</p>
+
+            {user?.role !== 0 && !vasarolt && (
+              <button className="btn" onClick={() => kosarba(termek)}>
+                Kosárba
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="termek-video">
+          {user?.role === 0 || vasarolt ? (
+            <video
+              src={`http://localhost:8000/videok/${termek.url}`}
+              controls
+              controlsList="nodownload"
+              disablePictureInPicture
+              onContextMenu={(e) => e.preventDefault()}
+            />
           ) : (
-            <p>{vasarolt ? termek.leiras : termek.bemutatas}</p>
-          )}
-
-          <p className="ar">Ár: {termek.ar} Ft</p>
-          <p>Hozzáférési idő: {termek.hozzaferesi_ido} nap</p>
-
-          {user?.role !== 0 && !vasarolt && (
-            <button className="btn" onClick={() => kosarba(termek)}>
-              Kosárba
-            </button>
+            <p>A videó csak vásárlás után érhető el.</p>
           )}
         </div>
       </div>
-
-      <div className="termek-video">
-        {user?.role === 0 || vasarolt ? (
-          <video
-            src={`http://localhost:8000/videok/${termek.url}`}
-            controls
-            controlsList="nodownload"
-            disablePictureInPicture
-            onContextMenu={(e) => e.preventDefault()}
-          />
-        ) : (
-          <p>A videó csak vásárlás után érhető el.</p>
-        )}
-      </div>
-    </div>
+    </>
   );
 }

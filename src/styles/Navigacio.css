@@ -93,11 +93,11 @@ body {
 
 /* 🔹 MOBIL MENÜ STÍLUS */
 .mobile-menu {
-  position: absolute;
-  top: 4em;
-  right: 1em;
+  position: fixed;
+  top: 3.2em; 
+  right: 0.1em;
   background-color: white;
-  box-shadow: 0 0.3em 0.7em rgba(0, 0, 0, 0.1);
+/*box-shadow: 0 0.3em 0.7em rgba(0, 0, 0, 0.1);*/
   border-radius: 0.6em;
   padding: 1em 1.5em;
   z-index: 1001;

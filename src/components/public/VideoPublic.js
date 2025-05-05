@@ -11,7 +11,7 @@ export function TermekPublic(props) {
   console.log("Termék adatok a TermekPublic komponensben:", props.termek);
   console.log("Navigációs útvonal:", `/termek/${props.termek.termek_id}`);
  
-  // 📸 Helyes képútvonal kialakítása
+  // Helyes képútvonal kialakítása
   const kepUrl = props.termek.kep
     ? `/kepek/${props.termek.kep}`
     : "/placeholder.png";
