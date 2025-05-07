@@ -12,7 +12,7 @@ export default function Kereso({ termekek, setFilteredTermekek, setNincsTalalat 
       const leiras = termek.leiras?.toLowerCase() || "";
       const bemutatas = termek.bemutatas?.toLowerCase() || "";
 
-      //  JAVÍTVA: címkék nem objektumok, hanem stringek
+      // címkék nem objektumok, hanem stringek
       const cimkekSzoveg = (termek.cimkek || [])
       .map((c) => (typeof c === "string" ? c : c.elnevezes || ""))
       .map((s) => s.toLowerCase())

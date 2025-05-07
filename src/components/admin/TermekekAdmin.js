@@ -1,7 +1,7 @@
 import React from "react";
 import TermekAdmin from "./TermekAdmin";
 import TablaFejlec from "./TablaFejlec";
-import "../../styles/TermekekTablazatAdmin.css"; 
+import "../../styles/TermekekTablazatAdmin.css";
 
 function TermekekAdmin({ termekek }) {
   if (!termekek || termekek.length === 0) {

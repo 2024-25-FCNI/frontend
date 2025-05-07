@@ -10,11 +10,11 @@
   z-index: 1000;
 }
 
-/* 🔹 TARTALOM ELTOLÁS (hogy ne takarja ki a navbar) */
+/* TARTALOM ELTOLÁS (hogy ne takarja ki a navbar) */
 body {
   padding-top: 3em; /* vagy amilyen magas a navbar */
 }
-/* 🔹 LOGÓ MÉRETE */
+/* LOGÓ MÉRETE */
 .logo-img {
   width: 2.5em;
   height: auto;
@@ -22,7 +22,7 @@ body {
   margin: 0 1em;
 }
 
-/* 🔹 ASZTALI NAVIGÁCIÓS LINKEK */
+/* ASZTALI NAVIGÁCIÓS LINKEK */
 .left-nav,
 .right-nav {
   display: flex;
@@ -55,7 +55,7 @@ body {
   color: #999;
 }
 
-/* 🔹 KOSÁR GOMB */
+/* KOSÁR GOMB */
 .kosar-btn {
   background: none;
   border: none;
@@ -75,13 +75,13 @@ body {
   margin-right: 0.3em;
 }
 
-/* 🔹 MOBIL NAVIGÁCIÓ */
+/* MOBIL NAVIGÁCIÓ */
 .mobile-nav {
   display: none;
   align-items: center;
 }
 
-/* 🔹 HAMBURGER GOMB */
+/* HAMBURGER GOMB */
 .hamburger-btn {
   background: none;
   border: none;
@@ -91,7 +91,7 @@ body {
   color: #333;
 }
 
-/* 🔹 MOBIL MENÜ STÍLUS */
+/* MOBIL MENÜ STÍLUS */
 .mobile-menu {
   position: fixed;
   top: 3.2em; 
@@ -125,7 +125,7 @@ body {
   color: #999;
 }
 
-/* 🔹 ANIMÁCIÓ */
+/* ANIMÁCIÓ */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -136,7 +136,7 @@ body {
     transform: translateY(0);
   }
 }
-/* 🔹 MOBILNÉZET */
+/* MOBILNÉZET */
 @media (max-width: 800px) {
   .nav-left,
   .nav-right {

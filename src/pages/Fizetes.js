@@ -56,8 +56,6 @@ export default function Fizetes() {
     }
   };
 
- 
-
   useEffect(() => {
     if (sikeresVasarlas) {
       const timer = setTimeout(() => {

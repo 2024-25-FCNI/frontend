@@ -18,7 +18,9 @@ export const AnalitikaProvider = ({ children }) => {
     setLoading(true);
     try {
       console.log("Felhasználók lekérése...");
-      const response = await axios.get("http://localhost:8000/api/felhasznalok");
+      const response = await axios.get(
+        "http://localhost:8000/api/felhasznalok"
+      );
       console.log("API válasz:", response.data);
       setFelhasznalok(response.data);
       setLoading(false);
@@ -28,31 +30,27 @@ export const AnalitikaProvider = ({ children }) => {
       setLoading(false);
     }
   };
-  
 
   // Felhasználó törlése
   const torolFelhasznalo = async (id) => {
     await csrf();
     try {
-        console.log(`Felhasználó törlése: ${id}`);
+      console.log(`Felhasználó törlése: ${id}`);
 
-        const response = await myAxios.delete(`/api/felhasznalok/${id}`, {
-         
-/*             withCredentials: true
- */        });
+      const response = await myAxios.delete(`/api/felhasznalok/${id}`, {});
 
-        if (response.status === 200) {
-            setFelhasznalok((prevFelhasznalok) =>
-                prevFelhasznalok.filter((felhasznalo) => felhasznalo.id !== id)
-            );
-            console.log("Felhasználó sikeresen törölve.");
-        } else {
-            console.error("Nem sikerült törölni a felhasználót.");
-        }
+      if (response.status === 200) {
+        setFelhasznalok((prevFelhasznalok) =>
+          prevFelhasznalok.filter((felhasznalo) => felhasznalo.id !== id)
+        );
+        console.log("Felhasználó sikeresen törölve.");
+      } else {
+        console.error("Nem sikerült törölni a felhasználót.");
+      }
     } catch (error) {
-        console.error("Hiba történt a törlés során:", error);
+      console.error("Hiba történt a törlés során:", error);
     }
-};
+  };
 
   // Vásárlások lekérése felhasználó szerint
   const fetchVasarlasok = async (id) => {

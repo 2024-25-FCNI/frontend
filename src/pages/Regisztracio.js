@@ -11,7 +11,6 @@ export default function Regisztracio() {
   const [password_confirmation, setPasswordConfirmation] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
-
   const { loginReg, errors } = useAuthContext();
 
   const handleSubmit = async (e) => {
@@ -62,7 +61,9 @@ export default function Regisztracio() {
               />
             </div>
           </div>
-          {errors.email && <span className="error-text">{errors.email[0]}</span>}
+          {errors.email && (
+            <span className="error-text">{errors.email[0]}</span>
+          )}
 
           {/* Jelszó mező */}
           <div className="input-group">
@@ -85,7 +86,9 @@ export default function Regisztracio() {
               </button>
             </div>
           </div>
-          {errors.password && <span className="error-text">{errors.password[0]}</span>}
+          {errors.password && (
+            <span className="error-text">{errors.password[0]}</span>
+          )}
 
           {/* Jelszó újra mező */}
           <div className="input-group">
@@ -102,24 +105,35 @@ export default function Regisztracio() {
               <button
                 type="button"
                 className="toggle-password"
-                onClick={() => setShowPasswordConfirmation(!showPasswordConfirmation)}
+                onClick={() =>
+                  setShowPasswordConfirmation(!showPasswordConfirmation)
+                }
               >
                 {showPasswordConfirmation ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
           </div>
           {errors.password_confirmation && (
-            <span className="error-text">{errors.password_confirmation[0]}</span>
+            <span className="error-text">
+              {errors.password_confirmation[0]}
+            </span>
           )}
 
           {/* Regisztráció gomb */}
           <div className="button-container">
-            <button type="submit" className="register-button">Regisztrálok</button>
+            <button type="submit" className="register-button">
+              Regisztrálok
+            </button>
           </div>
 
           {/* Extra link */}
           <div className="extra-links">
-            <p>Már van profilja? <Link to="/bejelentkezes" className="login-link">Bejelentkezés</Link></p>
+            <p>
+              Már van profilja?{" "}
+              <Link to="/bejelentkezes" className="login-link">
+                Bejelentkezés
+              </Link>
+            </p>
           </div>
         </form>
       </div>

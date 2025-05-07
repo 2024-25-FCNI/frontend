@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { myAxios } from "../api/axios"; // 🔥 Axios importálása az API híváshoz
+import { myAxios } from "../api/axios";
 import "../styles/UjJelszo.css";
-
 
 export default function ElfelejtettJelszo() {
   const [email, setEmail] = useState("");
@@ -26,7 +25,9 @@ export default function ElfelejtettJelszo() {
       <h1 className="text-center">Elfelejtett jelszó</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email címed:</label>
+          <label htmlFor="email" className="form-label">
+            Email címed:
+          </label>
           <input
             type="email"
             value={email}

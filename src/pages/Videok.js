@@ -10,10 +10,7 @@ export default function Videok() {
   const { getData } = useContext(ApiContext);
   const [termekek, setTermekek] = useState([]);
   const [filteredTermekek, setFilteredTermekek] = useState([]);
-
-  // ÚJ: nincs találat állapot
   const [nincsTalalat, setNincsTalalat] = useState(false);
-
   const [activeTab, setActiveTab] = useState("videok");
 
   useEffect(() => {
@@ -21,7 +18,7 @@ export default function Videok() {
       setTermekek(adatok);
       setFilteredTermekek(adatok);
     });
-  }, []); // ✅ csak egyszer, az első betöltésnél
+  }, []); // csak egyszer, az első betöltésnél
 
   return (
     <div className="videok-container mt-4">
@@ -49,8 +46,7 @@ export default function Videok() {
             className={`nav-link ${activeTab === "csomagok" ? "active" : ""}`}
             onClick={() => setActiveTab("csomagok")}
             style={{
-              backgroundColor:
-                activeTab === "csomagok" ? "#FCEDE8" : "#FFFFFF",
+              backgroundColor: activeTab === "csomagok" ? "#FCEDE8" : "#FFFFFF",
               color: "black",
               borderRadius: "10px 10px 0 0",
               border: "none",
@@ -61,11 +57,9 @@ export default function Videok() {
         </li>
       </ul>
 
-      {/* Kereső középre */}
       <div className="p-4 custom-wrapper">
         <div className="d-flex justify-content-center my-3">
           <div className="w-50 search-container rounded-pill">
-            {/* átadjuk a setNincsTalalat propot is */}
             <Kereso
               termekek={termekek}
               setFilteredTermekek={setFilteredTermekek}

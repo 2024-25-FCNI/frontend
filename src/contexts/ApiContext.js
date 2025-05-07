@@ -1,14 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 import { myAxios } from "./MyAxios";
- 
+
 export const ApiContext = createContext("");
- 
+
 export const ApiProvider = ({ children }) => {
   const [apiData, setApiData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  
-  
+
   function getData(vegpont, fv) {
     setLoading(true);
     setError(null);
@@ -30,7 +29,6 @@ export const ApiProvider = ({ children }) => {
     setLoading(true);
     setError(null);
     try {
-      // ✅ Megadjuk a `Content-Type: multipart/form-data` fejlécet
       const response = await myAxios.post(vegpont, data, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -43,8 +41,6 @@ export const ApiProvider = ({ children }) => {
       setLoading(false);
     }
   };
-  
-
 
   const sendEmail = async () => {
     setLoading(true);
@@ -59,18 +55,16 @@ export const ApiProvider = ({ children }) => {
       setLoading(false);
     }
   };
- 
- 
+
   useEffect(() => {
     getData("/api/termekek", setApiData); // Adatok automatikus lekérése
   }, []);
- 
- 
+
   return (
-    <ApiContext.Provider value={{ getData, apiData, sendEmail, postData, loading, error }}>
+    <ApiContext.Provider
+      value={{ getData, apiData, sendEmail, postData, loading, error }}
+    >
       {children}
     </ApiContext.Provider>
   );
- 
 };
- 

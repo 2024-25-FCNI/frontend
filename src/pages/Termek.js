@@ -37,24 +37,23 @@ export default function Termek() {
           console.error("Vásárlás ellenőrzés hiba:", error);
         });
     } else {
-      // 🔹 Ha nincs user, alapértelmezés szerint nincs jogosultság
+      // Ha nincs user, alapértelmezés szerint nincs jogosultság
       setVasarolt(false);
     }
   }, [termekId, user]);
 
-  // 🔹 Ha az API még nem töltötte be az adatokat, jelenítsünk meg egy "Betöltés..." üzenetet
+  // Ha az API még nem töltötte be az adatokat, jelenítsünk meg egy "Betöltés..." üzenetet
   if (!termek) {
     return <div>Betöltés...</div>;
   }
 
-  // 🔹 Ellenőrizzük, hogy a `termek.kep` létezik-e, mielőtt használjuk
+  // Ellenőrizzük, hogy a `termek.kep` létezik-e, mielőtt használjuk
   const imageUrl = termek.kep
     ? `http://localhost:8000/kepek/${termek.kep}`
     : "/placeholder.png";
 
   return (
     <>
-      {/* Fehér sáv a navigáció alatt, fix navbar miatt */}
       <div style={{ height: "3em", backgroundColor: "#fff" }}></div>
       <div className="termek-container">
         <div className="termek-card">

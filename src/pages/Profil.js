@@ -6,7 +6,6 @@ import "../styles/Profil.css";
 import { myAxios } from "../api/axios";
 
 export default function Profil() {
-  
   const { user, logout, getUser } = useAuthContext();
   const navigate = useNavigate();
   const [osszesTermek, setOsszesTermek] = useState([]);
@@ -68,28 +67,27 @@ export default function Profil() {
   const handleProfilKepValtas = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-  
+
     const formData = new FormData();
     formData.append("profilkep", file);
-  
+
     try {
       await myAxios.get("/sanctum/csrf-cookie");
-  
+
       const res = await myAxios.post("/api/upload-profilkep", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-  
+
       const fajlNev = res.data.profilkep;
       setProfilKep(`http://localhost:8000/profilkep/${fajlNev}`);
-  
-      await getUser(); // 🔁 EZZEL FRISSÍTED A USER ADATOKAT
+
+      await getUser(); //User adat frissítése
     } catch (err) {
       console.error("❌ Profilkép feltöltési hiba:", err);
     }
   };
-  
 
   const handleTermekClick = (termekId) => {
     navigate(`/termek/${termekId}`);

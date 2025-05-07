@@ -3,7 +3,6 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { myAxios } from "../api/axios";
 import "../styles/UjJelszo.css";
 
-
 export default function UjJelszo() {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
@@ -30,7 +29,9 @@ export default function UjJelszo() {
       navigate("/bejelentkezes");
     } catch (err) {
       console.error("Hiba a jelszó visszaállításkor:", err);
-      setError("Hiba történt a jelszó visszaállításakor. Ellenőrizd az adatokat.");
+      setError(
+        "Hiba történt a jelszó visszaállításakor. Ellenőrizd az adatokat."
+      );
     }
   };
 
@@ -39,7 +40,9 @@ export default function UjJelszo() {
       <h1 className="text-center">Új jelszó beállítása</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email címed:</label>
+          <label htmlFor="email" className="form-label">
+            Email címed:
+          </label>
           <input
             type="email"
             value={email}
@@ -51,7 +54,9 @@ export default function UjJelszo() {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="password" className="form-label">Új jelszó:</label>
+          <label htmlFor="password" className="form-label">
+            Új jelszó:
+          </label>
           <input
             type="password"
             value={password}
@@ -63,7 +68,9 @@ export default function UjJelszo() {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="passwordConfirm" className="form-label">Jelszó megerősítése:</label>
+          <label htmlFor="passwordConfirm" className="form-label">
+            Jelszó megerősítése:
+          </label>
           <input
             type="password"
             value={passwordConfirm}

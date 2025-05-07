@@ -5,18 +5,18 @@
   padding: 2em;
 }
 
-/* 🔹 A szekció most már rugalmasan nőhet a tartalommal */
+/* A szekció most már rugalmasan nőhet a tartalommal */
 .bemutatkozas-section {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh; /* ✅ csak ha kell, akkor nő meg */
+  min-height: 100vh; /* csak ha kell, akkor nő meg */
   width: 100%;
   padding: 2em;
   box-sizing: border-box;
 }
 
-/* 🔹 Tartalom */
+/* Tartalom */
 .bemutatkozas-content {
   display: flex;
   align-items: center;
@@ -27,7 +27,7 @@
   flex-wrap: wrap;
 }
 
-/* 🔹 Kép */
+/* Kép */
 .bemutatkozas-image {
   flex: 1 1 40%;
   display: flex;
@@ -42,7 +42,7 @@
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
 }
 
-/* 🔹 Szöveg */
+/* Szöveg */
 .bemutatkozas-text {
   flex: 1 1 50%;
   padding: 2em;
@@ -60,7 +60,7 @@
   line-height: 1.6;
 }
 
-/* 🔹 Gomb */
+/*  Gomb */
 .btn-primary {
   background-color: #e49788;
   border: none;
@@ -82,7 +82,7 @@
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
-/* 🔹 Reszponzív */
+/* Reszponzív */
 @media (max-width: 800px) {
   .bemutatkozas-content {
     flex-direction: column;

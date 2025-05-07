@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "../../styles/Analitika.css"; 
+import "../../styles/Analitika.css";
 
 function UserAnalitika({ felhasznalok, torolFelhasznalo }) {
   const [rendezes, setRendezes] = useState("desc");
