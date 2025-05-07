@@ -49,9 +49,14 @@ export const AdminProvider = ({ children }) => {
         withCredentials: true,
       });
       console.log("✅ Termék törölve:", termekId);
-      await fetchTermekek(); // Frissítjük a listát törlés után
+      await fetchTermekek(); // frissítjük a listát törlés után
     } catch (error) {
-      console.error("❌ Törlési hiba:", error);
+      if (error.response && error.response.status === 403) {
+        alert("⚠️ A termék már meg lett vásárolva, nem törölhető.");
+      } else {
+        console.error("❌ Törlési hiba:", error);
+        // NEM dob alertet, ha más típusú hiba lép fel
+      }
     }
   };
 
