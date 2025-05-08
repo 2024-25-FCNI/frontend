@@ -4,17 +4,18 @@ import { myAxios } from "../api/axios";
 import { FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "../styles/Fizetes.css";
+import Loader from "../components/public/Loader";
 
 export default function Fizetes() {
   const { kosar, total, torolTermek, uritKosar } = useContext(KosarContext);
   const [sikeresVasarlas, setSikeresVasarlas] = useState(false);
+  const [betolt, setBetolt] = useState(false); 
   const navigate = useNavigate();
 
   const handlePayment = async (event) => {
     event.preventDefault();
-
-    let folyamat = "Kezdés"; // Állapot követés
-
+    let folyamat = "Kezdés";
+    setBetolt(true);
     try {
       folyamat = "CSRF cookie lekérése";
       await myAxios.get("/sanctum/csrf-cookie");
@@ -31,9 +32,7 @@ export default function Fizetes() {
       });
 
       if (vasarlasValasz.status !== 201) {
-        throw new Error(
-          "A vásárlás mentése nem sikerült (nem 201-es státuszkód)."
-        );
+        throw new Error("A vásárlás mentése nem sikerült (nem 201-es státuszkód).");
       }
 
       folyamat = "E-mail küldés";
@@ -46,17 +45,12 @@ export default function Fizetes() {
       uritKosar();
       setSikeresVasarlas(true);
     } catch (error) {
-      console.error(
-        `❌ Hiba történt a fizetés során. Folyamat: ${folyamat}`,
-        error
-      );
-      alert(
-        `Hiba történt a következő lépésnél: ${folyamat}. Kérlek, próbáld újra!`
-      );
+      console.error(`❌ Hiba történt a fizetés során. Folyamat: ${folyamat}`, error);
+      alert(`Hiba történt a következő lépésnél: ${folyamat}. Kérlek, próbáld újra!`);
+    } finally {
+      setBetolt(false); 
     }
   };
-
- 
 
   useEffect(() => {
     if (sikeresVasarlas) {
@@ -67,6 +61,10 @@ export default function Fizetes() {
       return () => clearTimeout(timer);
     }
   }, [sikeresVasarlas, navigate]);
+
+  if (betolt) {
+    return <Loader />; 
+  }
 
   if (sikeresVasarlas) {
     return (
