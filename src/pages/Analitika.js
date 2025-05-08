@@ -4,7 +4,6 @@ import UserAnalitika from "../components/admin/UserAnalitika";
 import VasarlasAnalitika from "../components/admin/VasarlasAnalitika";
 import "../styles/Analitika.css";
 
-
 function Analitika() {
   const { felhasznalok, loading, error, torolFelhasznalo } =
     useContext(AnalitikaContext);
@@ -19,17 +18,17 @@ function Analitika() {
 
   return (
     <div className="analitika-container">
-    <div className="analitika-szekcio">
-      <UserAnalitika
-        felhasznalok={felhasznalok}
-        torolFelhasznalo={torolFelhasznalo}
-      />
+      <div className="analitika-szekcio">
+        <UserAnalitika
+          felhasznalok={felhasznalok}
+          torolFelhasznalo={torolFelhasznalo}
+        />
+      </div>
+
+      <div className="analitika-szekcio">
+        <VasarlasAnalitika />
+      </div>
     </div>
-  
-    <div className="analitika-szekcio">
-      <VasarlasAnalitika />
-    </div>
-  </div>
   );
 }
 

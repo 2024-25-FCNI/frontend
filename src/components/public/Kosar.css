@@ -1,6 +1,6 @@
 
 .kosar-gomb {
-  background-color: #f7a69b; /* Alap szín */
+  background-color: #f7a69b; 
   color: white;
   border-radius: 0.5em;
   width: 2.5em;
@@ -72,7 +72,7 @@
   transform: translateX(0);
 }
 
-/* 🔴 Bezárás gomb */
+/*Bezárás gomb */
 .close-btn {
   position: absolute;
   top: 0.5em;
@@ -84,7 +84,7 @@
   color: red;
 }
 
-/* 🛒 Kosár cím */
+/* Kosár cím */
 .kosar-title {
   text-align: center;
   font-size: 1.2em;
@@ -92,7 +92,7 @@
   margin-bottom: 0.5em;
 }
 
-/* 🏷️ Kosár elemek */
+/* Kosár elemek */
 .kosar-list {
   list-style: none;
   padding: 0;
@@ -100,7 +100,7 @@
   flex-grow: 1;
 }
 
-/* 🔹 Egyes termékek */
+/* Egyes termékek */
 .kosar-item {
   display: flex;
   align-items: center;
@@ -111,7 +111,7 @@
   margin-bottom: 0.5em;
 }
 
-/* 📷 Kép */
+/* Kép */
 .kosar-img-container {
   width: 2.5em;
   height: 2.5em;
@@ -125,7 +125,7 @@
   object-fit: cover;
 }
 
-/* 📝 Termék infó */
+/* Termék infó */
 .kosar-info {
   flex-grow: 1;
   display: flex;
@@ -145,7 +145,7 @@
   color: #555;
 }
 
-/* ❌ Törlés gomb */
+/* Törlés gomb */
 .remove-btn {
   background: none;
   border: none;
@@ -158,7 +158,7 @@
   color: red;
 }
 
-/* 🏦 Fizetés */
+/* Fizetés */
 .kosar-bottom {
   text-align: center;
   padding-top: 0.5em;
@@ -177,7 +177,7 @@
   font-weight: bold;
 }
 
-/* 💳 Gomb */
+/* Gomb */
 .checkout-btn {
   width: 100%;
   background: #f7a69b;

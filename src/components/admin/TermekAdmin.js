@@ -12,12 +12,6 @@ export function TermekAdmin({ termek }) {
     }
   };
 
-  /*  const formatDate = (dateString) => {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    return date.toISOString().slice(0, 16).replace("T", " ");
-  }; */
-
   const formatDate = (dateString) => {
     if (!dateString) return "";
     const date = new Date(dateString);
@@ -42,7 +36,6 @@ export function TermekAdmin({ termek }) {
 
       <td>{termek.ar} Ft</td>
       <td>{termek.hozzaferesi_ido} nap</td>
-      {/* <td>{Array.isArray(termek.cimkek) ? termek.cimkek.join(", ") : ""}</td> */}
       <td>
         {Array.isArray(termek.cimkek)
           ? termek.cimkek

@@ -57,7 +57,11 @@ export default function Kezdolap() {
                 <img src={f} alt="Facebook" className="social-icon-small" />
                 <span>Wehowszky Vivien</span>
               </a>
-              <a href="https://instagram.com" target="_blank" className="social-link">
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                className="social-link"
+              >
                 <img src={i} alt="Instagram" className="social-icon-small" />
                 <span>wehovivi</span>
               </a>
@@ -75,20 +79,30 @@ export default function Kezdolap() {
         </h2>
         <div className="row">
           <div className="col-md-4 col-sm-12 product-card animate-up delay-1">
-            <Link to="/videok" style={{ textDecoration: "none", color: "black" }}>
+            <Link
+              to="/videok"
+              style={{ textDecoration: "none", color: "black" }}
+            >
               <div className="product-box">
                 <img src={v} alt="videok" className="book-image" />
                 <h3>Videók</h3>
-                <p>Fejleszd hajlékonyságod és erőnléted szakértői útmutatással!</p>
+                <p>
+                  Fejleszd hajlékonyságod és erőnléted szakértői útmutatással!
+                </p>
               </div>
             </Link>
           </div>
           <div className="col-md-4 col-sm-12 product-card animate-up delay-2">
-            <Link to="/videok" style={{ textDecoration: "none", color: "black" }}>
+            <Link
+              to="/videok"
+              style={{ textDecoration: "none", color: "black" }}
+            >
               <div className="product-box">
                 <img src={v} alt="csomagok" className="book-image" />
                 <h3>Videós csomagok</h3>
-                <p>Komplex edzésprogramok a rugalmasság és erő fejlesztéséhez!</p>
+                <p>
+                  Komplex edzésprogramok a rugalmasság és erő fejlesztéséhez!
+                </p>
               </div>
             </Link>
           </div>
@@ -97,7 +111,10 @@ export default function Kezdolap() {
               <div className="product-box">
                 <img src={v} alt="konyv" className="book-image" />
                 <h3>Könyv</h3>
-                <p>Egy sportoló útja: kitartás, küzdelem és szenvedély a sikerért!</p>
+                <p>
+                  Egy sportoló útja: kitartás, küzdelem és szenvedély a
+                  sikerért!
+                </p>
               </div>
             </div>
           </div>

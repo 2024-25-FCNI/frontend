@@ -27,7 +27,7 @@ export default function Bemutatkozas() {
 
   return (
     <div className="bemutatkozas-container">
-      {/* 🔹 Első szekció */}
+      {/* Első szekció */}
       <section className="bemutatkozas-section">
         <div className="bemutatkozas-content">
           <div className="bemutatkozas-image" data-aos="fade-right">
@@ -56,7 +56,7 @@ export default function Bemutatkozas() {
         </div>
       </section>
 
-      {/* 🔹 Második szekció – Könyv */}
+      {/* Második szekció – Könyv */}
       <section id="konyv-szekcio" className="bemutatkozas-section">
         <div className="bemutatkozas-content reverse">
           <div className="bemutatkozas-text" data-aos="fade-up">

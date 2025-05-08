@@ -8,7 +8,7 @@ function UjTermek({ existingVideos = [] }) {
   const { postData } = useAdminContext();
   const urlInputRef = useRef(null);
 
-  const [loading, setLoading] = useState(false); // 🔹 loader állapot
+  const [loading, setLoading] = useState(false); // loader állapot
   const [termek, setTermek] = useState({
     cim: "",
     bemutatas: "",

@@ -25,7 +25,6 @@ export default function Navigacio() {
     <>
       <nav className="custom-navbar">
         <div className="container-fluid d-flex justify-content-between align-items-center">
-
           {/* 🔹 Bal oldal: Logó + Menüelemek */}
           <div className="left-nav d-flex align-items-center">
             <Link to="/" className="navbar-brand">
@@ -98,12 +97,16 @@ export default function Navigacio() {
         </div>
       </nav>
 
-      {/* 🔹 Lenyíló menü mobilon */}
+      {/* Lenyíló menü mobilon */}
       {menuOpen && (
         <div className="mobile-menu">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link className="nav-link" to="/bemutatkozas" onClick={toggleMenu}>
+              <Link
+                className="nav-link"
+                to="/bemutatkozas"
+                onClick={toggleMenu}
+              >
                 Bemutatkozás
               </Link>
             </li>
@@ -121,7 +124,11 @@ export default function Navigacio() {
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link" to="/analitika" onClick={toggleMenu}>
+                    <Link
+                      className="nav-link"
+                      to="/analitika"
+                      onClick={toggleMenu}
+                    >
                       Analitika
                     </Link>
                   </li>
@@ -135,7 +142,11 @@ export default function Navigacio() {
               )
             ) : (
               <li className="nav-item">
-                <Link className="nav-link" to="/bejelentkezes" onClick={toggleMenu}>
+                <Link
+                  className="nav-link"
+                  to="/bejelentkezes"
+                  onClick={toggleMenu}
+                >
                   Bejelentkezés
                 </Link>
               </li>
@@ -144,10 +155,13 @@ export default function Navigacio() {
         </div>
       )}
 
-      {/* 🔹 Kosár működőképes megnyitása */}
+      {/* Kosár működőképes megnyitása */}
       {isKosarOpen && (
         <div className="kosar-overlay" onClick={toggleKosar}>
-          <div className="kosar-panel open" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="kosar-panel open"
+            onClick={(e) => e.stopPropagation()}
+          >
             <Kosar toggleKosar={toggleKosar} />
           </div>
         </div>

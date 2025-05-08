@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import "../styles/Bejelentkezes.css"; 
+import "../styles/Bejelentkezes.css";
 
 export default function Bejelentkezes() {
   const [email, setEmail] = useState("");
@@ -42,7 +42,9 @@ export default function Bejelentkezes() {
               />
             </div>
           </div>
-          {errors.email && <span className="error-text">{errors.email[0]}</span>}
+          {errors.email && (
+            <span className="error-text">{errors.email[0]}</span>
+          )}
 
           <div className="input-group">
             <label htmlFor="pwd">Jelszó</label>
@@ -65,15 +67,28 @@ export default function Bejelentkezes() {
               </button>
             </div>
           </div>
-          {errors.password && <span className="error-text">{errors.password[0]}</span>}
+          {errors.password && (
+            <span className="error-text">{errors.password[0]}</span>
+          )}
 
           <div className="button-container">
-            <button type="submit" className="login-button">Bejelentkezés</button>
+            <button type="submit" className="login-button">
+              Bejelentkezés
+            </button>
           </div>
 
           <div className="extra-links">
-            <p>Még nincs fiókja? <Link to="/regisztracio" className="register-link">Regisztráció</Link></p>
-            <p><Link to="/elfelejtett-jelszo" className="forgot-password">Elfelejtettem a jelszavam</Link></p>
+            <p>
+              Még nincs fiókja?{" "}
+              <Link to="/regisztracio" className="register-link">
+                Regisztráció
+              </Link>
+            </p>
+            <p>
+              <Link to="/elfelejtett-jelszo" className="forgot-password">
+                Elfelejtettem a jelszavam
+              </Link>
+            </p>
           </div>
         </form>
       </div>

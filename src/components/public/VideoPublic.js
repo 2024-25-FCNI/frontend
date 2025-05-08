@@ -2,20 +2,19 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { KosarContext } from "../../contexts/KosarContext";
 import useAuthContext from "../../contexts/AuthContext";
- 
+
 export function TermekPublic(props) {
   const { kosarba } = useContext(KosarContext);
   const { user } = useAuthContext();
- 
-  // Ellenőrzés: Kiírjuk a termék ID-t a konzolba
+
+  // Ellenőrzés: termék ID a konzolba
   console.log("Termék adatok a TermekPublic komponensben:", props.termek);
   console.log("Navigációs útvonal:", `/termek/${props.termek.termek_id}`);
- 
-  // Helyes képútvonal kialakítása
+
   const kepUrl = props.termek.kep
     ? `/kepek/${props.termek.kep}`
     : "/placeholder.png";
- 
+
   return (
     <div className="col">
       <div className="card h-200">
@@ -30,12 +29,6 @@ export function TermekPublic(props) {
             <h5 className="card-title">{props.termek.cim}</h5>
           </div>
           <div className="card-body">
-            {/* <img
-              src={kepUrl}
-              alt={props.termek.cim}
-              className="card-img-top"
-              style={{ maxHeight: "200px", objectFit: "cover" }}
-            /> */}
             <p>{props.termek.leiras}</p>
           </div>
         </Link>
@@ -53,5 +46,5 @@ export function TermekPublic(props) {
     </div>
   );
 }
- 
+
 export default TermekPublic;

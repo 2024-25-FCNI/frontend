@@ -7,9 +7,8 @@
   border-radius: 0 15px 15px 15px;
   
 }
-
  
-/* 📌 Keresőmező */
+/* Keresőmező */
 .search-container {
   display: flex;
   align-items: center;
@@ -37,7 +36,7 @@
   white-space: nowrap;
 }
 
-/* 🔍 Keresés gomb */
+/* Keresés gomb */
 .search-button {
   background: none;
   border: none;
@@ -62,7 +61,7 @@
   color: #f7a69b;
 }
 
-/* 📱 Mobil optimalizálás */
+/* Mobil optimalizálás */
 @media (max-width: 600px) {
   .search-container {
     min-width: 11em;;
@@ -99,10 +98,6 @@
   height: auto;
   border-radius: 0.5em;
 }
- 
-/* .videok-card .card-body {
-  flex-grow: 1;
-} */
  
 .cart-button {
   width: 2em;

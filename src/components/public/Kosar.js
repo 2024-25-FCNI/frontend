@@ -17,9 +17,9 @@ function Kosar({ toggleKosar }) {
   const handleCheckout = () => {
     toggleKosar(); // Bezárja a kosarat
     if (user) {
-      navigate("/fizetes"); // Ha van bejelentkezett user, a fizetés oldalra megy
+      navigate("/fizetes");
     } else {
-      navigate("/bejelentkezes"); // Ha nincs, a bejelentkezés oldalra megy
+      navigate("/bejelentkezes");
     }
   };
 
@@ -28,21 +28,18 @@ function Kosar({ toggleKosar }) {
       <button className="close-btn" onClick={toggleKosar}>
         <FaTimes />
       </button>
-
-      {/* Kosár címsor */}
       <h3 className="kosar-title">Kosár</h3>
-
       <ul className="list-group kosar-list">
         {kosar.length > 0 ? (
           kosar.map((termek) => (
             <li
-            className="kosar-item"
-            key={termek.termek_id}
-            onClick={() => {
-              toggleKosar();
-              navigate(`/termek/${termek.termek_id}`);
-            }}
-            style={{ cursor: "pointer" }}
+              className="kosar-item"
+              key={termek.termek_id}
+              onClick={() => {
+                toggleKosar();
+                navigate(`/termek/${termek.termek_id}`);
+              }}
+              style={{ cursor: "pointer" }}
             >
               <div className="kosar-img-container">
                 <img
