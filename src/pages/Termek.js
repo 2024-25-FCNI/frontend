@@ -4,6 +4,7 @@ import axios from "axios";
 import { KosarContext } from "../contexts/KosarContext";
 import useAuthContext from "../contexts/AuthContext";
 import "../styles/Termek.css";
+import Loader from "../components/public/Loader";
 
 export default function Termek() {
   const { termekId } = useParams();
@@ -44,7 +45,8 @@ export default function Termek() {
 
   // Ha az API még nem töltötte be az adatokat, jelenítsünk meg egy "Betöltés..." üzenetet
   if (!termek) {
-    return <div>Betöltés...</div>;
+    return <Loader />;
+
   }
 
   // Ellenőrizzük, hogy a `termek.kep` létezik-e, mielőtt használjuk

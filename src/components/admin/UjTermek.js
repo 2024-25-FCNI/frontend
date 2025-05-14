@@ -69,7 +69,7 @@ function UjTermek({ existingVideos = [] }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    setLoading(true); // 🔹 loader mutatása
+    setLoading(true); 
     const jelzesErtek = useExistingVideos ? 0 : 1;
     setTermek((prev) => ({ ...prev, jelzes: jelzesErtek }));
 
@@ -102,13 +102,13 @@ function UjTermek({ existingVideos = [] }) {
       alert("Hiba történt a feltöltéskor.");
       console.error(error);
     } finally {
-      setLoading(false); // 🔹 loader eltüntetése
+      setLoading(false);
     }
   }
 
   return (
     <>
-      {loading && <Loader />} {/* 🔹 loader megjelenítése */}
+      {loading && <Loader />} {}
 
       <form onSubmit={handleSubmit} className="video-form">
         <h2 className="form-title">Új termék feltöltése</h2>
